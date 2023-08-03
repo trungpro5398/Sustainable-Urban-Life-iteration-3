@@ -12,7 +12,7 @@ const icons = {
 const FootprintCard = ({ type, value }) => {
   return (
     <div className="footprint-card">
-      <FontAwesomeIcon icon={icons[type]} size="3x" />
+      <FontAwesomeIcon className="fa-icon" icon={icons[type]} size="3x" />
       <p>{value}</p>
     </div>
   );
