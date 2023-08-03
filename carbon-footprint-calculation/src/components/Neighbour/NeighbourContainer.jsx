@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Cell,
+  ResponsiveContainer,
+} from "recharts";
 import { Button, Select } from "antd";
 import "./NeighbourContainer.scss";
 
@@ -9,10 +18,23 @@ const NeighbourContainer = () => {
   const [suburb, setSuburb] = useState("");
   const userFootprint = 120; // Update with your own data
   const suburbFootprint = 80; // Update with your own data
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${label} : ${payload[0].value}`}</p>
+          <p className="intro">This is data related to {label}</p>
+          <p className="desc">Anything you want can be displayed here.</p>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   const data = [
-    { name: "User", value: userFootprint },
-    { name: "Suburb Average", value: suburbFootprint },
+    { name: "User", footprint: userFootprint },
+    { name: "Suburb Average", footprint: suburbFootprint },
   ];
 
   const handleSuburbChange = (value) => {
@@ -37,24 +59,36 @@ const NeighbourContainer = () => {
         </Button>
       </div>
       <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            dataKey="value"
-            data={data}
-            fill="#8884d8"
-            labelLine={false}
-            label={({ name, percent }) =>
-              `${name}: ${(percent * 100).toFixed(0)}%`
-            }
-          >
-            <Cell fill="#0088FE" />
-            <Cell fill="#00C49F" />
-          </Pie>
-        </PieChart>
+        <BarChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="footprint" fill="#52e0a4">
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.name === "User" ? "#8884d8" : "#82ca9d"}
+              />
+            ))}
+          </Bar>
+        </BarChart>
       </ResponsiveContainer>
-      <div className="legend">
-        <span className="user-color" /> User
-        <span className="suburb-color" /> Suburb Average
+
+      <div className="result">
+        Your carbon footprint is{" "}
+        {userFootprint > suburbFootprint ? "higher" : "lower"} than the average
+        of {suburb}.
       </div>
     </div>
   );
