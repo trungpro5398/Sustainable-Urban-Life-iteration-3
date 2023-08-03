@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TabButton from "./TabButton";
 import FootprintContainer from "../Footprint/FootprintContainer";
+import NeighbourContainer from "../Neighbour/NeighbourContainer";
 import "./TabContainer.scss";
 
 const TabContainer = () => {
@@ -30,6 +31,8 @@ const TabContainer = () => {
         />
       </div>
       {activeTab === "Your Footprint" && <FootprintContainer />}
+      {activeTab === "Your Neighbour" && <NeighbourContainer />}
+      {/* Add similar condition for "Your Settings" when you have the component */}
     </div>
   );
 };

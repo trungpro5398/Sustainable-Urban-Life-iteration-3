@@ -1,0 +1,50 @@
+.neighbour-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+margin-top: 50px;
+margin-left: -6px;
+margin-right: -6px;
+  .input-area {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 40px;
+    .dragdown {
+      width: 448px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
+    .button{
+      width: 104px;
+flex-shrink: 0;
+border-radius: 10px;
+border: 1px solid #CCC;
+background: #C4F8E2;
+color: black;
+    }
+  }
+
+  .legend {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+
+    .user-color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: #0088fe;
+    }
+
+    .suburb-color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: #00c49f;
+    }
+  }
+}
