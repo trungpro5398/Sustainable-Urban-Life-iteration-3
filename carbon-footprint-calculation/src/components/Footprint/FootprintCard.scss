@@ -9,14 +9,14 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   margin-top: 30px;
-
   margin-bottom: 30px;
+  margin-left: 10px;
+
   &:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.1);
   }
 
   .fa-icon {
-    color: #00c49f;
     margin-bottom: 15px;
   }
 
@@ -25,4 +25,16 @@
     font-size: 24px;
     color: #2c3e50;
   }
+}
+
+.footprint-card.gas .fa-icon {
+    color: #ff0000;  /* Red color for gas */
+}
+
+.footprint-card.electricity .fa-icon {
+    color: #0000ff;  /* Blue color for electricity */
+}
+
+.footprint-card.co2 .fa-icon {
+    color: #00ff00;  /* Green color for CO2 */
 }
