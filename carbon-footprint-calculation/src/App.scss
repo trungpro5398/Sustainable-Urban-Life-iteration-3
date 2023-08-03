@@ -1,0 +1,23 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.outer-container {
+  width: 700px;
+  height: 875px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid #CCC;
+  background: #FFF;
+  margin-left: 17px;
+  display: flex;
+  justify-content: center;
+
+}

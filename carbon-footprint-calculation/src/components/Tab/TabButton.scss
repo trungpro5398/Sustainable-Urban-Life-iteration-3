@@ -1,0 +1,23 @@
+.tab-button {
+  color: #ccc;
+
+  background: #fff;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  width: 220px;
+
+  &.active {
+    // Style for active tab
+    // You might want to update the color, background, border etc. when the tab is active.
+    height: 55px;
+    border-radius: 20px;
+    border: 1px solid #c4f8e2;
+    background: #c4f8e2;
+    color: #000;
+  }
+  
+}
