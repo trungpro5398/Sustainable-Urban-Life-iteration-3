@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import FootprintCard from "./FootprintCard";
 import {
   BarChart,
@@ -12,18 +13,28 @@ import {
 import "./FootprintContainer.scss";
 
 const FootprintContainer = () => {
+  const { electricity, gas } = useSelector((state) => state.energy);
+  const electricityCoefficient = 0.9825946582890537;
+  const gasCoefficient = 0.018008133249378278;
+
+  const co2eElectricity = electricity * electricityCoefficient;
+  const co2eGas = gas * gasCoefficient;
+
   const data = [
-    { name: "Gas", Consumption: 1000 },
-    { name: "Electricity", Consumption: 1000 },
-    { name: "CO2", Consumption: 1000 },
+    { name: "Gas", Consumption: gas },
+    { name: "Electricity", Consumption: electricity },
+    { name: "CO2", Consumption: co2eElectricity + co2eGas },
   ];
 
   return (
     <div className="footprint-container">
       <div className="cards">
-        <FootprintCard type="Gas" value="1000 kWh" />
-        <FootprintCard type="Electricity" value="1000 kWh" />
-        <FootprintCard type="CO2" value="1000 kWh" />
+        <FootprintCard type="Gas" value={`${gas} kWh`} />
+        <FootprintCard type="Electricity" value={`${electricity} kWh`} />
+        <FootprintCard
+          type="CO2"
+          value={`${(co2eElectricity + co2eGas).toFixed(4)} kg CO2e`}
+        />
       </div>
       <BarChart width={500} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />

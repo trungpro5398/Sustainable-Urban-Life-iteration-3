@@ -1,44 +1,53 @@
 .energy-form {
-    width: 700px;
-    height: 412px;
-    background: #FFF;
-    box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+  width: 700px;
+  height: 412px;
+  background: #FFF;
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
 
-    border-radius: 20px;
-    padding: 9px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .question {
-    width: 434px;
-    color: #000;
-    font-family: 'Nunito', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    letter-spacing: -0.4px;
-    margin-top: 32px;
-    margin-bottom: 27px;
-  }
-  
-  .label {
-    align-self: flex-start;
-    margin-left: 24px;
-  }
-  .label-gas{
-    align-self: flex-start;
-    margin-left: 24px;
+.question {
+  color: #000;
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  text-align: center;
+}
 
-    margin-top: 20px;
-  }
-  .input {
-    
-    width: 639px;
-    height: 34px;
-    border: 1px solid #CCC;
-    border-radius: 10px;
-    margin-top: 27px;
-    
-  }
-  
+.label, .label-gas {
+  align-self: flex-start;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.input {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #CCC;
+  border-radius: 10px;
+  padding: 0 15px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.calculate-button {
+  width: 150px;
+  height: 45px;
+  background-color: #4CAF50; 
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 15px 2px;
+  cursor: pointer;
+}
