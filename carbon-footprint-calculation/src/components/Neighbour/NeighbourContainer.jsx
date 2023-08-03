@@ -11,12 +11,23 @@ import {
 } from "recharts";
 import { Button, Select } from "antd";
 import "./NeighbourContainer.scss";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
+// Add a function to calculate the user's carbon footprint
+const calculateCarbonFootprint = (electricity, gas) => {
+  const electricityCoefficient = 0.9825946582890537;
+  const gasCoefficient = 0.018008133249378278;
+  const co2eElectricity = electricity * electricityCoefficient;
+  const co2eGas = gas * gasCoefficient;
+  const total = (co2eElectricity + co2eGas).toFixed(4);
+  return total;
+};
 
 const NeighbourContainer = () => {
   const [suburb, setSuburb] = useState("");
-  const userFootprint = 120; // Update with your own data
+  const { electricity, gas } = useSelector((state) => state.energy);
+  const userFootprint = calculateCarbonFootprint(electricity, gas);
   const suburbFootprint = 80; // Update with your own data
   const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
