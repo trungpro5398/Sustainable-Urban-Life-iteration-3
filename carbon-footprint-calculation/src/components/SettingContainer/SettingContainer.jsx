@@ -26,14 +26,7 @@ const SettingsContainer = () => {
             onChange={(e) => setGasPrice(e.target.value)}
           />
         </label>
-        <label>
-          Emission Factor:
-          <input
-            type="number"
-            value={emissionFactor}
-            onChange={(e) => setEmissionFactor(e.target.value)}
-          />
-        </label>
+
         <button type="submit" className="settings-button">
           Apply
         </button>
