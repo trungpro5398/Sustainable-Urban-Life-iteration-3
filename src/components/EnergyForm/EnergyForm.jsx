@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import {
@@ -21,7 +21,14 @@ const EnergyForm = () => {
       dispatch(setActiveTab("Your Neighbour"));
     }
   };
+  const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    fetch("https://carbon-footprint-calculator-backend.onrender.com/api/hello")
+      .then((response) => response.json())
+      .then((data) => setMessage(data.msg));
+  }, []);
+  console.log(message);
   return (
     <div className="energy-form">
       <h2 className="question">How much energy do you consume in your home?</h2>
@@ -38,6 +45,11 @@ const EnergyForm = () => {
       <Button className="calculate-button" onClick={handleCalculate}>
         Calculate
       </Button>
+      <div className="App">
+        <header className="App-header">
+          <p>{message}</p>
+        </header>
+      </div>
     </div>
   );
 };
