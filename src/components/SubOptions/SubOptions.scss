@@ -1,0 +1,39 @@
+// Inside SubOptions.scss
+
+.sub-options-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0;
+  
+    .option-card {
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      padding: 2rem;
+      width: 27%;
+      text-align: center;
+      transition: transform 0.2s;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+  
+      h3 {
+        margin-top: 0;
+      }
+  
+      button {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 0.8rem 1.5rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+  
+        &:hover {
+          background-color: #005994;
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,12 @@
+.HomePage {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    // Spacing between the sections
+    & > *:not(:last-child) {
+      margin-bottom: 40px;
+    }
+  
+  
+
+  }
+  

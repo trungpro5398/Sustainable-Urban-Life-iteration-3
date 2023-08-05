@@ -4,7 +4,7 @@ import "./Header.scss";
 const Header = () => {
   return (
     <div className="header">
-      <h1 className="title">Carbon Footprint Calculation</h1>
+      <h1 className="title">Sustainable-Urban-Life</h1>
     </div>
   );
 };

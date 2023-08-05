@@ -1,0 +1,45 @@
+.carousel-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e9ecef;
+  padding: 20px;
+  text-align: center;
+  img {
+    width: 80%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  p {
+    font-size: 18px;
+    color: #555;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Adjust the carousel container */
+.carousel {
+  max-width: 1440px; // This can be any value you want
+  margin: 0 auto;
+
+  .carousel.carousel-slider {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,91 @@
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(400%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes popInFromRight {
+    0% {
+        transform: translateX(400%) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(-10%) scale(1.05);
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.info-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .block {
+      display: flex;
+      flex: 1 0 calc(50% - 10px); // Half width minus half of the gap
+      animation: slideInFromLeft 4s ease-out; // Increased duration
+      
+      &.left {
+        flex-direction: row;
+        .text-section {
+          order: 1;
+          animation-name: slideInFromLeft;
+          animation-duration: 4s; // Increased duration
+        }
+        .illustration {
+          order: 2;
+          animation-name: popInFromRight;
+          animation-duration: 4s; // Increased duration
+        }
+      }
+
+      &.right {
+        flex-direction: row-reverse;
+        .text-section {
+          order: 2;
+          animation-name: popInFromRight;
+          animation-duration: 4s; // Increased duration
+        }
+        .illustration {
+          order: 1;
+          animation-name: slideInFromRight; // Changed animation
+          animation-duration: 4s; // Increased duration
+        }
+      }
+    }
+
+    .text-section {
+      flex: 50%;
+      padding: 1rem;
+    }
+
+    .illustration {
+      flex: 50%;
+      max-width: 100%;
+      height: auto;
+    }
+
+    img {
+        width: 40%;
+        height: auto;
+    }
+}

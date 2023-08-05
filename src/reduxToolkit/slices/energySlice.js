@@ -6,6 +6,10 @@ export const energySlice = createSlice({
     electricity: "",
     gas: "",
     activeTab: false,
+    settings: {
+      electricityPrice: 1,
+      gasPrice: 1,
+    },
   },
   reducers: {
     updateEnergy: (state, action) => {
@@ -15,10 +19,15 @@ export const energySlice = createSlice({
     setActiveTab: (state, action) => {
       state.activeTab = action.payload;
     },
+    updateSettings: (state, action) => {
+      state.settings.electricityPrice = action.payload.electricityPrice;
+      state.settings.gasPrice = action.payload.gasPrice;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateEnergy, setActiveTab } = energySlice.actions;
+export const { updateEnergy, setActiveTab, updateSettings } =
+  energySlice.actions;
 
 export default energySlice.reducer;
