@@ -18,7 +18,12 @@ const TabContainer = () => {
         <TabButton
           active={activeTab === "Charts"}
           onClick={() => setActiveTab("Charts")}
-          label="Charts"
+          label="Suburb’s solar"
+        />
+        <TabButton
+          active={activeTab === "Quotes"}
+          onClick={() => setActiveTab("Quotes")}
+          label="Quotes"
         />
       </div>
       {activeTab === "User Input Results" && <SolarAnalysisContainer />}

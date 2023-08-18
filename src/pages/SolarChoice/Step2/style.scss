@@ -1,0 +1,165 @@
+.info-step{
+  background-image: url('../../../assets/images/solar-choice-background-2.png'); 
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    color: #112A46;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+    font-size: 50px;
+  }
+  .info-step-container {
+ 
+ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; 
+    box-sizing: border-box; 
+    
+   
+  
+    label, p {
+      color: #112A46;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 40px;
+    }
+  
+    .ant-input {
+      margin-bottom: 20px;
+      width: 400px;
+      height: 50px;
+      font-size: 20px;
+    }
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    
+      .ant-spin {
+        margin-bottom: 10px;
+      }
+    
+      .ant-spin-text {
+        color: #FFFDE5; // or any other color
+        font-weight: bold;
+      }
+    }
+    
+    .gender-options {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+    
+        .gender-option {
+          position: relative;
+          width: 120px;
+          height: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          background-color: rgba(227, 131, 88, 0.7); // Using #E38358 with opacity
+          border: 2px solid #D75537;
+          border-radius: 10px;
+          transition: transform 0.2s;
+          
+          &:hover {
+            transform: scale(1.1);
+            background-color: rgba(227, 131, 88, 0.9);
+          }
+    
+          &.ant-radio-button-wrapper-checked {
+            background-color: rgba(215, 85, 55, 0.8); // Using #D75537 with opacity
+    
+            .choice-tick {
+              visibility: visible;
+            }
+          }
+    
+          p {
+            z-index: 1;
+            color: #FFFDE5; // Light cream color for text
+            font-size: 25px;
+          }
+    
+          .choice-circle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FFFDE5; // Cream color for the background of choice circle
+            border: 1px solid #D75537; // Using a darker color for the border
+    
+            .choice-tick {
+              opacity: 1;
+              font-size: large;
+              color: rgb(3, 108, 3);
+              font-weight: bold;
+            }
+          }
+        }
+      }
+        // Define common styles for both next and previous buttons
+.button-common {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  top: 50%;
+  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  border: 2px solid #bbb7b7;
+  color: #4CAF50;
+  padding: 10px 20px;
+  border-radius: 35px;
+  box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+  transition: all 0.3s ease-out;
+  opacity: 0.8;
+  font-size: 30px;
+
+  &:hover {
+    background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+
+
+    .anticon {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.next-button {
+  @extend .button-common; // Use the common styles
+  right: 0px;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.previous-button {
+  @extend .button-common; // Use the common styles
+  left: 70px;
+  transform: translateX(-50%) translateY(-50%);
+}
+}
+}

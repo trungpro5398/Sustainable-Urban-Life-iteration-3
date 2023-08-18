@@ -10,6 +10,7 @@ import { store } from "./store";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import SolarChoice from "./pages/SolarChoice/SolarChoice";
 
 const App = () => {
   const [isBlurred, setIsBlurred] = useState(false);
@@ -53,7 +54,7 @@ const App = () => {
           <div className={`content ${isBlurred ? "blurred" : ""}`}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/calculation" element={<Calculation />} />
+              <Route path="/solar-choice" element={<SolarChoice />} />
               <Route path="/about-us" element={<AboutUs />} />
             </Routes>
           </div>

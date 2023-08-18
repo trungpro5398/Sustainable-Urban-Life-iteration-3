@@ -7,8 +7,10 @@ import { faSun } from "@fortawesome/free-solid-svg-icons";
 import { updateField } from "../../../reduxToolkit/slices/solarFormSlice";
 
 import "./style.scss";
+// Constants
+const COST_PER_KW = 1000; // This is just an example. Adjust this to the real cost per kW.
 
-function SolarSystemDetails() {
+const SolarSystemDetails = () => {
   const dispatch = useDispatch();
   const solarSystemDetails = useSelector(
     (state) => state.solarForm.solarSystemDetails
@@ -16,6 +18,18 @@ function SolarSystemDetails() {
 
   const handleValueChange = (field, value) => {
     dispatch(updateField({ section: "solarSystemDetails", field, value }));
+
+    // Update the system cost if system size changes
+    if (field === "systemSize") {
+      const newCost = value * COST_PER_KW;
+      dispatch(
+        updateField({
+          section: "solarSystemDetails",
+          field: "systemCost",
+          value: newCost,
+        })
+      );
+    }
   };
 
   return (
@@ -49,7 +63,8 @@ function SolarSystemDetails() {
         <Tooltip title="This includes your government solar rebate, GST, and installation costs. You can customize this in advanced options.">
           <Input
             value={solarSystemDetails.systemCost}
-            onChange={(e) => handleValueChange("systemCost", e.target.value)}
+            // Make the input readonly since it's computed
+            readOnly
             placeholder="Cost of Solar Panels"
             prefix="$"
           />
@@ -69,6 +84,6 @@ function SolarSystemDetails() {
       </div>
     </div>
   );
-}
+};
 
 export default SolarSystemDetails;

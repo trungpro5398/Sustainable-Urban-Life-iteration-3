@@ -1,0 +1,81 @@
+.first-step-container {
+  background-image: url('../../../assets/images/solar-choice-background-1.png'); 
+  background-size: cover;
+  background-position: center;
+  height: 100vh;  // Makes the container's height equivalent to the height of the viewport
+  width: 100vw;  // Makes the container's width equivalent to the width of the viewport
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; // To ensure animations don't overflow outside the container
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  h1 {
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+  .start-button {
+    background-color: #4CAF50; // Green color
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    
+    &:hover {
+      background-color: #45a049; // Darker green
+      transform: scale(1.05); // Button grows a bit larger
+    }
+  }
+
+  .moving-balloon {
+    position: absolute;
+    top: 5%;
+    left: -5%; // Start outside of the screen
+    animation: moveBalloon 20s linear infinite; // 10 seconds linear animation
+    background-image: url('../../../assets/images/hot-air-balloon.png'); 
+    width: 130px;
+    height: 130px;
+    background-size: cover;
+  background-position: center;
+    
+  }
+
+  @keyframes moveBalloon {
+    100% {
+      transform: translateX(2000%); // Move to the other side
+    }
+  }
+  .next-button {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    right: 20px;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%); // Center the button both horizontally and vertically
+    background: linear-gradient(to bottom, #ffffff, #f2f2f2); // Subtle gradient from white to light gray
+    border: 2px solid #bbb7b7; // Dark border for distinction
+    color: #4CAF50; // Green color for the text/icon to maintain the theme
+    padding: 10px 20px; // Padding for better appearance
+    border-radius: 35px; // Rounded edges
+    box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1); // Soft shadow for elevation
+    transition: all 0.3s ease-out; // Smooth transition
+    opacity: 0.8; // Slightly transparent to indicate that it's clickable
+    font-size: 30px;
+    &:hover {
+        background: linear-gradient(to bottom, #f2f2f2, #ffffff); // Switch gradient direction on hover
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); // More pronounced shadow on hover
+        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+        .anticon {
+          transform: scale(1.2); // Enlarges the icon slightly on hover for a fun interactive effect
+      }
+    }
+
+  
+}
+
+}

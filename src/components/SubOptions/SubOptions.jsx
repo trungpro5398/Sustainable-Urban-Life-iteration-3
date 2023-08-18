@@ -2,8 +2,15 @@
 
 import React from "react";
 import "./SubOptions.scss";
+import { useNavigate } from "react-router-dom";
 
 const SubOptions = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/calculation");
+  };
+
   return (
     <div className="sub-options-container">
       <div className="option-card">
@@ -15,7 +22,7 @@ const SubOptions = () => {
       <div className="option-card">
         <h3>Solar Choice</h3>
         <p>Explore the various solar panel choices suitable for your needs.</p>
-        <button>Explore</button>
+        <button onClick={handleButtonClick}>Explore</button>
       </div>
 
       <div className="option-card">

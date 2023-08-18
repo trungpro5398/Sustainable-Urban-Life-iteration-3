@@ -18,7 +18,7 @@ const HeroSection = () => {
         <h1>Welcome to Sustainable Urban Life</h1>
         <p>Learn about your carbon impact and ways to reduce it.</p>
         <button className="cta-button" onClick={handleButtonClick}>
-          Calculation
+          Solar Choice
         </button>
       </div>
     </section>

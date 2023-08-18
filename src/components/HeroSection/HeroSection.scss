@@ -1,7 +1,7 @@
 .hero {
     height: 80vh;
     width: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../../public/assets/images/hero-bg.png") center/cover no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../assets/images/hero-bg.png") center/cover no-repeat;
     .hero-overlay {
       display: flex;
       flex-direction: column;
@@ -20,13 +20,14 @@
       }
   
       .cta-button {
-        padding: 10px 20px;
+        padding: 20px 40px;
         background-color: #66bb6a;
         border: none;
+        border-radius: 15px;
         color: #fff;
         cursor: pointer;
         transition: background-color 0.3s;
-  
+        font-size: 30px;
         &:hover {
           background-color: #558b4f;
         }

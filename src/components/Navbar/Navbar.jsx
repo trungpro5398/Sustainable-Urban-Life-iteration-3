@@ -19,7 +19,7 @@ const Navbar = ({ isHomePage }) => {
           Home
         </Link>
         <Link to="/calculation" className="nav-item">
-          Calculation
+          Solar Choice
         </Link>
         <Link to="/about-us" className="nav-item">
           About Us
