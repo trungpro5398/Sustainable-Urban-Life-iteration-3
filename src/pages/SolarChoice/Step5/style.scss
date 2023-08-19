@@ -1,0 +1,250 @@
+.location-step {
+  background-image: url("../../../assets/images/solar-choice-background-5.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    color: #112a46;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+    font-size: 50px;
+  }
+  .location-step-container {
+    margin-top: -2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .ant-select {
+      width: 100%;
+      margin: 20px 0;
+      align-self: start;
+      left: 5%;
+      position: relative;
+      // Main dropdown box
+      .ant-select-selector {
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(135deg, #fdf6e7 0%, #ebb33a 100%);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          background: linear-gradient(135deg, #90c9e8 0%, #a9dff7 100%);
+        }
+
+        // Text inside the dropdown
+        .ant-select-selection-item,
+        .ant-select-selection-placeholder {
+          font-size: 20px;
+          color: #2b3d63;
+          font-weight: bold;
+        }
+      }
+
+      // Dropdown arrow icon
+      .ant-select-arrow {
+        color: #2b3d63;
+        font-size: 1.2em;
+      }
+
+      // Focus state
+      &:focus-within {
+        .ant-select-selector {
+          box-shadow: 0 0 0 2px rgba(105, 159, 232, 0.7);
+        }
+      }
+    }
+
+    label,
+    p {
+      color: #112a46;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 40px;
+    }
+
+    .ant-input {
+      margin-bottom: 20px;
+      width: 400px;
+      height: 50px;
+      font-size: 20px;
+    }
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+
+      .ant-spin {
+        margin-bottom: 10px;
+      }
+
+      .ant-spin-text {
+        color: #fffde5; // or any other color
+        font-weight: bold;
+      }
+    }
+
+    .region-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 20px;
+      width: 700px;
+
+      &:nth-child(3n) {
+        margin-right: auto; // This will push any remaining items to the next row after every third item
+      }
+      .region-option {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        background-color: rgba(#51abbf, 0.5); // Using #E38358 with opacity
+        border: 2px solid #37a9c2;
+        border-radius: 10px;
+        transition: transform 0.2s;
+        margin-bottom: 40px;
+        .region-image {
+          width: 100%; // occupy the full width of the parent
+          height: 100%; // occupy the full height of the parent
+          background-size: cover; // cover the entire div with the image
+          background-position: center; // center the background image
+
+          position: absolute;
+          top: 0;
+          left: 0;
+          &.NT {
+            background-image: url("../../../assets/images/icon-aus/north.png");
+          }
+
+          &.SA {
+            background-image: url("../../../assets/images/icon-aus/south.png");
+          }
+
+          &.WA {
+            background-image: url("../../../assets/images/icon-aus/western.png");
+          }
+
+          &.NSW {
+            background-image: url("../../../assets/images/icon-aus/nsw.png");
+          }
+
+          &.QLD {
+            background-image: url("../../../assets/images/icon-aus/queen.png");
+          }
+
+          &.TAS {
+            background-image: url("../../../assets/images/icon-aus/tas.png");
+          }
+
+          &.VIC {
+            background-image: url("../../../assets/images/icon-aus/vic.png");
+          }
+        }
+        &:hover {
+          transform: scale(1.1);
+          background-color: rgba(#29a8c5, 0.9);
+        }
+
+        &.ant-radio-button-wrapper-checked {
+          background-color: rgba(#0299ba, 0.9);
+
+          .choice-tick {
+            visibility: visible;
+          }
+        }
+
+        p {
+          z-index: 1;
+          color: #112a46;
+          font-size: 25px;
+          position: absolute;
+          bottom: -30%;
+          left: 38%;
+        }
+
+        .choice-circle {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #fffde5; // Cream color for the background of choice circle
+          border: 1px solid #d75537; // Using a darker color for the border
+
+          .choice-tick {
+            opacity: 1;
+            font-size: large;
+            color: rgb(3, 108, 3);
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    // Define common styles for both next and previous buttons
+    .button-common {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      top: 50%;
+      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+      border: 2px solid #bbb7b7;
+      color: #4caf50;
+      padding: 10px 20px;
+      border-radius: 35px;
+      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      transition: all 0.3s ease-out;
+      opacity: 0.8;
+      font-size: 30px;
+
+      &:hover {
+        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+
+        .anticon {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .next-button {
+      @extend .button-common; // Use the common styles
+      right: 0px;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    .previous-button {
+      @extend .button-common; // Use the common styles
+      left: 70px;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+}

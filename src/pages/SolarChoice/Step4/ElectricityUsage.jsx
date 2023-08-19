@@ -15,7 +15,7 @@ function ElectricityUsage({ nextStep, previousStep }) {
       if (callback && typeof callback === "function") {
         callback();
       }
-    }, 2000); // Wait for 2 seconds before invoking the callback
+    }, 1); // Wait for 2 seconds before invoking the callback
   };
   return (
     <div className="electricity-usage-step">
