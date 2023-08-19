@@ -1,0 +1,105 @@
+.postcode-info {
+    background-image: url('../../../assets/images/solar-choice-background-6.png'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+        color: #333;
+        border-bottom: 2px solid #0088FE;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: #555;
+        line-height: 1.5;
+    }
+
+    .postcode-info-container{
+      margin-top: -2%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      .charts {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+
+        .pie-container {
+            text-align: center;
+            p {
+                margin-top: 10px;
+            }
+        }
+    }
+
+    .sun-info,
+    .system-efficiency,
+    .solar-choice-info,
+    .installers-info {
+        margin-top: 30px;
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        padding: 20px 30px;
+        border-radius: 8px;
+
+        p {
+            color: #2d1c02;
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 20px;
+            
+        }
+    }
+
+    .button-common {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        top: 50%;
+        background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+        border: 2px solid #bbb7b7;
+        color: #4caf50;
+        padding: 10px 20px;
+        border-radius: 35px;
+        box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+        transition: all 0.3s ease-out;
+        opacity: 0.8;
+        font-size: 30px;
+  
+        &:hover {
+          background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+          box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+          transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+  
+          .anticon {
+            transform: scale(1.2);
+          }
+        }
+      }
+  
+      .next-button {
+        @extend .button-common; // Use the common styles
+        right: 0px;
+        transform: translateX(-50%) translateY(-50%);
+      }
+  
+      .previous-button {
+        @extend .button-common; // Use the common styles
+        left: 70px;
+        transform: translateX(-50%) translateY(-50%);
+      }
+    }
+}

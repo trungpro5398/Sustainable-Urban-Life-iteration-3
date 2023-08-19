@@ -1,19 +1,32 @@
-.electricity-usage-step {
-    background-image: url('../../../assets/images/solar-choice-background-4.png');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+.electricity-usage{
+  background-image: url('../../../assets/images/solar-choice-background-4.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .step-title {
+    color: #112A46;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    font-size: 50px;
+  }
+  .electricity-usage-step {
+    margin-top: -2%;
     display: flex;
     flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100vw;
     align-items: center;
     justify-content: center;
-  
     .step-background {
       position: absolute;
       top: 0;
@@ -24,16 +37,13 @@
       z-index: -1;
     }
   
-    .step-title {
-      color: #112A46;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-      font-size: 50px;
-    }
+ 
   
     .usage-instructions p {
       color: #112A46;
       font-size: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 90px;
+
     }
   
     .usage-slider {
@@ -43,7 +53,7 @@
         display: flex;
         flex-direction: column;
         align-items: center; // Ensures the content within the slider container is centered
-      
+        
         .range-labels {
           position: absolute  ;
           display: flex;
@@ -61,40 +71,69 @@
           }
         }
       
-        .custom-slider {
+        .electricity-usage-slider {
           width: 23%; 
           position: relative;
           height: 24px;
           border-radius: 12px;
-          background: linear-gradient(to right, #485163, #829196); 
-          opacity: 0.8;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Adds a soft shadow below the slider for a lifted appearance
-          padding: 1px; // Provides a small padding to create a border effect using the background gradient
+          background: linear-gradient(to right, #36D1DC, #5B86E5); // A soothing gradient from teal to blue
+          opacity: 0.9;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); // Slightly increased shadow opacity for depth
+          padding: 1px;
       
           & .ant-slider-track {
-              background: linear-gradient(to right, #E38358, #D75537); 
-              height: 100%; // Makes the track take the full height of the custom-slider
-              border-radius: 12px; // Rounded corners for the track
+              background: linear-gradient(to right, #FFB6B9, #FF5864); // Warm gradient from soft pink to coral red
+              height: 100%;
+              border-radius: 12px;
           }
       
           & .ant-slider-handle {
-              height: 24px;
-              width: 24px;
+              height: 28px; // Slightly increased for better interaction
+              width: 28px;
               background-color: #FFFDE5;
               border: 2px solid #D75537;
               border-radius: 50%;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-              transform: translateY(-50%); // Vertically centers the handle on the track
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); // A bit more shadow for a 'lifted' feel
+              transform: translateY(-50%);
           }
       }
-      
-      
-        .slider-value-display {
-          position: absolute;
-          top: 60px; // Adjusts the position so it's above the slider
-          color: #1e1b01;
-          font-size: 30px;
+      .electricity-usage-size {
+        position: absolute;
+        margin-top: -3%;
+        font-size: 32px; // Slightly increased for emphasis
+        color: #112A46; // You can change this based on your theme
+
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  
+    }
+      .electricity-usage-input-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        
+         
+          .electricity-usage-unit {
+            position: absolute;
+            margin-top: 10%;
+            margin-left: 8%;  // Slightly increased for better spacing
+            font-size: 32px; // Slightly increased for emphasis
+            color: #112A46; // You can change this based on your theme
+
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  
         }
+          .electricity-usage-input {
+              position: absolute;
+              top: 110px;
+              color: #28364A; // Dark blue-gray for consistency
+              font-size: 26px; // A bit larger for clarity
+              width: 5%; // A little increase in width for visual balance
+              background: #f7f9fc; // A very soft blue background
+              border: 1px solid #dce1e8; // A gentle border
+              border-radius: 4px; // Slight rounding for softness
+              padding: 5px 10px; // Padding for better ergonomics
+          }
+      }
       }
       
   
@@ -153,3 +192,4 @@
 
   }
   
+}

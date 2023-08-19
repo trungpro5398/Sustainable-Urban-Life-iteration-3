@@ -8,7 +8,7 @@ const SubOptions = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate("/calculation");
+    navigate("/solar-choice");
   };
 
   return (
