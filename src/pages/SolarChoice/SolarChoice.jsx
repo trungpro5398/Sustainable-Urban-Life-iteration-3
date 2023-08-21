@@ -9,7 +9,7 @@ import BatteryChoice from "./Step7/BatteryChoice";
 import Recommendation from "./Step8/Recommendation";
 
 function SolarChoice() {
-  const [step, setStep] = useState(8);
+  const [step, setStep] = useState(1);
 
   const handleNextStep = () => {
     setStep((prevStep) => prevStep + 1);

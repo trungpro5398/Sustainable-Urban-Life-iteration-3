@@ -18,7 +18,7 @@ const Navbar = ({ isHomePage }) => {
         <Link to="/" className="nav-item">
           Home
         </Link>
-        <Link to="/calculation" className="nav-item">
+        <Link to="/solar-choice" className="nav-item">
           Solar Choice
         </Link>
         <Link to="/about-us" className="nav-item">

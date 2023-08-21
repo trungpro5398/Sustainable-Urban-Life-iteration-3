@@ -12,23 +12,41 @@ const SubOptions = () => {
   };
 
   return (
-    <div className="sub-options-container">
-      <div className="option-card">
-        <h3>Solar Energy Benefit</h3>
-        <p>Discover the advantages of solar energy for your home.</p>
-        <button>Learn More</button>
+    <div className="outer-wrapper-sub-options" id="sub-options">
+      <div className="intro-section">
+        <h1>Unlock the Power of Solar!</h1>
+        <p>
+          From understanding benefits to choosing the right solution, we've got
+          you covered.
+        </p>
       </div>
 
-      <div className="option-card">
-        <h3>Solar Choice</h3>
-        <p>Explore the various solar panel choices suitable for your needs.</p>
-        <button onClick={handleButtonClick}>Explore</button>
-      </div>
+      <div className="sub-options-container">
+        <div className="option-card">
+          <div className="option-card-img-1"></div>
 
-      <div className="option-card">
-        <h3>Government support program</h3>
-        <p>Learn about the government incentives for solar installation.</p>
-        <button>Get Info</button>
+          <h3>Solar Energy Benefit</h3>
+          <p>Discover the advantages of solar energy for your home.</p>
+          <button>Learn More</button>
+        </div>
+
+        <div className="option-card">
+          <div className="option-card-img-2"></div>
+
+          <h3>Solar Choice</h3>
+          <p>
+            Explore the various solar panel choices suitable for your needs.
+          </p>
+          <button onClick={handleButtonClick}>Explore</button>
+        </div>
+
+        <div className="option-card">
+          <div className="option-card-img-3"></div>
+
+          <h3>Government support program</h3>
+          <p>Learn about the government incentives for solar installation.</p>
+          <button>Get Info</button>
+        </div>
       </div>
     </div>
   );

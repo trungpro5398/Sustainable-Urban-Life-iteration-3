@@ -1,91 +1,122 @@
-@keyframes slideInFromLeft {
+@keyframes iconRotate {
     from {
-        transform: translateX(-100%);
-        opacity: 0;
+        transform: rotate(0deg);
     }
     to {
-        transform: translateX(0);
-        opacity: 1;
+        transform: rotate(15deg);
     }
 }
-
-@keyframes slideInFromRight {
-    from {
-        transform: translateX(400%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes popInFromRight {
-    0% {
-        transform: translateX(400%) scale(0.5);
-        opacity: 0;
-    }
-    50% {
-        transform: translateX(-10%) scale(1.05);
-    }
-    100% {
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-}
-
-.info-blocks {
+.outer-wrapper {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-
-    .block {
-      display: flex;
-      flex: 1 0 calc(50% - 10px); // Half width minus half of the gap
-      animation: slideInFromLeft 4s ease-out; // Increased duration
-      
-      &.left {
-        flex-direction: row;
-        .text-section {
-          order: 1;
-          animation-name: slideInFromLeft;
-          animation-duration: 4s; // Increased duration
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;   /* This will take the full width of the viewport */
+    overflow: hidden;  /* To prevent any overflow */
+    .headline-container {
+        text-align: center;
+        margin-bottom: 40px;
+    
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
         }
-        .illustration {
-          order: 2;
-          animation-name: popInFromRight;
-          animation-duration: 4s; // Increased duration
+    
+        p {
+            font-size: 1.2em;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto; // To center the text if it's less than 800px wide
+            line-height: 1.5;
         }
-      }
-
-      &.right {
-        flex-direction: row-reverse;
-        .text-section {
-          order: 2;
-          animation-name: popInFromRight;
-          animation-duration: 4s; // Increased duration
-        }
-        .illustration {
-          order: 1;
-          animation-name: slideInFromRight; // Changed animation
-          animation-duration: 4s; // Increased duration
-        }
-      }
     }
-
-    .text-section {
-      flex: 50%;
-      padding: 1rem;
-    }
-
-    .illustration {
-      flex: 50%;
-      max-width: 100%;
-      height: auto;
-    }
-
-    img {
+    
+    .info-blocks {
+        display: flex;
         width: 40%;
-        height: auto;
+        .reasons-container {
+            flex: 1;
+            margin-right: 20px;
+            width: 50%;
+
+        }
+    
+        .reason {
+            display: flex;
+            align-items: center;
+            border: 1px solid transparent;
+            padding: 15px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.05);
+            
+            &.active, &:hover, &:focus {
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                border-color: #F76B1C;
+                transform: scale(1.05);
+            }
+    
+            .fa-icon {
+                flex: 0 0 auto;
+                margin-right: 30px;
+                transition: transform 0.3s ease;
+                &:hover {
+                    animation: iconRotate 0.3s ease forwards;
+                }
+            }
+    
+            .text-section {
+                flex: 1;
+                transition: color 0.3s ease;
+    
+                h2 {
+                    margin-bottom: 10px;
+                    transition: text-shadow 0.3s ease;
+    
+                    &:hover {
+                        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                    }
+                }
+            }
+        }
+    
+        .illustration-container {
+            flex: 2;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            background-image: url('../../assets/images/info-blocks/reason-1.png');
+            
+            &.reason1{
+                background-image: url('../../assets/images/info-blocks/reason-1.png');
+            }
+            &.reason2{
+                background-image: url('../../assets/images/info-blocks/reason-2.png');
+            }
+            &.reason3{
+                background-image: url('../../assets/images/info-blocks/reason-3.png');
+                
+            }
+            width: 100%; // occupy the full width of the parent
+            background-size: cover; // cover the entire div with the image
+            background-position: center; // center the background image
+            
+            &:hover {
+                transform: scale(1.05);
+
+            }
+            
+            
+            
+        }
     }
+    
 }
+

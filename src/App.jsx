@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 import "./App.scss";
 
 import Home from "./pages/HomePage/Home"; // assuming you've created a Home.js inside pages directory
-import Calculation from "./pages/CalculationPage/Calculation"; // and similarly for other pages
 import AboutUs from "./pages/AboutUsPage/AboutUs";
 import { Provider } from "react-redux";
 import { store } from "./store";

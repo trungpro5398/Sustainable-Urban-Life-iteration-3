@@ -15,7 +15,7 @@ const Home = () => {
     <div className="HomePage">
       <HeroSection />
       <SubOptions />
-      <Carousel />
+      {/* <Carousel /> */}
       <InfoBlocks />
       <Testimonials />
       <Footer />

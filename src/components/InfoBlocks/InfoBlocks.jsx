@@ -1,61 +1,72 @@
-import React from "react";
-import "./InfoBlocks.scss";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSun,
+  faCity,
+  faBalanceScale,
+} from "@fortawesome/free-solid-svg-icons";
 
+import "./InfoBlocks.scss";
 const InfoBlocks = () => {
-  const blocksData = [
+  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const reasonsData = [
     {
-      title: "Did You Know?",
-      content: "Transportation is a major source of carbon emissions.",
-      illustration: "assets/images/slider1.png",
-    },
-    {
-      title: "Trees & Carbon",
+      title: "Renewable Energy",
+      icon: faSun,
       content:
-        "For every tree cut down, approximately 48 pounds of carbon dioxide is released into the atmosphere.",
-      illustration: "assets/images/slider1.png",
+        "We utilize cutting-edge technologies to harness renewable sources...",
+      illustration: "reason1",
     },
     {
-      title: "Trees & Carbon",
-      content:
-        "For every tree cut down, approximately 48 pounds of carbon dioxide is released into the atmosphere.",
-      illustration: "assets/images/slider1.png",
+      title: "Urban Planning",
+      icon: faCity,
+      content: "Our platform offers advanced solutions...",
+      illustration: "reason2",
     },
     {
-      title: "Trees & Carbon",
-      content:
-        "For every tree cut down, approximately 48 pounds of carbon dioxide is released into the atmosphere.",
-      illustration: "assets/images/slider1.png",
+      title: "Governance and Policy",
+      icon: faBalanceScale,
+      content: "Through our robust framework...",
+      illustration: "reason3",
     },
-    {
-      title: "Trees & Carbon",
-      content:
-        "For every tree cut down, approximately 48 pounds of carbon dioxide is released into the atmosphere.",
-      illustration: "assets/images/slider1.png",
-    },
-    {
-      title: "Trees & Carbon",
-      content:
-        "For every tree cut down, approximately 48 pounds of carbon dioxide is released into the atmosphere.",
-      illustration: "assets/images/slider1.png",
-    },
-    // ... Add the rest of the blocks here
   ];
 
   return (
-    <div className="info-blocks">
-      {blocksData.map((block, idx) => (
-        <div className={`block ${idx % 2 === 0 ? "left" : "right"}`} key={idx}>
-          <div className="text-section">
-            <h2>{block.title}</h2>
-            <p>{block.content}</p>
-          </div>
-          <img
-            src={block.illustration}
-            alt={block.title}
-            className="illustration"
-          />
+    <div className="outer-wrapper">
+      <div className="headline-container">
+        <h1>Shaping the Future, Sustainably.</h1>
+        <p>
+          Discover unparalleled solutions that blend innovation with
+          sustainability, ensuring a brighter tomorrow.
+        </p>
+      </div>
+      <div className="info-blocks">
+        <div className="reasons-container">
+          {reasonsData.map((reason, idx) => (
+            <div
+              className={`reason ${selectedIndex === idx ? "active" : ""}`}
+              key={idx}
+              onClick={() => setSelectedIndex(idx)}
+            >
+              <FontAwesomeIcon
+                icon={reason.icon}
+                size="2x"
+                className="fa-icon"
+              />
+              <div className="text-section">
+                <h2>{reason.title}</h2>
+                <p>{reason.content}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+
+        <div className={`illustration-container ${selectedImage}`}>
+          {/* No need for the img tag anymore */}
+        </div>
+      </div>
     </div>
   );
 };

@@ -7,7 +7,10 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate("/solar-choice");
+    const subOptions = document.getElementById("sub-options");
+    if (subOptions) {
+      subOptions.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -18,7 +21,7 @@ const HeroSection = () => {
         <h1>Welcome to Sustainable Urban Life</h1>
         <p>Learn about your carbon impact and ways to reduce it.</p>
         <button className="cta-button" onClick={handleButtonClick}>
-          Solar Choice
+          Learn More
         </button>
       </div>
     </section>
