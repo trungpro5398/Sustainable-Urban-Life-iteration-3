@@ -54,10 +54,20 @@
             border-radius: 15px;
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.05);
             
-            &.active, &:hover, &:focus {
+            &.active {
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-                border-color: #F76B1C;
+                border-left: 4px groove #F76B1C; // Only set the left border
                 transform: scale(1.05);
+                
+                // Reset other borders to none
+                border-top: none;
+                border-right: none;
+                border-bottom: none;
+            }
+            &:hover, &:focus {
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                transform: scale(1.05);
+                
             }
     
             .fa-icon {
