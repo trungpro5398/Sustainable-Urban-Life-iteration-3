@@ -3,8 +3,11 @@
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  width: 100vw; /* This will take the full width of the viewport */
-  overflow: hidden; /* To prevent any overflow */
+  width: 100vw;
+  overflow: hidden;
+  font-family: "Patrick Hand", cursive; /* Cartoon font */
+  background: white; // Soft pale background for a playful touch
+
   .intro-section {
     text-align: center;
     margin-bottom: 30px;
@@ -18,8 +21,7 @@
     p {
       font-size: 1.2em;
       margin-bottom: 15%;
-
-      color: #666;
+      color: #555; // Slightly darker for better contrast
     }
   }
 
@@ -27,71 +29,83 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    width: 60%;
+    width: 70%; // increased for better space distribution
+
     .option-card {
-      background: #fff;
-      border-radius: 10px;
+      background: #FCF5E8; // Soft pale background for a playful touch
+      border-radius: 15px; // More rounded
       overflow: hidden;
-      display: flex; // Added this
-      justify-content: center; // Added this
-      align-items: center; // Added this
-      flex-direction: column; // Added this (to stack items vertically)
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-      transition: box-shadow 0.3s ease;
-      &:hover {
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        transform: translateY(-5px);
-      }
-      .option-card-img-1 {
-        width: 250px;
-        height: 250px;
-        background-image: url("../../assets/images/info-blocks/renewable-energy.png ");
-        background-size: cover; // cover the entire div with the image
-      }
-      .option-card-img-2 {
-        width: 250px;
-        height: 250px;
-        background-image: url("../../assets/images/info-blocks/solar-panel.png ");
-        background-size: cover; // cover the entire div with the image
-      }
-      .option-card-img-3 {
-        width: 250px;
-        height: 250px;
-        background-size: cover; // cover the entire div with the image
-        background-image: url("../../assets/images/info-blocks/renewable-energy.png ");
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px; // Consistent padding for all items
+      box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.08); // Slight cartoonish shadow
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      border-radius: 5px;
+      
+      border: 4px solid #07090b; /* Brighter border */
+
+      box-shadow: 7px 7px 0px 0px #07090b; // offset shadow for cartoon feel
+      &:hover, &:focus {
+        transform: translateY(-10px); // Lift effect
+        
+        h3, p {
+          color: #F76B1C;
+
+        }
       }
 
       h3 {
-        font-size: 1.5em;
-        margin: 15px 0;
-        margin-top: 45px;
+        font-size: 2em;
+        margin: 20px 0; // Consistent margin
         color: #444;
-        text-align: center;
       }
 
       p {
+        font-size: 1.2em;
         color: #777;
-        margin-bottom: 15px;
-        padding: 0 20px;
-        text-align: center;
+        margin: 20px 0; // Consistent margin
       }
 
       button {
-        display: block;
-        margin: 15px auto;
-        padding: 10px 20px;
+        margin-top: 20px;
+        padding: 10px 25px; // Increased padding for better visuals
         border: none;
+        border-radius: 20px; // More rounded
         border-radius: 5px;
-        background: linear-gradient(to right, #f3a975, #f88017); // Warm gradient from soft pink to coral red
-
-        color: #fff;
+      
+        border: 2px solid #07090b; /* Brighter border */
+  
+        box-shadow: 4px 4px 0px 0px #07090b; // offset shadow for cartoon feel
+        font-weight: bold; // Bold text for the button
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease;
 
         &:hover {
-            background: linear-gradient(to right, #f37458, #f92e01); // Warm gradient from soft pink to coral red
+          background-color: #FAD300;
 
+          scale: 1.5;
         }
+      }
+
+      // Simplified repeated styles for images
+      [class^="option-card-img-"] {
+        width: 250px;
+        height: 250px;
+        background-size: cover;
+        margin-bottom: 20px; // Space between the image and title
+      }
+
+      .option-card-img-1 {
+        background-image: url("../../assets/images/info-blocks/renewable-energy.png");
+      }
+
+      .option-card-img-2 {
+        background-image: url("../../assets/images/info-blocks/solar-panel.png");
+      }
+
+      .option-card-img-3 {
+        background-image: url("../../assets/images/info-blocks/renewable-energy.png");
       }
     }
   }

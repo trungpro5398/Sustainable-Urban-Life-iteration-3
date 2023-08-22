@@ -1,8 +1,6 @@
 .HomePage {
     font-family: 'Arial', sans-serif;
-    color: #333;
     width: 100vh; 
-    background-color: red;
     position: absolute;
     top: 0;
     left: 0;
@@ -14,6 +12,29 @@
       margin-bottom: 40px;
     }
   
-
+    .scroll-to-top {
+      position: fixed;
+      display: flex;
+      width: 80px;
+      height: 80px;
+      bottom: 5%;
+      right: 5%;
+      cursor: pointer;
+      background: linear-gradient(to right, #f3a975, #f88017); 
+      align-items: center;
+      justify-content: center;
+      color: white;  
+      border-radius: 50%;
+      z-index: 1000;
+      
+      .icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px; // if it's a font icon
+        display: block;  // ensure it's block level to respect width and height
+      }
+    }
+    
+    
   }
   

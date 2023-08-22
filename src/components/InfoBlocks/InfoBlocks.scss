@@ -13,19 +13,20 @@
     height: 100vh;
     width: 100vw;   /* This will take the full width of the viewport */
     overflow: hidden;  /* To prevent any overflow */
+    background: white;
     .headline-container {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 5%;
     
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 50px;
+            margin-bottom: 6%;
             font-weight: bold;
             color: #333;
         }
     
         p {
-            font-size: 1.2em;
+            font-size: 25px;
             color: #666;
             max-width: 800px;
             margin: 0 auto; // To center the text if it's less than 800px wide
@@ -35,7 +36,7 @@
     
     .info-blocks {
         display: flex;
-        width: 40%;
+        width: 50%;
         .reasons-container {
             flex: 1;
             margin-right: 20px;
@@ -51,23 +52,26 @@
             margin-bottom: 20px;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            border-radius: 15px;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.05);
-            
+            border-radius: 5px;
+      
+            border: 4px solid #07090b; /* Brighter border */
+      
+            box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
             &.active {
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-                border-left: 4px groove #F76B1C; // Only set the left border
                 transform: scale(1.05);
                 
                 // Reset other borders to none
-                border-top: none;
-                border-right: none;
-                border-bottom: none;
+             
+          background-color: #FAD300;
+
+           
             }
             &:hover, &:focus {
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+
                 transform: scale(1.05);
-                
+          background-color: #FAD300;
+
+             
             }
     
             .fa-icon {
@@ -75,6 +79,7 @@
                 margin-right: 30px;
                 transition: transform 0.3s ease;
                 &:hover {
+
                     animation: iconRotate 0.3s ease forwards;
                 }
             }
@@ -88,6 +93,7 @@
                     transition: text-shadow 0.3s ease;
     
                     &:hover {
+
                         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
                     }
                 }

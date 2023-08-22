@@ -2,39 +2,65 @@ import React, { useState } from "react";
 import { Select, Radio, Button, Spin } from "antd";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight,
+  faArrowLeft,
+  faInfoCircle,
+  faLightbulb,
+  faSearch,
+  faMousePointer,
+} from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateField,
+  selectSolarForm,
+  updatePostcodeInfo,
+} from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust path if necessary
+import { Modal } from "antd";
 
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-const LocationStep = ({ nextStep, previousStep }) => {
+const LocationStep = ({ data, nextStep, previousStep }) => {
+  const locationData = useSelector(selectSolarForm).location;
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const regionsData = [
-    { name: "NT", suburbs: ["Suburb 1", "Suburb 2", "Suburb 3"] },
-    { name: "SA", suburbs: ["Suburb 1", "Suburb 2", "Suburb 3"] },
-    {
-      name: "WA",
-      suburbs: ["Suburb 1", "Suburb 2", "Suburb 3"],
-    },
-    { name: "NSW", suburbs: ["Suburb 1", "Suburb 2", "Suburb 3"] },
-    { name: "TAS", suburbs: ["Suburb 1", "Suburb 2", "Suburb 3"] },
-    {
-      name: "QLD",
-      suburbs: ["Suburb 1", "Suburb 2", "Suburb 3"],
-    },
-    { name: "VIC", suburbs: ["Suburb 1", "Suburb 2", "Suburb 3"] },
-    // ... add other regions here
-  ];
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [showError, setShowError] = useState(false);
+
   const handleClick = (callback) => {
+    if (!locationData.suburb) {
+      // If cycle hasn't been chosen, show an error and return early
+      setShowError(true);
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       if (callback && typeof callback === "function") {
         callback();
       }
-    }, 2000); // Wait for 2 seconds before invoking the callback
+    }, 2000);
   };
 
-  const [suburb, setSuburb] = useState(null); // Store the selected suburb
+  const handleSuburbChange = (value) => {
+    // Update the suburb value in the redux store
+    setShowError(false);
+    dispatch(updateField({ section: "location", field: "suburb", value }));
+    // Find the suburb object using the postcode value
+    const selectedSuburbInfo = data.find((loc) => loc.postcode === value);
 
-  const [region, setregion] = useState(null); // Store the selected region
+    // Dispatch the data to the redux store
+    dispatch(updatePostcodeInfo(selectedSuburbInfo));
+  };
+
+  // Extract unique suburbs with postcode and place name
+  const uniqueSuburbs = Array.from(
+    new Set(
+      data.map((loc) => ({
+        postcode: loc.postcode,
+        place_name: loc.place_name,
+      }))
+    ),
+    JSON.stringify
+  ).map(JSON.parse);
 
   return (
     <div className="location-step">
@@ -46,52 +72,69 @@ const LocationStep = ({ nextStep, previousStep }) => {
         </div>
       ) : (
         <div className="location-step-container">
-          <p>Which region are you living now?</p>
-          <Radio.Group
-            className="region-options"
-            onChange={(e) => setregion(e.target.value)}
-            value={region}
-          >
-            {regionsData.map((regionData, idx) => (
-              <Radio.Button
-                key={idx}
-                className="region-option"
-                value={regionData.name}
-              >
-                <div className={`region-image ${regionData.name}`}></div>
-                <div className="choice-circle">
-                  {region === regionData.name && (
-                    <div className="choice-tick">✓</div>
-                  )}
-                </div>
-                <p className="region-option-name">{regionData.name}</p>
-              </Radio.Button>
-            ))}
-          </Radio.Group>
-          {region && ( // This conditionally renders the suburb dropdown based on if a region is selected
-            <>
-              <p>Which suburb are you located in?</p>
-              <Select
-                showSearch
-                style={{ width: 200 }}
-                placeholder="Select a suburb"
-                optionFilterProp="children"
-                onChange={setSuburb}
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {regionsData
-                  .find((r) => r.name === region)
-                  .suburbs.map((sub) => (
-                    <Select.Option key={sub} value={sub}>
-                      {sub}
-                    </Select.Option>
-                  ))}
-              </Select>
-            </>
+          <p>Which suburb are you located in?</p>
+          <div className="select-location">
+            <Select
+              showSearch
+              placeholder="Select a suburb"
+              optionFilterProp="children"
+              onChange={handleSuburbChange}
+              value={locationData.suburb}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {uniqueSuburbs.map((suburb) => (
+                <Select.Option key={suburb.postcode} value={suburb.postcode}>
+                  {suburb.postcode} - {suburb.place_name}
+                </Select.Option>
+              ))}
+            </Select>
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              className="location-icon"
+              onClick={() => setModalVisible(true)}
+              onMouseEnter={() => setModalVisible(true)}
+            />
+          </div>
+          {showError && (
+            <p className="error-message">
+              Please select a suburb before proceeding.
+            </p>
           )}
+          <Modal
+            title={
+              <div className="location-item">
+                <FontAwesomeIcon icon={faLightbulb} className="location-icon" />
+                How to Choose a Suburb
+              </div>
+            }
+            visible={isModalVisible}
+            onCancel={() => setModalVisible(false)}
+            footer={null}
+            centered
+            className="location-modal"
+          >
+            <div className="location-content">
+              <div className="location-item">
+                <FontAwesomeIcon icon={faSearch} className="location-icon" />
+                <p>
+                  Type your suburb directly into the input box to search for
+                  matching suburbs.
+                </p>
+              </div>
+              <div className="location-item">
+                <FontAwesomeIcon
+                  icon={faMousePointer}
+                  className="location-icon"
+                />
+                <p>
+                  Scroll through the list and select a suburb from the dropdown.
+                </p>
+              </div>
+            </div>
+          </Modal>
+
           <Button
             className="previous-button"
             icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}

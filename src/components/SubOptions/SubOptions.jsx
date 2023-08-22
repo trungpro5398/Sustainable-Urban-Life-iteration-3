@@ -10,7 +10,9 @@ const SubOptions = () => {
   const handleButtonClick = () => {
     navigate("/solar-choice");
   };
-
+  const handleButtonClicktoGovernmentSupport = () => {
+    navigate("/government-support");
+  };
   return (
     <div className="outer-wrapper-sub-options" id="sub-options">
       <div className="intro-section">
@@ -45,7 +47,9 @@ const SubOptions = () => {
 
           <h3>Government support program</h3>
           <p>Learn about the government incentives for solar installation.</p>
-          <button>Get Info</button>
+          <button onClick={handleButtonClicktoGovernmentSupport}>
+            Get Info
+          </button>
         </div>
       </div>
     </div>

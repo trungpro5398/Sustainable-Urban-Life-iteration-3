@@ -1,25 +1,29 @@
-.bill-step{
-  background-image: url('../../../assets/images/solar-choice-background-3.png'); 
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px; 
-    box-sizing: border-box; 
-    position:absolute;
-    top:0px;
-    right:0px;
-    bottom:0px;
-    left:0px;
-    h1 {
-      color: #FFFDE5;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); // Increased shadow intensity for better visibility
-      margin-bottom: 60px;
-    }
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* Cartoon-like font from Google Fonts */
+
+.bill-step {
+  font-family: "Patrick Hand", cursive; /* Cartoon-like font */
+  background-color: #ffcce5; /* Bright pastel pink background */
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border: 5px solid #ff66cc; /* Brighter border */
+
+  h1 {
+    color: black;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    margin-bottom: 80px;
+    font-size: 50px;
+  }
 
   .bill-step-container {
     margin-top: -2%;
@@ -29,120 +33,172 @@
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
-    
-  
-    label, p {
-      color: #FFFDE5;
+    border: 8px solid #62504b; /* Thicker border */
+
+    box-shadow: 8px 8px 0px 0px #6e4032; // offset shadow for cartoon feel
+
+    label,
+    p {
+      color: #fffde5;
       font-weight: 600;
       margin-bottom: 10px;
+      font-family: "Patrick Hand", cursive; /* Cartoon-like font */
     }
-  
+    h2 {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .info-icon {
+        font-size: 30px;
+        margin-left: 10px;
+        cursor: pointer;
+        color: black;
+      }
+    }
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
     .ant-input {
       margin-bottom: 20px;
       width: 400px;
       height: 50px;
       font-size: 20px;
+      border: 3px solid #ff66cc; /* Brighter border */
     }
-  
+
     .bill-cycle-options {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+
+      .bill-cycle-option {
+        position: relative;
+        width: 120px;
+        height: 120px;
         display: flex;
-        gap: 30px;
-        margin-top: 20px;
-    
-        .bill-cycle-option {
-          position: relative;
-          width: 120px;
-          height: 120px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: rgba(#7a6b71, 0.7);
+        border-radius: 10px;
+        transition: transform 0.2s;
+        border: 4px solid #6e4032; /* Thicker border */
+        box-shadow: 4px 4px 0px 0px #6e4032; // offset shadow for cartoon feel
+
+        &:hover {
+          transform: scale(1.1);
+          background-color: rgba(#6c230d, 0.9);
+        }
+
+        &.ant-radio-button-wrapper-checked {
+          background-color: rgba(#6c230d, 0.8);
+
+          .choice-tick {
+            visibility: visible;
+          }
+        }
+
+        p {
+          z-index: 1;
+          color: #fffde5; // Light cream color for text
+          font-size: 25px;
+        }
+
+        .choice-circle {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
           display: flex;
           align-items: center;
           justify-content: center;
-          cursor: pointer;
-          background-color: rgba(#7A6B71, 0.7); 
-        border: 2px solid #6E4032;
-          border-radius: 10px;
-          transition: transform 0.2s;
-          
-          &:hover {
-            transform: scale(1.1);
-            background-color: rgba(#7A6B71, 0.9);
-          }
-    
-          &.ant-radio-button-wrapper-checked {
-            background-color: rgba(#6E4032, 0.8); 
-    
-            .choice-tick {
-              visibility: visible;
-            }
-          }
-    
-          p {
-            z-index: 1;
-            color: #FFFDE5; // Light cream color for text
-            font-size: 25px;
-          }
-    
-          .choice-circle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 30px;
-            height: 30px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #FFFDE5; // Cream color for the background of choice circle
-            border: 1px solid #72656A; // Using a darker color for the border
-    
-            .choice-tick {
-              opacity: 1;
-              font-size: large;
-              color: rgb(3, 108, 3);
-              font-weight: bold;
-            }
+          background-color: #fffde5; // Cream color for the background of choice circle
+          border: 1px solid #72656a; // Using a darker color for the border
+
+          .choice-tick {
+            opacity: 1;
+            font-size: large;
+            color: rgb(3, 108, 3);
+            font-weight: bold;
           }
         }
       }
-      // Define common styles for both next and previous buttons
-  .button-common {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    top: 50%;
-    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-    border: 2px solid #bbb7b7;
-    color: #4CAF50;
-    padding: 10px 20px;
-    border-radius: 35px;
-    box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
-    transition: all 0.3s ease-out;
-    opacity: 0.8;
-    font-size: 30px;
-  
-    &:hover {
-      background: linear-gradient(to bottom, #f2f2f2, #ffffff);
-      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-      transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
-  
-  
-      .anticon {
-        transform: scale(1.2);
+    }
+    // Define common styles for both next and previous buttons
+    .button-common {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      top: 50%;
+      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+      border: 2px solid #bbb7b7;
+      color: #4caf50;
+      padding: 10px 20px;
+      border-radius: 35px;
+      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      transition: all 0.3s ease-out;
+      opacity: 0.8;
+      font-size: 30px;
+
+      &:hover {
+        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+
+        .anticon {
+          transform: scale(1.2);
+        }
       }
     }
-  }
-  
-  .next-button {
-    @extend .button-common; // Use the common styles
-    right: 0px;
-    transform: translateX(-50%) translateY(-50%);
-  }
-  
-  .previous-button {
-    @extend .button-common; // Use the common styles
-    left: 70px;
-    transform: translateX(-50%) translateY(-50%);
-  }
-  
+
+    .next-button {
+      @extend .button-common; // Use the common styles
+      right: 0px;
+      transform: translateX(-50%) translateY(-50%);
     }
-  
+
+    .previous-button {
+      @extend .button-common; // Use the common styles
+      left: 70px;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+}
+
+.cartoon-modal {
+  .ant-modal-content {
+    border-radius: 10px;
+    transition: transform 0.2s;
+    border: 4px solid #6e4032;
+
+    box-shadow: 4px 4px 0px 0px #6e4032; // offset shadow
+  }
+
+  .cartoon-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .cartoon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      font-size: 18px;
+      line-height: 24px;
+      margin: 0;
+    }
+  }
+
+  .cartoon-icon {
+    color: #4b0082;
+    flex-shrink: 0; // prevents icon from shrinking
+  }
 }

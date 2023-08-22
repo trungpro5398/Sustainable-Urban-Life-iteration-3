@@ -1,3 +1,19 @@
+@keyframes swell {
+  0%, 100% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+@keyframes iconRotate {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(15deg);
+  }
+}
 .hero {
   height: 80vh;
   width: 100vh;
@@ -15,8 +31,8 @@
   right: 0px;
   bottom: 0px;
   left: 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../../assets/images/homepage-background.png");
+ 
+  background: rgb(250, 208, 208);
   background-size: cover;
   background-position: center;
   .hero-overlay {
@@ -25,40 +41,67 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    color: #fff;
+    color: black;
+    font-family: "Patrick Hand", cursive; /* Cartoon font */
+    .outer-text{
+      width: 70%;
+      font-size: 50px;
+      height: 25%;
+      text-align: center;
+      display: flex; // To line up the spans in a row
+      flex-wrap: wrap; // To wrap to the next line if needed
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      // Optional box-shadow
+       border-radius: 5px;
+      
+      border: 4px solid #07090b; /* Brighter border */
 
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
+      box-shadow: 8px 8px 0px 0px #07090b; // offset shadow for cartoon feel
+     
+      h1 {
+        margin-right: 20px;
+        margin-top: -20px;
+        height: 30px;
+        span {
+          display: inline-block;
+          animation: swell 2s ease-in-out infinite;
+          background: linear-gradient(#242933, #060a10); 
+          -webkit-background-clip: text;
+          color: transparent;
+      
+          text-shadow: 10px 10px 14px rgba(#111926, 0.8);
+      
+          // Optional box-shadow
+      
+          // Hide spaces
+        
+        }
+      }
     }
 
     p {
       margin-bottom: 20px;
+      font-size: 30px;
     }
 
     .cta-button {
       padding: 20px 40px;
-      background: linear-gradient(
-        to right,
-        #f3a975,
-        #f88017
-      ); // Warm gradient from soft pink to coral red
-
-      color: #fff;
+     
       cursor: pointer;
       transition: background-color 0.3s ease;
+      border-radius: 5px;
+      
+      border: 3px solid #07090b; /* Brighter border */
 
+      box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
      
-      border: none;
-      border-radius: 15px;
+     
       
       font-size: 30px;
       &:hover {
-        background: linear-gradient(
-          to right,
-          #f37458,
-          #f92e01
-        ); // Warm gradient from soft pink to coral red
+        background-color: #FAD300;
       }
     }
   }

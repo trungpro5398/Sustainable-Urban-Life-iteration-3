@@ -1,5 +1,4 @@
-.battery-choice{
-  background-image: url('../../../assets/images/solar-choice-background-7.png');
+.battery-choice {
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -13,127 +12,200 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: "Patrick Hand", cursive; /* Cartoon font */
+  background-color: #ffdd77; /* Pastel yellow */
   .step-title {
-    color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
     font-size: 50px;
+    color: #000; /* Solid black */
+    text-shadow: 4px 4px 0px #727234; /* Bright green shadow for cartoon effect */
   }
   .battery-query {
     display: flex;
     align-items: center;
     gap: 20px;
-    color: #FFFDE5;
     font-size: 24px;
     margin: 20px 0;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     margin-bottom: 3%;
+    color: #000; /* Solid black */
+    text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
 
     span {
-        font-weight: 600;
+      font-weight: 900; /* Heavier weight */
+      color: #000; /* Solid black */
+      text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
     }
-}
+  }
   .battery-choice-step {
-    margin-top: -2%;
     display: flex;
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
-    width: 100vw;
     align-items: center;
     justify-content: center;
+    border: 3px solid #0b0c0f; /* Solid blue border for contrast */
+    border-radius: 15px;
+    box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
     .usage-slider {
       width: 80%;
       margin: 20px auto; // Centers the slider in its container
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center; // Ensures the content within the slider container is centered
       margin-top: 4%;
       .range-labels {
-        position: absolute  ;
+        margin-top: 20px;
+        margin-bottom: 10px;
         display: flex;
-        justify-content: space-between; 
-        width: 32%; 
-        color: white; // You can change this based on your theme
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        justify-content: space-between;
+        width: 100%; /* Full width for responsiveness */
+        color: #000; /* Solid black */
+        text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
 
-        margin-top: 5px;
-        margin-left: 30px;
-        font-size: 30px;
+        font-size: 16px; /* Smaller size for mobile */
+
         &-low {
-          align-self: flex-start; // Positions the "Low" text to the left
+          align-self: flex-start;
         }
-    
+
         &-high {
-          align-self: flex-end; // Positions the "High" text to the right
+          align-self: flex-end;
+        }
+        &-low,
+        &-high {
+          background: #ff463a;
+          padding: 5px;
+          border-radius: 10px;
+        }
+
+        /* Adjustments for larger screens */
+        @media (min-width: 768px) {
+          /* Medium screens */
+          font-size: 24px;
+        }
+
+        @media (min-width: 1024px) {
+          /* Large screens */
+          font-size: 30px;
         }
       }
-    
-      .battery-slider {
-        width: 23%; 
-        position: relative;
-        height: 24px;
-        border-radius: 12px;
-        background: linear-gradient(to right, #36D1DC, #5B86E5); // A soothing gradient from teal to blue
-        opacity: 0.9;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); // Slightly increased shadow opacity for depth
-        padding: 1px;
-    
-        & .ant-slider-track {
-            background: linear-gradient(to right, #FFB6B9, #FF5864); // Warm gradient from soft pink to coral red
-            height: 100%;
-            border-radius: 12px;
-        }
-    
-        & .ant-slider-handle {
-            height: 28px; // Slightly increased for better interaction
-            width: 28px;
-            background-color: #FFFDE5;
-            border: 2px solid #D75537;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); // A bit more shadow for a 'lifted' feel
-            transform: translateY(-50%);
-        }
-    }
-    .battery-size {
-      position: absolute;
-      margin-top: -3%;
-      font-size: 32px; // Slightly increased for emphasis
-      color: white; // You can change this based on your theme
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 
-  }
-    .battery-input-container {
+      .battery-slider {
+        width: 100%;
+        height: 16px;
+        border: 2px solid #0b0c0f; /* Solid blue border for contrast */
+        border-radius: 15px;
+        box-shadow: 4px 4px 0px 0px #07090b; // offset shadow for cartoon feel
+        & .ant-slider-track {
+          background: linear-gradient(
+            to right,
+            #ef5e53,
+            #f63122
+          ); // Deep orange to deep red gradient
+          height: 100%;
+          border-radius: 8px;
+        }
+
+        & .ant-slider-handle {
+          height: 20px;
+          width: 20px;
+          background-color: #fffde5;
+
+          border-radius: 50%;
+          transform: translateY(-50%);
+          box-shadow: 0 3px 0 rgba(0, 0, 0, 0.6);
+        }
+
+        @media (min-width: 768px) {
+          /* Medium screens */
+          height: 20px;
+          border-radius: 10px;
+
+          & .ant-slider-handle {
+            height: 24px;
+            width: 24px;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          /* Large screens */
+          height: 24px;
+          border-radius: 12px;
+
+          & .ant-slider-handle {
+            height: 28px;
+            width: 28px;
+          }
+        }
+      }
+
+      .battery-size {
+        font-size: 24px; /* Reduced for mobile */
+        color: #000; /* Solid black */
+        text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
+
+        @media (min-width: 768px) {
+          /* Medium screens */
+          font-size: 28px;
+        }
+
+        @media (min-width: 1024px) {
+          /* Large screens */
+          font-size: 32px;
+        }
+      }
+
+      .battery-input-container {
         display: flex;
         align-items: center;
         justify-content: center;
-    
-       
+
         .battery-unit {
-          position: absolute;
-          margin-top: 10%;
-          margin-left: 8%;  // Slightly increased for better spacing
-          font-size: 32px; // Slightly increased for emphasis
-          color: white; // You can change this based on your theme
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+          font-size: 24px; /* Reduced for mobile */
+          color: #000; /* Solid black */
+          text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
 
-      }
-        .battery-input {
-            position: absolute;
-            top: 110px;
-            color: #28364A; // Dark blue-gray for consistency
-            font-size: 26px; // A bit larger for clarity
-            width: 5%; // A little increase in width for visual balance
-            background: #f7f9fc; // A very soft blue background
-            border: 1px solid #dce1e8; // A gentle border
-            border-radius: 4px; // Slight rounding for softness
-            padding: 5px 10px; // Padding for better ergonomics
+          @media (min-width: 768px) {
+            /* Medium screens */
+            font-size: 28px;
+          }
+
+          @media (min-width: 1024px) {
+            /* Large screens */
+            font-size: 32px;
+          }
         }
-    }
-  }
-  
 
-    
+        .battery-input {
+          color: #28364a;
+          font-size: 20px; /* Reduced for mobile */
+          width: 60%; /* Increased width for mobile */
+          border: 2px solid #dce1e8; /* Slightly thicker border for emphasis */
+          border-radius: 6px; /* Slightly increased for cartoon feel */
+          padding: 4px 8px; /* Adjusted padding for mobile */
+          color: #000; /* Solid black */
+          text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
+          background: #ff463a;
+          border: 3px solid #0b0c0f; /* Solid blue border for contrast */
+          border-radius: 15px;
+          box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
+
+          @media (min-width: 768px) {
+            /* Medium screens */
+            font-size: 22px;
+            width: 40%;
+          }
+
+          @media (min-width: 1024px) {
+            /* Large screens */
+            font-size: 26px;
+            width: 30%;
+          }
+        }
+      }
+    }
+
     .step-background {
       position: absolute;
       top: 0;
@@ -143,12 +215,16 @@
       object-fit: cover;
       z-index: -1;
     }
-  
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 20px;
+    }
     .battery-choice-options {
       display: flex;
       gap: 30px;
       margin-top: 20px;
-  
+
       .battery-choice-option {
         position: relative;
         width: 120px;
@@ -157,30 +233,42 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        background-color: rgba(#7A6B71, 0.7); 
-      border: 2px solid #6E4032;
-        border-radius: 10px;
         transition: transform 0.2s;
-        
+        background-color: rgba(white, 0.7); /* Brighter, cartoonish color */
+        border: 3px solid #0b0c0f; /* Solid blue border for contrast */
+        border-radius: 15px;
+        box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
         &:hover {
           transform: scale(1.1);
-          background-color: rgba(#7A6B71, 0.9);
+          background-color: rgba(
+            255,
+            50,
+            50,
+            0.8
+          ); /* Even more saturated red on hover */
+          color: white;
         }
-  
+
         &.ant-radio-button-wrapper-checked {
-          background-color: rgba(#6E4032, 0.8); 
-  
+          background-color: rgba(
+            255,
+            50,
+            50,
+            0.9
+          ); /* Even more saturated red on hover */
+
           .choice-tick {
             visibility: visible;
           }
         }
-  
+
         p {
           z-index: 1;
-          color: #FFFDE5; // Light cream color for text
+          color: #000;
+
           font-size: 25px;
         }
-  
+
         .choice-circle {
           position: absolute;
           top: 10px;
@@ -191,9 +279,9 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          background-color: #FFFDE5; // Cream color for the background of choice circle
-          border: 1px solid #72656A; // Using a darker color for the border
-  
+          background-color: #fffde5; // Cream color for the background of choice circle
+          border: 1px solid #72656a; // Using a darker color for the border
+
           .choice-tick {
             opacity: 1;
             font-size: large;
@@ -203,62 +291,57 @@
         }
       }
     }
-  
-    
-  
+
     .loading-section {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 20px;
-  
+
       p {
-        color: #FFFDE5;
         margin-top: 10px;
+        text-shadow: 3px 3px 0px #ffdd77; /* Cartoonish yellow shadow */
       }
     }
-  
+
     // Define common styles for both next and previous buttons
-.button-common {
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  top: 50%;
-  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-  border: 2px solid #bbb7b7;
-  color: #4CAF50;
-  padding: 10px 20px;
-  border-radius: 35px;
-  box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
-  transition: all 0.3s ease-out;
-  opacity: 0.8;
-  font-size: 30px;
+    .button-common {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      top: 50%;
+      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+      border: 2px solid #bbb7b7;
+      color: #4caf50;
+      padding: 10px 20px;
+      border-radius: 35px;
+      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      transition: all 0.3s ease-out;
+      opacity: 0.8;
+      font-size: 30px;
 
-  &:hover {
-    background: linear-gradient(to bottom, #f2f2f2, #ffffff);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-    transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+      &:hover {
+        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
 
+        .anticon {
+          transform: scale(1.2);
+        }
+      }
+    }
 
-    .anticon {
-      transform: scale(1.2);
+    .next-button {
+      @extend .button-common; // Use the common styles
+      right: 0px;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    .previous-button {
+      @extend .button-common; // Use the common styles
+      left: 70px;
+      transform: translateX(-50%) translateY(-50%);
     }
   }
-}
-
-.next-button {
-  @extend .button-common; // Use the common styles
-  right: 0px;
-  transform: translateX(-50%) translateY(-50%);
-}
-
-.previous-button {
-  @extend .button-common; // Use the common styles
-  left: 70px;
-  transform: translateX(-50%) translateY(-50%);
-}
-
-  }
-  
 }

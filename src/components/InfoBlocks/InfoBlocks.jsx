@@ -48,7 +48,10 @@ const InfoBlocks = () => {
             <div
               className={`reason ${selectedIndex === idx ? "active" : ""}`}
               key={idx}
-              onClick={() => setSelectedIndex(idx)}
+              onClick={() => {
+                setSelectedImage(reason.illustration);
+                setSelectedIndex(idx);
+              }}
             >
               <FontAwesomeIcon
                 icon={reason.icon}

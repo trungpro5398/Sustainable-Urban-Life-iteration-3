@@ -1,0 +1,104 @@
+.government-support {
+  background-color: #e0f0d9; // A vibrant green background
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    font-size: 32px;
+    color: #2b8a3e; // Darker green for contrast
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 5px dashed #d83367; // Pinkish border
+    padding-bottom: 20px;
+    font-family: "Comic Sans MS", sans-serif; // Classic cartoon font
+  }
+
+  .question-collapse {
+    margin-top: 40px;
+    background-color: #fff3e0; // Creamy orange background
+    border-radius: 20px;
+    border: 5px dotted #ff6b6b; // Bright red dotted border
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 2%;
+
+    .ant-collapse-item {
+      &.ant-collapse-item-active .ant-collapse-header {
+        background-color: #f9c2ff; // Soft pink for active tab
+      }
+    }
+
+    .ant-collapse-header {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2b8a3e; // Darker green
+      padding-left: 50px;
+      background-color: #ffebe4; // Soft reddish background
+      border-radius: 15px;
+      border: 2px solid #ff6b6b; // Bright red border
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+
+      .ant-collapse-arrow {
+        right: 25px; // Move the arrow icon closer to the right
+      }
+    }
+    .sub-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #2b8a3e; // Darker green
+      font-family: "Comic Sans MS", sans-serif;
+      text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); // Giving it a slight shadow for depth
+      border-bottom: 3px dotted #ff6b6b; // Red playful underline
+      padding-bottom: 5px;
+      transition: transform 0.2s; // For hover effect
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        transform: scale(1.05); // Slight scale on hover
+      }
+    }
+
+    .sub-description {
+      font-size: 18px;
+      margin: 8px 0 15px;
+      color: #3b3b3b;
+      font-family: "Comic Sans MS", sans-serif;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      background-color: #ffebe4; // Soft reddish background
+      padding: 5px;
+      border: 2px dashed #ff6b6b; // Red playful border
+      border-radius: 10px;
+    }
+
+    .custom-panel {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      flex-direction: column;
+      img {
+        width: 100vh;
+        height: 100vh;
+        margin-right: 30px;
+        border: 2px dashed #ff6b6b; // Bright red border
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .content {
+        flex-grow: 1;
+        padding-left: 25px;
+
+        p {
+          font-size: 20px;
+          color: #3b3b3b;
+          margin: 0;
+          font-family: "Comic Sans MS", sans-serif; // Cartoon feel font
+        }
+      }
+    }
+  }
+}
