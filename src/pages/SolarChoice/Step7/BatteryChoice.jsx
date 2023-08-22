@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Slider, Spin, Button, Radio, InputNumber } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,14 +7,35 @@ import {
   faArrowRight,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import { updateField } from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust this path to your project's directory structure
 import "./style.scss";
 
 const BatteryChoice = ({ nextStep, previousStep }) => {
+  const dispatch = useDispatch();
+  const batteryChoice = useSelector((state) => state.solarForm.batteryChoice); // Adjust the path if you have a different structure
+
   const [loading, setLoading] = useState(false);
-  const [choice, setChoice] = useState(null);
-  const [batterySize, setBatterySize] = useState(5); // Default to 5
+  const [choice, setChoice] = useState(batteryChoice.wantBattery);
+  const [batterySize, setBatterySize] = useState(batteryChoice.batterySize);
+
+  const updateChoiceToRedux = (key, value) => {
+    dispatch(
+      updateField({
+        section: "batteryChoice",
+        field: key,
+        value: value,
+      })
+    );
+  };
+
+  const [showError, setShowError] = useState(false);
 
   const handleClick = (callback) => {
+    if (!batteryChoice.wantBattery) {
+      // If cycle hasn't been chosen, show an error and return early
+      setShowError(true);
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -23,22 +45,37 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
     }, 2000);
   };
 
+  // Update the redux store when the choice changes
+  const handleChoiceChange = (e) => {
+    setShowError(false);
+    const newChoice = e.target.value;
+    setChoice(newChoice);
+    updateChoiceToRedux("wantBattery", newChoice);
+  };
+
+  // Update the redux store when battery size changes
+  const handleBatterySizeChange = (value) => {
+    setBatterySize(value);
+    updateChoiceToRedux("batterySize", value);
+  };
+
   return (
     <div className="battery-choice">
       <h1 className="step-title">Electricity Consumption</h1>
-      <div className="battery-query">
-        <FontAwesomeIcon icon={faBatteryThreeQuarters} size="2x" />
-        <span>Do you want to add a solar battery to your system?</span>
-      </div>
+
       {loading ? (
         <div className="loading-section">
           <Spin size="large" tip="Preparing your solar journey..."></Spin>
         </div>
       ) : (
         <div className="battery-choice-step">
+          <div className="battery-query">
+            <FontAwesomeIcon icon={faBatteryThreeQuarters} size="2x" />
+            <span>Do you want to add a solar battery to your system?</span>
+          </div>
           <Radio.Group
             className="battery-choice-options"
-            onChange={(e) => setChoice(e.target.value)}
+            onChange={handleChoiceChange}
             value={choice}
           >
             <Radio.Button className="battery-choice-option" value="No">
@@ -54,7 +91,12 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
               </div>
             </Radio.Button>
           </Radio.Group>
-          {choice === "Yes" && (
+          {showError && (
+            <p className="error-message">
+              Please select Yes or No before proceeding.
+            </p>
+          )}
+          {/* {choice === "Yes" && (
             <div className="usage-slider">
               <div className="range-labels">
                 <span className="range-labels-low">0 kW</span>
@@ -63,8 +105,8 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
               <Slider
                 min={1}
                 max={100}
-                step={0.1} // This allows float increments
-                onChange={(value) => setBatterySize(value)}
+                step={0.1}
+                onChange={handleBatterySizeChange}
                 value={batterySize}
                 className="battery-slider"
                 tooltipVisible
@@ -77,16 +119,16 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
                 <InputNumber
                   min={1}
                   max={100}
-                  step={0.1} // This allows float increments
+                  step={0.1}
                   style={{ margin: "0 16px" }}
                   value={batterySize}
-                  onChange={(value) => setBatterySize(value)}
+                  onChange={handleBatterySizeChange}
                   className="battery-input"
                 />
                 <div className="battery-unit">kW</div>
               </div>
             </div>
-          )}
+          )} */}
           <Button
             className="previous-button"
             icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}

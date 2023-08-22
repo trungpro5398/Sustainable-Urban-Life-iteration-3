@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 const FirstStep = ({ nextStep }) => {
   const [loading, setLoading] = useState(false);
+  const text = "Your Journey to Solar Begins Here";
+  const smallText = text.split(" ");
 
   const handleClick = (callback) => {
     setLoading(true);
@@ -20,7 +22,17 @@ const FirstStep = ({ nextStep }) => {
 
   return (
     <div className="first-step-container">
-      <h1>Your Journey to Solar Begins Here</h1>
+      <div className="outer-text">
+        {smallText.map((word, index) => (
+          <h1>
+            {word.split("").map((char, index) => (
+              <span style={{ animationDelay: `${index * 0.1}s` }} key={index}>
+                {char}
+              </span>
+            ))}
+          </h1>
+        ))}
+      </div>
       {loading ? (
         <Spin />
       ) : (

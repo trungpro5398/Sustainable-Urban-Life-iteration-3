@@ -1,10 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./HeroSection.scss";
 import Navbar from "../Navbar/Navbar";
 
 const HeroSection = () => {
-  const navigate = useNavigate();
+  const text = "Welcome to Sustainable Urban Life";
+  const smallText = text.split(" ");
 
   const handleButtonClick = () => {
     const subOptions = document.getElementById("sub-options");
@@ -18,7 +18,18 @@ const HeroSection = () => {
       <Navbar isHomePage={true} />
 
       <div className="hero-overlay">
-        <h1>Welcome to Sustainable Urban Life</h1>
+        <div className="outer-text">
+          {smallText.map((word, index) => (
+            <h1>
+              {word.split("").map((char, index) => (
+                <span style={{ animationDelay: `${index * 0.1}s` }} key={index}>
+                  {char}
+                </span>
+              ))}
+            </h1>
+          ))}
+        </div>
+
         <p>Learn about your carbon impact and ways to reduce it.</p>
         <button className="cta-button" onClick={handleButtonClick}>
           Learn More

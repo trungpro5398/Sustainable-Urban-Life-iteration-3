@@ -1,264 +1,196 @@
-
-
 .recommendation-container {
-    display: flex;
-    position: relative;
-    height: 100vh;
-    background: #ffffff; /* Container background color */
-    width: 50vh;
-    font-family: 'Arial', sans-serif;
-    flex-direction: column;
-    .filter-icon-container {
-        position: absolute;
-        top: 5%;
-        right: 20px;
-        background-color: white;
-        border-radius: 50%;
-        padding: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        transition: transform 0.3s ease;
+  display: flex;
+  height: 100vh;
+  background-color: #e6f2ff; // Slightly changed for a more playful look
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  position: relative;
+  .sidebar {
+    width: 25%;
+    background-color: #fff8dc; // Cornsilk background
 
-        &:hover {
-            transform: scale(1.1);
-        }
+    padding: 2rem;
+    border-radius: 5px;
 
-        img {
-            width: 24px;
-            height: 24px;
-        }
+    border: 6px solid #07090b; /* Brighter border */
+    border-left: none;
+    border-top: none;
 
-        .filter-count {
-            position: absolute;
-            background-color: #EFAD49;
-            color: white;
-            border-radius: 50%;
-            padding: 5px;
-            top: 5px;
-            right: 5px;
-            font-size: 10px;
-        }
+    border-bottom: none;
+
+    h3 {
+      cursor: pointer;
+      transition: color 0.3s;
+      font-size: 1.5rem;
+      color: #ff4500; // Use a brighter orange color for headers
+      border-bottom: 3px solid #ff6347; // Border for a playful touch
+      margin-bottom: 0.5rem; // Adjust margin
+      padding-bottom: 0.5rem; // Adjust padding
+
+      &:hover {
+        color: #3498db;
+        text-shadow: 2px 2px 2px #ffb6c1; // Pink shadow
+      }
     }
-    h1 {
-        margin-left: 15%;
-        color: #004D40;
-        font-weight: bold;
-        font-size: 2.2em;
-        margin-bottom: 20px;
+    .custom-radio-group .ant-radio-wrapper {
+      display: block; // This will force each radio to take the full width and move to a new line.
+      margin-bottom: 10px; // Adds a bit of space between each radio.
     }
+
+    .filter-sort-container {
+      .filter-section,
+      .sort-section,
+      .battery-choice-section {
+        margin-bottom: 2rem; // Increase spacing for clarity
+        display: flex;
+        flex-direction: column;
+        margin-left: 10%;
+        align-items: start;
+        h3 {
+          font-size: 30px; // Increase font size for emphasis
+          font-weight: 800;
+        }
+        // Style for radio buttons to appear on separate rows and to give them a cartoonish appearance
+        .ant-radio-wrapper {
+          margin-bottom: 0.5rem;
+          color: #4b0082; // Deep purple color
+          font-size: 1.2rem; // Increase font size for emphasis
+        }
+      }
+      .filter-section-solar,
+      .sort-section-price {
+        margin-left: 2rem;
+        margin-bottom: 2rem; // Increase spacing for clarity
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        h3 {
+          font-size: 20px; // Increase font size for emphasis
+        }
+        // Style for radio buttons to appear on separate rows and to give them a cartoonish appearance
+        .ant-radio-wrapper {
+          margin-bottom: 0.5rem;
+          font-size: 1.2rem; // Increase font size for emphasis
+          color: #4b0082; // Deep purple color
+        }
+      }
+    }
+
+    // Define common styles for both next and previous buttons
+    .button-common {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      top: 50%;
+      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+      border: 2px solid #bbb7b7;
+      color: #4caf50;
+      padding: 10px 20px;
+      border-radius: 35px;
+      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      transition: all 0.3s ease-out;
+      opacity: 0.8;
+      font-size: 30px;
+
+      &:hover {
+        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+
+        .anticon {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .previous-button {
+      @extend .button-common; // Use the common styles
+      left: 40px;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    background-color: #fffaf0; // Cream color
+
+    h1,
     h2 {
-        color: #004D40;
-        font-weight: bold;
-        font-size: 2.2em;
-        margin-bottom: 20px;
+      color: #4b0082; // Deep purple color
+      text-shadow: 2px 2px 2px #ffb6c1; // Pink shadow
+      margin-bottom: 1rem; // Adjust margin
     }
-   
-    .content {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px;
-        background: #f5f9f8;
-        width: 100%;
-        
 
-        .installer-list {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Distributes space evenly */
-        }
+    .installer-card {
+      background-color: #fff8dc; // Cornsilk background
+      border-radius: 20px; // Increased for a softer look
+      padding: 1.5rem;
+      margin-bottom: 1.5rem; // Increase spacing
+      border-radius: 5px;
 
-        .installer-card {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
-            
-            &:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-            }
+      border: 3px solid #07090b; /* Brighter border */
 
-            h3 {
-                font-size: 1.8em;
-                margin-bottom: 10px;
-                color: #00695C;
-                cursor: pointer;
-                text-decoration: underline;
-                transition: color 0.3s ease;
+      box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
 
-                &:hover {
-                    color: #5B5F5B;
-                }
-            }
+      font-family: "Comic Sans MS", cursive, sans-serif;
 
-            .rated {
-                display: flex;
-                align-items: center;
-
-                .stars {
-                    color: #5B5F5B;
-                    margin-right: 5px;
-                }
-            }
-
-            p {
-                font-size: 1.1em;
-                margin-bottom: 15px;
-                color: #555;
-            }
-
-            .price-info {
-                font-size: 1em;
-                color: #00695C;
-                margin-top: -10px;
-                margin-bottom: 20px;
-            }
-            button {
-                background: linear-gradient(135deg, #EFAD49, #d5e6e1); /* Gradient Background */
-                border: none;
-                border-radius: 5px;
-                font-size: 1.1em;
-                color: #ffffff;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-
-                &:hover {
-                    background-color: #d5a741; /* Slightly darkened gradient color for hover */
-                }
-            }
-        }
-    }
-    .loading-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    
-        p {
-          color: #FFFDE5;
-          margin-top: 10px;
-        }
-      }
-    
-      // Define common styles for both next and previous buttons
-  .button-common {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    top: 50%;
-    margin-left: -150%;
-    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-    border: 2px solid #bbb7b7;
-    color: #4CAF50;
-    padding: 10px 20px;
-    border-radius: 35px;
-    box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
-    transition: all 0.3s ease-out;
-    opacity: 0.8;
-    font-size: 30px;
-  
-    &:hover {
-      background: linear-gradient(to bottom, #f2f2f2, #ffffff);
-      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-      transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
-  
-  
-      .anticon {
-        transform: scale(1.2);
-      }
-    }
-  }
-  
- 
-  
-  .previous-button {
-    @extend .button-common; // Use the common styles
-    left: 20%;
-    transform: translateX(-50%) translateY(-50%);
-  }
-  
-    
-}
-
-.custom-modal {
-    .ant-modal-header {
-      color: white;
-  
-      .ant-modal-title {
-        color: black;
-      }
-    }
-  
-    .ant-modal-content {
-      border-radius: 15px;
-    }
-  
-    .ant-modal-close-x {
-      color: white;
-    }
-  
-    .filter-section,
-    .sort-section {
-      margin-bottom: 20px;
-  
       h3 {
-        margin-bottom: 10px;
+        font-size: 2.5rem;
+        color: #ff4500; // Bright orange for installer names
+        margin-bottom: 1rem; // Adjust margin
+        font-family: "Comic Sans MS", cursive, sans-serif;
       }
-    }
-  
-    .ant-select {
-      width: 100%;
-  
-      .ant-select-selector {
-        border-radius: 10px !important;
-        background: linear-gradient(135deg, #EFAD49, #d5e6e1);
-        color: #004D40;
-        font-weight: bold;
-  
-        .ant-select-selection-item {
-          color: #004D40 !important;
+
+      p {
+        color: #4b0082; // Deep purple color for consistency
+        font-size: 1.2rem; // Increase size for clarity
+        margin-bottom: 1rem; // Adjust margin
+        font-family: "Comic Sans MS", cursive, sans-serif;
+      }
+
+      button {
+        color: black;
+        border: none;
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1); // Box shadow for depth
+        border-radius: 5px;
+
+        border: 3px solid #07090b; /* Brighter border */
+
+        box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
+
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        font-size: 24px;
+        height: 45px;
+        &:hover {
+          border-radius: 5px;
+          background-color: #fad300;
+
+          border: 3px solid #07090b; /* Brighter border */
+
+          box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
+
+          color: black;
+          scale: 1.1;
         }
       }
     }
   }
-  .gradient-btn {
-    background: linear-gradient(135deg, #dcdcdb, #cfded9); /* Gradient Background */
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    font-size: 20px;
-    color: black;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    &:hover {
-        background: linear-gradient(135deg, #EFAD49, #d5e6e1); /* Gradient Background */
 
+  @media (max-width: 992px) {
+    .sidebar {
+      width: 35%;
     }
-}
-.gradient-btn-1 {
-    background: linear-gradient(135deg, #91bc8f, #09b83d); /* Gradient Background */
-    opacity: 0.8;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    font-size: 20px;
-    color: black;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    &:hover {
-    opacity: 1;
+  }
 
-    background: linear-gradient(135deg, #EFAD49, #d5e6e1); /* Gradient Background */
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
 
+    .sidebar {
+      width: 100%;
+      position: relative;
+      border-right: none;
+      border-top: 5px solid #ff6347; // Tomato border
     }
+  }
 }

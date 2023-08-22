@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import { Input, Radio, Button, Spin } from "antd";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateField,
+  selectSolarForm,
+} from "../../../reduxToolkit/slices/solarFormSlice.js"; // Replace with the path to your slice
+
 const InformationStep = ({ nextStep, previousStep }) => {
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+  const solarForm = useSelector(selectSolarForm);
+  const { gender } = solarForm.personalDetails;
   const handleClick = (callback) => {
     setLoading(true);
     setTimeout(() => {
@@ -16,9 +24,6 @@ const InformationStep = ({ nextStep, previousStep }) => {
       }
     }, 2000); // Wait for 2 seconds before invoking the callback
   };
-
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState(null); // Store the selected gender
 
   return (
     <div className="info-step">
@@ -33,16 +38,32 @@ const InformationStep = ({ nextStep, previousStep }) => {
           <label htmlFor="name">What's your name?</label>
 
           <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={solarForm.personalDetails.name}
+            onChange={(e) =>
+              dispatch(
+                updateField({
+                  section: "personalDetails",
+                  field: "name",
+                  value: e.target.value,
+                })
+              )
+            }
             id="name"
             placeholder="Enter your name"
           />
           <p>What's your gender?</p>
           <Radio.Group
             className="gender-options"
-            onChange={(e) => setGender(e.target.value)}
-            value={gender}
+            onChange={(e) =>
+              dispatch(
+                updateField({
+                  section: "personalDetails",
+                  field: "gender",
+                  value: e.target.value,
+                })
+              )
+            }
+            value={solarForm.personalDetails.gender}
           >
             <Radio.Button className="gender-option" value="male">
               <p>Male</p>

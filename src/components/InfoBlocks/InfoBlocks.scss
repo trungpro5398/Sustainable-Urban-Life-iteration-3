@@ -1,132 +1,125 @@
 @keyframes iconRotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(15deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(15deg);
+  }
 }
 .outer-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw; /* This will take the full width of the viewport */
+  overflow: hidden; /* To prevent any overflow */
+  background: white;
+  .headline-container {
+    text-align: center;
+    margin-bottom: 5%;
+
+    h1 {
+      font-size: 50px;
+      margin-bottom: 6%;
+      font-weight: bold;
+      color: #333;
+    }
+
+    p {
+      font-size: 25px;
+      color: #666;
+      max-width: 800px;
+      margin: 0 auto; // To center the text if it's less than 800px wide
+      line-height: 1.5;
+    }
+  }
+
+  .info-blocks {
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;   /* This will take the full width of the viewport */
-    overflow: hidden;  /* To prevent any overflow */
-    .headline-container {
-        text-align: center;
-        margin-bottom: 40px;
-    
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #333;
-        }
-    
-        p {
-            font-size: 1.2em;
-            color: #666;
-            max-width: 800px;
-            margin: 0 auto; // To center the text if it's less than 800px wide
-            line-height: 1.5;
-        }
+    width: 50%;
+    .reasons-container {
+      flex: 1;
+      margin-right: 20px;
+      width: 50%;
     }
-    
-    .info-blocks {
-        display: flex;
-        width: 40%;
-        .reasons-container {
-            flex: 1;
-            margin-right: 20px;
-            width: 50%;
 
-        }
-    
-        .reason {
-            display: flex;
-            align-items: center;
-            border: 1px solid transparent;
-            padding: 15px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            border-radius: 15px;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.05);
-            
-            &.active {
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-                border-left: 4px groove #F76B1C; // Only set the left border
-                transform: scale(1.05);
-                
-                // Reset other borders to none
-                border-top: none;
-                border-right: none;
-                border-bottom: none;
-            }
-            &:hover, &:focus {
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-                transform: scale(1.05);
-                
-            }
-    
-            .fa-icon {
-                flex: 0 0 auto;
-                margin-right: 30px;
-                transition: transform 0.3s ease;
-                &:hover {
-                    animation: iconRotate 0.3s ease forwards;
-                }
-            }
-    
-            .text-section {
-                flex: 1;
-                transition: color 0.3s ease;
-    
-                h2 {
-                    margin-bottom: 10px;
-                    transition: text-shadow 0.3s ease;
-    
-                    &:hover {
-                        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-                    }
-                }
-            }
-        }
-    
-        .illustration-container {
-            flex: 2;
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-            background-image: url('../../assets/images/info-blocks/reason-1.png');
-            
-            &.reason1{
-                background-image: url('../../assets/images/info-blocks/reason-1.png');
-            }
-            &.reason2{
-                background-image: url('../../assets/images/info-blocks/reason-2.png');
-            }
-            &.reason3{
-                background-image: url('../../assets/images/info-blocks/reason-3.png');
-                
-            }
-            width: 100%; // occupy the full width of the parent
-            background-size: cover; // cover the entire div with the image
-            background-position: center; // center the background image
-            
-            &:hover {
-                transform: scale(1.05);
+    .reason {
+      display: flex;
+      align-items: center;
+      border: 1px solid transparent;
+      padding: 15px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease,
+        border-color 0.3s ease;
+      border-radius: 5px;
 
-            }
-            
-            
-            
+      border: 4px solid #07090b; /* Brighter border */
+
+      box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
+      &.active {
+        transform: scale(1.05);
+
+        // Reset other borders to none
+
+        background-color: #fad300;
+      }
+      &:hover,
+      &:focus {
+        transform: scale(1.05);
+        background-color: #fad300;
+      }
+
+      .fa-icon {
+        flex: 0 0 auto;
+        margin-right: 30px;
+        transition: transform 0.3s ease;
+        &:hover {
+          animation: iconRotate 0.3s ease forwards;
         }
+      }
+
+      .text-section {
+        flex: 1;
+        transition: color 0.3s ease;
+
+        h2 {
+          margin-bottom: 10px;
+          transition: text-shadow 0.3s ease;
+
+          &:hover {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
     }
-    
+
+    .illustration-container {
+      flex: 2;
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      background-image: url("../../assets/images/info-blocks/reason-1.png");
+
+      &.reason1 {
+        background-image: url("../../assets/images/info-blocks/reason-1.png");
+      }
+      &.reason2 {
+        background-image: url("../../assets/images/info-blocks/reason-2.png");
+      }
+      &.reason3 {
+        background-image: url("../../assets/images/info-blocks/reason-3.png");
+      }
+      width: 100%; // occupy the full width of the parent
+      background-size: cover; // cover the entire div with the image
+      background-position: center; // center the background image
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
 }
-

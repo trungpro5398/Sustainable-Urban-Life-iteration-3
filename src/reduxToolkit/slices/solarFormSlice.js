@@ -1,31 +1,32 @@
-// solarFormSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 export const solarFormSlice = createSlice({
   name: "solarForm",
   initialState: {
-    householdDetails: {
-      postcode: "3168",
-      avgBill: "10000",
-      retailer: "ABC",
-      billFrequency: "Monthly",
+    personalDetails: {
+      name: "",
+      gender: null,
     },
-    solarSystemDetails: {
-      systemSize: "",
-      systemCost: "",
-      electricityUsage: 0,
+    billingCycle: {
+      cycle: null,
     },
-    batteryStorageOptions: {
-      wantBattery: false,
-      batteryCost: 0,
+    electricityUsage: {
+      usageValue: 50,
+      usageDaily: null,
     },
-    propertyDetails: {
-      shadingHours: 0,
-      roofPitch: 0,
-      roofOrientation: "",
+    location: {
+      suburb: null,
     },
-    financeOptions: {
-      financingMethod: "cash",
+    postcodeInfo: {
+      data: null,
+    },
+    batteryChoice: {
+      wantBattery: null, // This could be "Yes" or "No"
+      batterySize: 5, // Default to 5 kW
+    },
+    pricing: {
+      withoutBattery: null,
+      withBattery: null,
     },
   },
   reducers: {
@@ -33,9 +34,14 @@ export const solarFormSlice = createSlice({
       const { section, field, value } = action.payload;
       state[section][field] = value;
     },
+    updatePostcodeInfo: (state, action) => {
+      state.postcodeInfo.data = action.payload;
+    },
   },
 });
 
-export const { updateField } = solarFormSlice.actions;
+export const { updateField, updatePostcodeInfo } = solarFormSlice.actions;
+
+export const selectSolarForm = (state) => state.solarForm;
 
 export default solarFormSlice.reducer;
