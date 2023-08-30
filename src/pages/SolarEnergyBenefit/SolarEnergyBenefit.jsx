@@ -16,10 +16,23 @@ import Navbar from "../../components/Navbar/Navbar";
 
 const { Panel } = Collapse;
 
-const CustomPanel = ({ image, title, children }) => (
+const HoverableLink = ({ url, children }) => {
+  return (
+    <span className="hoverable-container">
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    </span>
+  );
+};
+
+const CustomPanel = ({ image, title, children, link }) => (
   <div className="custom-panel">
     {image && <Image src={image} />}
-    <div className="content">{children}</div>
+    <div className="content">
+      {children}
+      {link && <HoverableLink url={link}>Read more</HoverableLink>}
+    </div>
   </div>
 );
 
@@ -59,25 +72,31 @@ const SolarEnergyBenefit = () => {
           key="1"
           className="question-panel"
         >
-          <CustomPanel image={s1} title="1.	Reduced Electricity Bills:">
+          <CustomPanel
+            image={s1}
+            title="1.	Reduced Electricity Bills:"
+            link="https://blog.hood.ai/average-electricity-rates-melbourne#:~:text=According%20to%20the%20Australian%20Energy,cost%20per%20kWh%20of%2027.29."
+          >
             <p>
               • Solar panels allow homeowners to generate their own electricity,
-              reducing their dependence on the grid.{" "}
+              reducing their dependence on the grid.
             </p>
             <span>
               • According to the Australian Energy Regulator (AER), the average
               annual electricity bill in Victoria is around $1,134 AUD.
-              https://blog.hood.ai/average-electricity-rates-melbourne#:~:text=According%20to%20the%20Australian%20Energy,cost%20per%20kWh%20of%2027.29.
             </span>
           </CustomPanel>
         </Panel>
 
         <Panel header="2.	Financial Savings:" key="2" className="question-panel">
-          <CustomPanel image={s2} title="2.	Financial Savings:">
+          <CustomPanel
+            image={s2}
+            title="2.	Financial Savings:"
+            link="https://www.cleanenergycouncil.org.au/resources/technologies/solar-energy"
+          >
             <p>
               • Solar panels can result in significant financial savings over
               time.
-              https://www.cleanenergycouncil.org.au/resources/technologies/solar-energy
             </p>
             <span>
               • On average, a 6.6 kW solar system can save homeowners around
@@ -91,11 +110,14 @@ const SolarEnergyBenefit = () => {
           key="3"
           className="question-panel"
         >
-          <CustomPanel image={s3} title="3.	Environmentally Friendly:">
+          <CustomPanel
+            image={s3}
+            title="3.	Environmentally Friendly:"
+            link="https://www.solar.vic.gov.au/apply?gclid=Cj0KCQjwi7GnBhDXARIsAFLvH4lq3j_jtiYxxPP4zqn2QibCt42WF9nUT3TFiZvDU5IH_hv706BB1rgaAlB2EALw_wcB"
+          >
             <p>
               • Solar energy reduces carbon emissions and dependence on fossil
               fuels, promoting a cleaner environment.
-              https://www.solar.vic.gov.au/apply?gclid=Cj0KCQjwi7GnBhDXARIsAFLvH4lq3j_jtiYxxPP4zqn2QibCt42WF9nUT3TFiZvDU5IH_hv706BB1rgaAlB2EALw_wcB
             </p>
             <span>
               • Victoria's solar installations have offset approximately 4.2
@@ -110,11 +132,14 @@ const SolarEnergyBenefit = () => {
           key="4"
           className="question-panel"
         >
-          <CustomPanel image={s4} title="4.	Government Incentives:">
+          <CustomPanel
+            image={s4}
+            title="4.	Government Incentives:"
+            link="https://engage.vic.gov.au/minimum-feed-tariff-review-202223"
+          >
             <p>
               • Victoria provides feed-in tariffs for excess solar energy that
               is exported back to the grid.
-              https://engage.vic.gov.au/minimum-feed-tariff-review-202223
             </p>
             <span>
               • The current minimum feed-in tariff rate in Victoria is around
@@ -124,11 +149,14 @@ const SolarEnergyBenefit = () => {
           </CustomPanel>
         </Panel>
         <Panel header="5.	Feed-in Tariffs:" key="5" className="question-panel">
-          <CustomPanel image={s5} title="5.	Feed-in Tariffs:">
+          <CustomPanel
+            image={s5}
+            title="5.	Feed-in Tariffs:"
+            link="https://engage.vic.gov.au/minimum-feed-tariff-review-202223"
+          >
             <p>
               • Victoria provides feed-in tariffs for excess solar energy that
               is exported back to the grid.
-              https://engage.vic.gov.au/minimum-feed-tariff-review-202223
             </p>
             <span>
               • The current minimum feed-in tariff rate in Victoria is around
@@ -138,7 +166,11 @@ const SolarEnergyBenefit = () => {
           </CustomPanel>
         </Panel>
         <Panel header="6.	Job Creation:" key="6" className="question-panel">
-          <CustomPanel image={s6} title="6.	Job Creation:">
+          <CustomPanel
+            image={s6}
+            title="6.	Job Creation:"
+            link="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/employment-renewable-energy-activities-australia/latest-release#:~:text=The%20increase%20of%20FTE%20employment,(1%2C220%20additional%20FTE%20jobs)."
+          >
             <p>
               • The solar industry creates job opportunities, contributing to
               the local economy.
@@ -146,7 +178,6 @@ const SolarEnergyBenefit = () => {
             <span>
               • In Victoria, solar jobs have increased by over 85% in recent
               years, according to data from the Australian Solar Council.
-              https://www.abs.gov.au/statistics/labour/employment-and-unemployment/employment-renewable-energy-activities-australia/latest-release#:~:text=The%20increase%20of%20FTE%20employment,(1%2C220%20additional%20FTE%20jobs).
             </span>
           </CustomPanel>
         </Panel>
@@ -155,7 +186,11 @@ const SolarEnergyBenefit = () => {
           key="7"
           className="question-panel"
         >
-          <CustomPanel image={s7} title="7.	Increased Property Value:">
+          <CustomPanel
+            image={s7}
+            title="7.	Increased Property Value:"
+            link="https://newscenter.lbl.gov/2015/01/13/berkeley-lab-illuminates-price-premiums-u-s-solar-home-sales/"
+          >
             <p>
               • Solar panel installations can increase the resale value of
               properties.
@@ -165,7 +200,6 @@ const SolarEnergyBenefit = () => {
               solar-equipped homes tend to have higher property values in the
               United States. This can be extrapolated to Victoria as well in the
               future.
-              https://newscenter.lbl.gov/2015/01/13/berkeley-lab-illuminates-price-premiums-u-s-solar-home-sales/
             </span>
           </CustomPanel>
         </Panel>

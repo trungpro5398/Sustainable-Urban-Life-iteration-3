@@ -112,7 +112,29 @@
       .content {
         flex-grow: 1;
         padding-left: 25px;
+        .hoverable-container {
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          transition: transform 0.2s; // For hover effect
+          a {
+            color: #07090b;
+            text-decoration: none;
+            width: 150px;
+            text-align: center;
+            border: 4px solid #07090b; /* Brighter border */
+            border-radius: 5px;
 
+            &:hover {
+              background-color: #fad300;
+
+              box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
+              transform: scale(1.05); // Slight scale on hover
+            }
+          }
+        }
         p,
         span {
           font-size: 20px;

@@ -45,8 +45,8 @@ const Home = () => {
       <SubOptions />
       {/* <Carousel /> */}
       <InfoBlocks />
-      <Testimonials />
-      <Footer />
+      {/* <Testimonials />
+      <Footer /> */}
       {isVisible && (
         <div onClick={scrollToTop} className="scroll-to-top">
           <FontAwesomeIcon icon={faChevronUp} className="icon" />

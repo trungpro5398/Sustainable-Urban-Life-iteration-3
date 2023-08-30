@@ -21,6 +21,7 @@
   font-family: "Patrick Hand", cursive; /* Cartoon font */
   text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
   justify-content: center;
+
   .logo-link {
     text-decoration: none;
   }
@@ -133,6 +134,24 @@
     }
     .nav-item {
       font-size: 40px;
+    }
+  }
+}
+
+.cartoon-dropdown {
+  .cartoon-dropdown-item {
+    font-family: "Patrick Hand", cursive;
+    transition: all 0.3s;
+    font-size: 30px;
+    font-weight: 400;
+
+    &:hover {
+      background-color: #fad300;
+      color: #07090b;
+      border: 3px solid #0b0c0f;
+      border-radius: 5px;
+      padding: 0px 5px;
+      box-shadow: 6px 6px 0px 0px #07090b;
     }
   }
 }

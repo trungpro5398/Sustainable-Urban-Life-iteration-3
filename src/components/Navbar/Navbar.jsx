@@ -8,15 +8,21 @@ import { faTree } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = ({ isHomePage }) => {
   const menu = (
-    <Menu>
+    <Menu className="cartoon-dropdown">
       <Menu.Item key="1">
-        <Link to="/solar-choice">Solar Choice</Link>
+        <Link to="/solar-choice" className="cartoon-dropdown-item">
+          Solar Choice
+        </Link>
       </Menu.Item>
       <Menu.Item key="2">
-        <Link to="/solar-energy-benefit">Solar Energy Benefit</Link>
+        <Link to="/solar-energy-benefit" className="cartoon-dropdown-item">
+          Solar Energy Benefit
+        </Link>
       </Menu.Item>
       <Menu.Item key="3">
-        <Link to="/government-support">Government support program</Link>
+        <Link to="/government-support" className="cartoon-dropdown-item">
+          Government support program
+        </Link>
       </Menu.Item>
     </Menu>
   );
@@ -38,6 +44,7 @@ const Navbar = ({ isHomePage }) => {
             Solutions <DownOutlined />
           </span>
         </Dropdown>
+
         <Link to="/about-us" className="nav-item">
           About Us
         </Link>
