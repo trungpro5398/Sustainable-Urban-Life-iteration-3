@@ -1,10 +1,20 @@
+// -------------------
+// IMPORTS
+// -------------------
+
+// React Dependencies
 import React, { useState } from "react";
+// UI Components & Icons
+
 import { Button, Spin } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.scss";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+// Redux Dependencies
 import { useSelector } from "react-redux";
+
+// Array of colors for the pie chart
 
 const COLORS = [
   "#0088FE",
@@ -14,10 +24,33 @@ const COLORS = [
   "#A83731",
   "#7A9A01",
 ];
-
+/**
+ * PostcodeInfo Component
+ * @param {Object} props - Properties passed to the component
+ * @param {Array} props.data - Array of location data
+ * @param {Function} props.nextStep - Function to move to the next step
+ * @param {Function} props.previousStep - Function to move to the previous step
+ * @returns JSX.Element
+ */
 const PostcodeInfo = ({ nextStep, previousStep }) => {
+  // -------------------
+  // REDUX STATE MANAGEMENT
+  // -------------------
+  // Get postcode data from Redux store
   const data = useSelector((state) => state.solarForm.postcodeInfo.data);
 
+  // -------------------
+  // LOCAL STATE MANAGEMENT
+  // -------------------
+  const [loading, setLoading] = useState(false);
+
+  // -------------------
+  // UTILITY FUNCTIONS
+  // -------------------
+  /**
+   * Handle loading animation and then invoke the callback
+   * @param {Function} callback - Callback to be invoked after loading
+   */
   const handleClick = (callback) => {
     setLoading(true);
     setTimeout(() => {
@@ -25,8 +58,10 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
       if (callback && typeof callback === "function") {
         callback();
       }
-    }, 2000); // Wait for 2 seconds before invoking the callback
+    }, 2000); // Delay of 2 seconds before invoking the callback
   };
+
+  // Prepare data for the pie chart
   const solarData = [
     { name: "With Solar", value: parseFloat(data.percentage_installation) },
     {
@@ -34,7 +69,6 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
       value: 100 - parseFloat(data.percentage_installation),
     },
   ];
-  const [loading, setLoading] = useState(false);
 
   return (
     <div className="postcode-info">

@@ -2,11 +2,13 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
-  font-family: "Patrick Hand", cursive; /* Cartoon font */
-  background: white; // Soft pale background for a playful touch
+  font-family: Arial, sans-serif; /* More professional and readable font */
+  background: #f4f4f4; /* Neutral, soft background for a professional touch */
+  position: relative;
+  background-size: cover;
+  background-position: center;
 
   .intro-section {
     text-align: center;
@@ -14,14 +16,14 @@
 
     h1 {
       font-size: 2.5em;
-      margin-bottom: 45px;
+      margin-bottom: 25px;
       color: #333;
     }
 
     p {
       font-size: 1.2em;
-      margin-bottom: 15%;
-      color: #555; // Slightly darker for better contrast
+      margin-bottom: 10%;
+      color: #555;
     }
   }
 
@@ -29,71 +31,60 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    width: 70%; // increased for better space distribution
+    width: 70%;
 
     .option-card {
-      background: #FCF5E8; // Soft pale background for a playful touch
-      border-radius: 15px; // More rounded
-      overflow: hidden;
+      background: #e6efe9; /* Earthy green shade to resonate with sustainability */
+      border-radius: 5px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px; // Consistent padding for all items
-      box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.08); // Slight cartoonish shadow
+      padding: 20px;
+      box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
       transition: box-shadow 0.3s ease, transform 0.3s ease;
-      border-radius: 5px;
-      
-      border: 4px solid #07090b; /* Brighter border */
 
-      box-shadow: 7px 7px 0px 0px #07090b; // offset shadow for cartoon feel
-      &:hover, &:focus {
-        transform: translateY(-10px); // Lift effect
-        
-        h3, p {
-          color: #F76B1C;
+      &:hover,
+      &:focus {
+        transform: translateY(-5px); /* A subtle lift for hover effect */
 
+        h3,
+        p {
+          color: #008248; /* A darker shade of green */
         }
       }
 
       h3 {
         font-size: 2em;
-        margin: 20px 0; // Consistent margin
-        color: #444;
+        margin: 20px 0;
+        color: #333;
       }
 
       p {
         font-size: 1.2em;
-        color: #777;
-        margin: 20px 0; // Consistent margin
+        color: #555;
+        margin: 20px 0;
       }
 
       button {
         margin-top: 20px;
-        padding: 10px 25px; // Increased padding for better visuals
-        border: none;
-        border-radius: 20px; // More rounded
-        border-radius: 5px;
-      
-        border: 2px solid #07090b; /* Brighter border */
-  
-        box-shadow: 4px 4px 0px 0px #07090b; // offset shadow for cartoon feel
-        font-weight: bold; // Bold text for the button
+        padding: 10px 20px;
+        border: 2px solid #008248; /* Consistent with the green theme */
+        border-radius: 4px;
+        font-weight: bold;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.3s ease;
 
         &:hover {
-          background-color: #FAD300;
-
-          scale: 1.5;
+          background-color: #008248;
+          color: #ffffff; /* White text for contrast on the green button */
         }
       }
 
-      // Simplified repeated styles for images
       [class^="option-card-img-"] {
         width: 250px;
         height: 250px;
         background-size: cover;
-        margin-bottom: 20px; // Space between the image and title
+        margin-bottom: 20px;
       }
 
       .option-card-img-1 {

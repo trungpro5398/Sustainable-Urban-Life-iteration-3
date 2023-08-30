@@ -1,5 +1,19 @@
+// -------------------
+// IMPORTS
+// -------------------
+
+// React Dependencies
 import React from "react";
-import { Slider, Spin, Button, InputNumber, Modal } from "antd";
+
+// Redux Dependencies
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateField,
+  selectSolarForm,
+} from "../../../reduxToolkit/slices/solarFormSlice";
+
+// UI Components & Icons
+import { Slider, Spin, Button, Modal, message, Input } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -9,20 +23,41 @@ import {
   faHandPointRight,
   faSlidersH,
 } from "@fortawesome/free-solid-svg-icons";
+
+// Styles
 import "./style.scss";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  updateField,
-  selectSolarForm,
-} from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust path if necessary
 
-function ElectricityUsage({ nextStep, previousStep }) {
+/**
+ * ElectricityUsage Component: Allows users to select their electricity usage.
+ *
+ * @param {function} nextStep - Function to move to the next step.
+ * @param {function} previousStep - Function to move to the previous step.
+ * @returns {JSX.Element}
+ */
+const ElectricityUsage = ({ nextStep, previousStep }) => {
+  // -------------------
+  // REDUX STATE MANAGEMENT
+  // -------------------
+
   const { electricityUsage, billingCycle } = useSelector(selectSolarForm);
-  const [isModalVisible, setModalVisible] = React.useState(false);
-
   const dispatch = useDispatch();
-  const [loading, setLoading] = React.useState(false);
 
+  // -------------------
+  // LOCAL STATE MANAGEMENT
+  // -------------------
+
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+
+  // -------------------
+  // UTILITY FUNCTIONS
+  // -------------------
+
+  /**
+   * Emulates a loading action and optionally calls a callback function.
+   * @param {function} callback - Optional callback to call after loading.
+   */
   const handleClick = (callback) => {
     setLoading(true);
     setTimeout(() => {
@@ -32,51 +67,110 @@ function ElectricityUsage({ nextStep, previousStep }) {
       }
     }, 2000);
   };
+
+  /**
+   * Compute the daily usage based on billing cycle.
+   * @param {number} usageValue - The usage value to compute daily usage for.
+   * @returns {number} - The computed daily usage.
+   */
   const computeDailyUsage = (usageValue) => {
     let divisor;
     switch (billingCycle.cycle) {
       case "monthly":
-        divisor = 30; // Assuming an average month has 30 days
+        divisor = 30;
         break;
       case "quarterly":
-        divisor = 90; // Assuming an average quarter has 90 days
+        divisor = 90;
         break;
       case "yearly":
         divisor = 365;
         break;
       default:
-        divisor = 1; // This ensures no division by zero in case of unexpected values
+        divisor = 1;
     }
-
     return usageValue / divisor;
   };
+
+  /**
+   * Calculates the usage range based on billing cycle.
+   * @param {number} usageValue - The usage value to calculate range for.
+   * @returns {number} - The calculated usage range.
+   */
   const rangeUsage = (usageValue) => {
     let divisor;
     switch (billingCycle.cycle) {
       case "monthly":
-        divisor = 30; // Assuming an average month has 30 days
+        divisor = 30;
         break;
       case "quarterly":
-        divisor = 90; // Assuming an average quarter has 90 days
+        divisor = 90;
         break;
       case "yearly":
         divisor = 365;
         break;
       default:
-        divisor = 1; // This ensures no division by zero in case of unexpected values
+        divisor = 1;
     }
-
     return ((usageValue / 365) * divisor).toFixed(0);
   };
-  const handleUsageChange = (value) => {
-    const dailyUsage = computeDailyUsage(value);
 
-    // Update usageValue in the store
+  /**
+   * Handles changes in the electricity usage input/slider.
+   * @param {number} value - The new value of the input/slider.
+   */
+  const handleUsageChange = (value) => {
+    // Setting message config
+    message.config({
+      top: "50vh", // 50% of the viewport height, adjust accordingly
+      duration: 5, // 5 seconds
+    });
+
+    setError("");
+    // Regex for special characters excluding the dot (.)
+    const regexSpecialChars = /[^0-9a-zA-Z.]/;
+
+    // Regex for alphabetic characters
+    const regexTextChars = /[a-zA-Z]/;
+
+    const maxLength = 6; // Adjust this value as needed
+
+    // Check for special characters first
+    if (regexSpecialChars.test(String(value))) {
+      message.error({
+        content: "Special characters are not allowed.",
+        style: {
+          fontSize: "20px", // Bigger font size
+        },
+      });
+      return;
+    }
+
+    // Check for alphabetic characters next
+    if (regexTextChars.test(String(value))) {
+      message.error({
+        content: "Text input is not allowed in numeric fields.",
+        style: {
+          fontSize: "20px", // Bigger font size
+        },
+      });
+      return;
+    }
+
+    // Check length last
+    if (String(value).length > maxLength) {
+      message.error({
+        content: "Input exceeds character limit.",
+        style: {
+          fontSize: "20px", // Bigger font size
+        },
+      });
+      return;
+    }
+
+    const dailyUsage = computeDailyUsage(value);
     dispatch(
       updateField({ section: "electricityUsage", field: "usageValue", value })
     );
-
-    // Update usageDaily in the store
     dispatch(
       updateField({
         section: "electricityUsage",
@@ -85,6 +179,10 @@ function ElectricityUsage({ nextStep, previousStep }) {
       })
     );
   };
+
+  // -------------------
+  // COMPONENT JSX
+  // -------------------
 
   return (
     <div className="electricity-usage">
@@ -109,7 +207,7 @@ function ElectricityUsage({ nextStep, previousStep }) {
             </div>
             <Slider
               min={1}
-              max={rangeUsage(8770)}
+              max={rangeUsage(10000)}
               step={0.1}
               onChange={handleUsageChange}
               value={electricityUsage.usageValue}
@@ -122,12 +220,9 @@ function ElectricityUsage({ nextStep, previousStep }) {
             <div className="electricity-usage-size">Electricity usage</div>
 
             <div className="electricity-usage-input-container">
-              <InputNumber
-                min={1}
-                max={rangeUsage(8770)}
-                step={0.1}
-                value={electricityUsage.usageValue}
-                onChange={handleUsageChange}
+              <Input
+                value={String(electricityUsage.usageValue)}
+                onChange={(e) => handleUsageChange(e.target.value)}
                 className="electricity-usage-input"
               />
               <div className="electricity-usage-unit">
@@ -215,6 +310,6 @@ function ElectricityUsage({ nextStep, previousStep }) {
       )}
     </div>
   );
-}
+};
 
 export default ElectricityUsage;

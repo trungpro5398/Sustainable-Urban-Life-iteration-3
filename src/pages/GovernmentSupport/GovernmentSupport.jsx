@@ -9,6 +9,26 @@ import Navbar from "../../components/Navbar/Navbar";
 
 const { Panel } = Collapse;
 
+/**
+ * HoverableLink component represents a styled anchor tag to show links.
+ * @param {string} url - The URL the link points to.
+ * @param {React.Node} children - The content inside the anchor tag.
+ */
+const HoverableLink = ({ url, children }) => {
+  return (
+    <span className="hoverable-container">
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    </span>
+  );
+};
+/**
+ * This component represents each of the custom panels inside the collapse.
+ * @param {string} image - The URL of the image to be shown.
+ * @param {string} title - The title of the panel.
+ * @param {React.Node} children - The content inside the panel.
+ */
 const CustomPanel = ({ image, title, children }) => (
   <div className="custom-panel">
     {image && <Image src={image} />}
@@ -16,6 +36,10 @@ const CustomPanel = ({ image, title, children }) => (
   </div>
 );
 
+/**
+ * The GovernmentSupport component showcases information about government solar rebates and incentives.
+ * It utilizes a collapsible component to display relevant details and explanations.
+ */
 const GovernmentSupport = () => {
   const [activeKeys, setActiveKeys] = useState(["1", "2", "3", "4", "5"]); // Initially all panels are active (open)
 
@@ -100,8 +124,11 @@ const GovernmentSupport = () => {
               government portfolio that runs the Solar Homes Program. This
               program encourages the adoption of renewable solar energy by
               offering a number of different rebates. You can find out more
-              about each of the following rebates via the Solar Victoria
-              website.
+              about each of the following rebates via the{" "}
+              <HoverableLink url={"https://www.solar.vic.gov.au/solar-rebates"}>
+                Solar Victoria website
+              </HoverableLink>{" "}
+              .
             </p>
           </CustomPanel>
         </Panel>
@@ -110,10 +137,24 @@ const GovernmentSupport = () => {
           The federal solar rebates provides an incentive for solar systems both
           small and large under the Renewable Energy Target (RET).The RET
           incentivises small-scale and large-scale solar projects differently,
-          with separate segments known as the Large-Scale Renewable Energy
-          Target (LRET) and the Small-Scale Renewable Energy Scheme (SRES). In
-          this article we discuss how incentives operate under each of these
-          programs.
+          with separate segments known as the{" "}
+          <HoverableLink
+            url={
+              "https://www.cleanenergyregulator.gov.au/RET/About-the-Renewable-Energy-Target/How-the-scheme-works/Large-scale-Renewable-Energy-Target"
+            }
+          >
+            Large-Scale Renewable Energy Target (LRET)
+          </HoverableLink>{" "}
+          and the{" "}
+          <HoverableLink
+            url={
+              "https://www.cleanenergyregulator.gov.au/RET/About-the-Renewable-Energy-Target/How-the-scheme-works/Small-scale-Renewable-Energy-Scheme"
+            }
+          >
+            Small-Scale Renewable Energy Scheme (SRES)
+          </HoverableLink>{" "}
+          . In this article we discuss how incentives operate under each of
+          these programs.
         </p>
         <Panel
           header="Q：Incentives for small-scale solar (Residential & commercial under 100kW)"
@@ -178,7 +219,13 @@ const GovernmentSupport = () => {
               split Australia into four zones. Remaining factors that would
               influence the output of a system like shading, panel orientation,
               efficiency losses are ignored for the purposes of the STC solar
-              rebate.
+              rebate. Federal solar rebates provide incentives for small and
+              large solar systems under the Renewable Energy Target (RET). You
+              can find out more about each of the following Commonwealth rebates
+              via the{" "}
+              <HoverableLink url={"https://www.energy.gov.au/rebates"}>
+                https://www.energy.gov.au/rebates
+              </HoverableLink>{" "}
             </p>
           </CustomPanel>
         </Panel>

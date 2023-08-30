@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Select, Radio, Button, Spin } from "antd";
+import { Select, Button, Spin, Modal } from "antd";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,39 +15,58 @@ import {
   updateField,
   selectSolarForm,
   updatePostcodeInfo,
-} from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust path if necessary
-import { Modal } from "antd";
+} from "../../../reduxToolkit/slices/solarFormSlice";
 
+/**
+ * LocationStep Component
+ * @param {Object} props - Properties passed to the component
+ * @param {Array} props.data - Array of location data
+ * @param {Function} props.nextStep - Function to move to the next step
+ * @param {Function} props.previousStep - Function to move to the previous step
+ * @returns JSX.Element
+ */
 const LocationStep = ({ data, nextStep, previousStep }) => {
+  // -------------------
+  // REDUX STATE MANAGEMENT
+  // -------------------
   const locationData = useSelector(selectSolarForm).location;
   const dispatch = useDispatch();
+
+  // -------------------
+  // LOCAL STATE MANAGEMENT
+  // -------------------
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [showError, setShowError] = useState(false);
 
+  // -------------------
+  // UTILITY FUNCTIONS
+  // -------------------
+  /**
+   * Handle button click actions
+   * @param {Function} callback - Function to be called after loading
+   */
   const handleClick = (callback) => {
     if (!locationData.suburb) {
-      // If cycle hasn't been chosen, show an error and return early
       setShowError(true);
       return;
     }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      if (callback && typeof callback === "function") {
-        callback();
-      }
+      callback?.();
     }, 2000);
   };
 
+  /**
+   * Handle suburb dropdown changes
+   * @param {string} value - The selected suburb's value
+   */
   const handleSuburbChange = (value) => {
-    // Update the suburb value in the redux store
     setShowError(false);
     dispatch(updateField({ section: "location", field: "suburb", value }));
-    // Find the suburb object using the postcode value
-    const selectedSuburbInfo = data.find((loc) => loc.postcode === value);
 
-    // Dispatch the data to the redux store
+    const selectedSuburbInfo = data.find((loc) => loc.place_name === value);
     dispatch(updatePostcodeInfo(selectedSuburbInfo));
   };
 
@@ -55,13 +74,13 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
   const uniqueSuburbs = Array.from(
     new Set(
       data.map((loc) => ({
+        key: loc.postcode + loc.place_name,
         postcode: loc.postcode,
         place_name: loc.place_name,
       }))
     ),
     JSON.stringify
   ).map(JSON.parse);
-
   return (
     <div className="location-step">
       <h1>Location</h1>
@@ -76,16 +95,25 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
           <div className="select-location">
             <Select
               showSearch
-              placeholder="Select a suburb"
+              placeholder="Select or type a suburb"
               optionFilterProp="children"
               onChange={handleSuburbChange}
               value={locationData.suburb}
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
+              filterOption={(input, option) => {
+                const suburbValue = option.value;
+                const matchingSuburb = uniqueSuburbs.find(
+                  (suburb) => suburb.place_name === suburbValue
+                );
+                if (matchingSuburb) {
+                  return `${matchingSuburb.postcode} - ${matchingSuburb.place_name}`
+                    .toLowerCase()
+                    .includes(input.toLowerCase());
+                }
+                return false;
+              }}
             >
               {uniqueSuburbs.map((suburb) => (
-                <Select.Option key={suburb.postcode} value={suburb.postcode}>
+                <Select.Option key={suburb.key} value={suburb.place_name}>
                   {suburb.postcode} - {suburb.place_name}
                 </Select.Option>
               ))}
@@ -119,8 +147,8 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
               <div className="location-item">
                 <FontAwesomeIcon icon={faSearch} className="location-icon" />
                 <p>
-                  Type your suburb directly into the input box to search for
-                  matching suburbs.
+                  Type or select your suburb directly into the input box to
+                  search for matching suburbs.
                 </p>
               </div>
               <div className="location-item">

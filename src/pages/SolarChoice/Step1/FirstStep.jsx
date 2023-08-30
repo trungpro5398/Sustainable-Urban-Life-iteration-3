@@ -1,56 +1,86 @@
+// External Dependencies
 import React, { useState } from "react";
 import { Button, Spin } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
+// Styles
+import "./style.scss";
+
+/**
+ * FirstStep Component
+ *
+ * A component that serves as an introduction to the solar journey. It showcases a text animation
+ * effect for the introductory text. It has two buttons: "start-button" and "next-button",
+ * which when clicked, show a loading state before advancing to the next step.
+ *
+ * @param {function} nextStep - Function to move to the next step.
+ * @returns {JSX.Element}
+ */
 const FirstStep = ({ nextStep }) => {
+  // State to manage loading effect
   const [loading, setLoading] = useState(false);
+
+  // Introductory text and its breakdown for animation purposes
   const text = "Your Journey to Solar Begins Here";
   const smallText = text.split(" ");
 
-  const handleClick = (callback) => {
+  /**
+   * Handles button click.
+   * Sets loading state, waits for a duration and then triggers the nextStep callback.
+   */
+  const handleClick = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      if (callback && typeof callback === "function") {
-        callback();
+      if (typeof nextStep === "function") {
+        nextStep();
       }
-    }, 2000); // Wait for 2 seconds before invoking the callback
+    }, 2000);
   };
 
   return (
     <div className="first-step-container">
+      {/* Animated Text Presentation */}
       <div className="outer-text">
-        {smallText.map((word, index) => (
-          <h1>
-            {word.split("").map((char, index) => (
-              <span style={{ animationDelay: `${index * 0.1}s` }} key={index}>
+        {smallText.map((word, wordIndex) => (
+          <h1 key={wordIndex}>
+            {word.split("").map((char, charIndex) => (
+              <span
+                style={{ animationDelay: `${charIndex * 0.1}s` }}
+                key={charIndex}
+              >
                 {char}
               </span>
             ))}
           </h1>
         ))}
       </div>
+
+      {/* Loading Spinner or Action Buttons based on loading state */}
       {loading ? (
         <Spin />
       ) : (
-        <Button
-          className="start-button"
-          icon={<ArrowRightOutlined />}
-          onClick={() => handleClick(nextStep)}
-        >
-          Make the first step now
-        </Button>
+        <>
+          <Button
+            className="start-button"
+            icon={<ArrowRightOutlined />}
+            onClick={handleClick}
+          >
+            Make the first step now
+          </Button>
+
+          <Button
+            className="next-button"
+            icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
+            onClick={handleClick}
+            shape="circle"
+          />
+        </>
       )}
-      <div className="moving-balloon"></div>
-      <Button
-        className="next-button"
-        icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
-        onClick={() => handleClick(nextStep)}
-        shape="circle"
-      ></Button>
+
+      <div className="sun-animation"></div>
     </div>
   );
 };

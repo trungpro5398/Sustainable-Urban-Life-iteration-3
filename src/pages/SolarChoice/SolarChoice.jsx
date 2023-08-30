@@ -1,43 +1,41 @@
 import "./style.scss";
 
 import React, { useState, useEffect } from "react";
-import FirstStep from "./Step1/FirstStep";
-import InformationStep from "./Step2/InformationStep";
-import BillCycle from "./Step3/BillCycle";
-import ElectricityUsage from "./Step4/ElectricityUsage";
-import LocationStep from "./Step5/LocationStep";
-import PostcodeInfo from "./Step6/PostcodeInfo";
-import BatteryChoice from "./Step7/BatteryChoice";
-import Recommendation from "./Step8/Recommendation";
-import Navbar from "../../components/Navbar/Navbar";
-import { Steps } from "antd";
-import { Spin } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
+import { Spin } from "antd";
+
+import FirstStep from "./Step1/FirstStep";
+import BillCycle from "./Step2/BillCycle";
+import ElectricityUsage from "./Step3/ElectricityUsage";
+import LocationStep from "./Step4/LocationStep";
+import PostcodeInfo from "./Step5/PostcodeInfo";
+import BatteryChoice from "./Step6/BatteryChoice";
+import Recommendation from "./Step7/Recommendation";
+import Navbar from "../../components/Navbar/Navbar";
+
 import { updateField } from "../../reduxToolkit/slices/solarFormSlice";
 
-const { Step } = Steps;
-function SolarChoice() {
+/**
+ * SolarChoice Component
+ * This is a multi-step form for users to make solar-related decisions. Each step corresponds to
+ * a different part of the user's decision-making process, such as selecting a battery, defining
+ * the billing cycle, and more.
+ */
+const SolarChoice = () => {
   const dispatch = useDispatch();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
   const [isLoading, setIsLoading] = useState(true);
-
-  const steps = [
-    "Start",
-    "Information",
-    "Bill Cycle",
-    "Electricity Usage",
-    "Location",
-    "Postcode Info",
-    "Battery Choice",
-    "Recommendation",
-  ];
   const [locationData, setLocationData] = useState(null);
-  // Fetching the data when the component mounts
 
+  /**
+   * Fetches necessary data when the component mounts and dispatches it to Redux store.
+   * The data includes:
+   * - Solar pricing with a battery.
+   * - Solar pricing without a battery.
+   * - Location-related data.
+   */
   useEffect(() => {
-    // Fetching data for withBattery
+    // Fetch data for solar packages with battery
     fetch(
       "https://sustainable-urban-life-backend.onrender.com/api/solar_energy/solar_package_wb"
     )
@@ -52,7 +50,7 @@ function SolarChoice() {
         );
       });
 
-    // Fetching data for withoutBattery
+    // Fetch data for solar packages without battery
     fetch(
       "https://sustainable-urban-life-backend.onrender.com/api/solar_energy/solar_package_wob"
     )
@@ -66,6 +64,8 @@ function SolarChoice() {
           })
         );
       });
+
+    // Fetch data for location-related information
     fetch(
       "https://sustainable-urban-life-backend.onrender.com/api/solar_energy/sub_info"
     )
@@ -76,31 +76,23 @@ function SolarChoice() {
       });
   }, []);
 
-  const handleNextStep = () => {
-    setStep((prevStep) => prevStep + 1);
-  };
+  // Handles navigation to the next step in the form
+  const handleNextStep = () => setStep((prevStep) => prevStep + 1);
 
-  const handlePreviousStep = () => {
-    setStep((prevStep) => prevStep - 1);
-  };
+  // Handles navigation to the previous step in the form
+  const handlePreviousStep = () => setStep((prevStep) => prevStep - 1);
+
   return (
     <div className="solar-choice-page">
       <Navbar isHomePage={false} />
-      {step === 1 && <FirstStep nextStep={handleNextStep} />}
 
       {isLoading ? (
         <div className="loading-container">
-          {/* Use a custom icon for the Spin component */}
-          <Spin size="large" tip="Charging solar energy..."></Spin>
+          <Spin size="large" tip="Charging solar energy..." />
         </div>
       ) : (
         <>
-          {/* {step === 2 && (
-            <InformationStep
-              previousStep={handlePreviousStep}
-              nextStep={handleNextStep}
-            />
-          )} */}
+          {step === 1 && <FirstStep nextStep={handleNextStep} />}
           {step === 2 && (
             <BillCycle
               previousStep={handlePreviousStep}
@@ -138,6 +130,6 @@ function SolarChoice() {
       )}
     </div>
   );
-}
+};
 
 export default SolarChoice;

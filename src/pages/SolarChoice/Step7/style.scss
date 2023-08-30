@@ -1,330 +1,111 @@
-.battery-choice {
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  width: 100vw;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+@import "../../../assets/scss/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+.recommendation-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: "Patrick Hand", cursive; /* Cartoon font */
-  background-color: #ffdd77; /* Pastel yellow */
-  .step-title {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-    font-size: 50px;
-    color: #000; /* Solid black */
-    text-shadow: 4px 4px 0px #727234; /* Bright green shadow for cartoon effect */
-  }
-  .battery-query {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-size: 24px;
-    margin: 20px 0;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    margin-bottom: 3%;
-    color: #000; /* Solid black */
-    text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
+  height: 100vh;
+  background-color: $light-green;
+  font-family: $primary-font;
+  position: relative;
+  font-family: $solar-font;
+  filter: drop-shadow($primary-box-shadow);
 
-    span {
-      font-weight: 900; /* Heavier weight */
-      color: #000; /* Solid black */
-      text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
+  background-color: $light-green;
+
+  .sidebar {
+    width: 25%;
+    padding: $mobile-padding;
+    border-radius: $primary-border-radius;
+    border: $primary-border;
+    box-shadow: $solar-hover-box-shadow;
+
+    border-radius: $primary-border-radius;
+    transition: transform $medium-transition;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    background-color: white;
+    h3 {
+      cursor: pointer;
+      transition: color $medium-transition;
+      font-size: $subtitle-font-size;
+      color: $harry-primary;
+
+      border-bottom: $primary-border;
+      margin-bottom: $spacing-unit;
+      padding-bottom: $spacing-unit;
+
+      &:hover {
+        color: $harry-primary;
+        text-shadow: $primary-text-shadow;
+      }
     }
-  }
-  .battery-choice-step {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #0b0c0f; /* Solid blue border for contrast */
-    border-radius: 15px;
-    box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
-    .usage-slider {
-      width: 80%;
-      margin: 20px auto; // Centers the slider in its container
-      display: flex;
-      flex-direction: column;
-      align-items: center; // Ensures the content within the slider container is centered
-      margin-top: 4%;
-      .range-labels {
-        margin-top: 20px;
-        margin-bottom: 10px;
+
+    .custom-radio-group .ant-radio-wrapper {
+      display: block;
+      margin-bottom: $spacing-unit;
+    }
+
+    .filter-sort-container {
+      .filter-section,
+      .sort-section,
+      .battery-choice-section {
+        margin-bottom: $desktop-padding;
         display: flex;
-        justify-content: space-between;
-        width: 100%; /* Full width for responsiveness */
-        color: #000; /* Solid black */
-        text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
+        flex-direction: column;
+        margin-left: $tablet-padding;
+        align-items: start;
 
-        font-size: 16px; /* Smaller size for mobile */
-
-        &-low {
-          align-self: flex-start;
+        h3 {
+          font-size: $harry-header-size;
+          font-weight: 800;
         }
 
-        &-high {
-          align-self: flex-end;
-        }
-        &-low,
-        &-high {
-          background: #ff463a;
-          padding: 5px;
-          border-radius: 10px;
-        }
-
-        /* Adjustments for larger screens */
-        @media (min-width: 768px) {
-          /* Medium screens */
-          font-size: 24px;
-        }
-
-        @media (min-width: 1024px) {
-          /* Large screens */
-          font-size: 30px;
+        .ant-radio-wrapper {
+          margin-bottom: $spacing-unit;
+          color: $harry-primary;
+          font-size: $navbar-font-size;
         }
       }
 
-      .battery-slider {
-        width: 100%;
-        height: 16px;
-        border: 2px solid #0b0c0f; /* Solid blue border for contrast */
-        border-radius: 15px;
-        box-shadow: 4px 4px 0px 0px #07090b; // offset shadow for cartoon feel
-        & .ant-slider-track {
-          background: linear-gradient(
-            to right,
-            #ef5e53,
-            #f63122
-          ); // Deep orange to deep red gradient
-          height: 100%;
-          border-radius: 8px;
-        }
-
-        & .ant-slider-handle {
-          height: 20px;
-          width: 20px;
-          background-color: #fffde5;
-
-          border-radius: 50%;
-          transform: translateY(-50%);
-          box-shadow: 0 3px 0 rgba(0, 0, 0, 0.6);
-        }
-
-        @media (min-width: 768px) {
-          /* Medium screens */
-          height: 20px;
-          border-radius: 10px;
-
-          & .ant-slider-handle {
-            height: 24px;
-            width: 24px;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          /* Large screens */
-          height: 24px;
-          border-radius: 12px;
-
-          & .ant-slider-handle {
-            height: 28px;
-            width: 28px;
-          }
-        }
-      }
-
-      .battery-size {
-        font-size: 24px; /* Reduced for mobile */
-        color: #000; /* Solid black */
-        text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
-
-        @media (min-width: 768px) {
-          /* Medium screens */
-          font-size: 28px;
-        }
-
-        @media (min-width: 1024px) {
-          /* Large screens */
-          font-size: 32px;
-        }
-      }
-
-      .battery-input-container {
+      .filter-section-solar,
+      .sort-section-price {
+        margin-left: $mobile-padding;
+        margin-bottom: $desktop-padding;
         display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .battery-unit {
-          font-size: 24px; /* Reduced for mobile */
-          color: #000; /* Solid black */
-          text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
-
-          @media (min-width: 768px) {
-            /* Medium screens */
-            font-size: 28px;
-          }
-
-          @media (min-width: 1024px) {
-            /* Large screens */
-            font-size: 32px;
-          }
+        flex-direction: column;
+        align-items: start;
+        h3 {
+          font-size: $secondary-font-size;
         }
 
-        .battery-input {
-          color: #28364a;
-          font-size: 20px; /* Reduced for mobile */
-          width: 60%; /* Increased width for mobile */
-          border: 2px solid #dce1e8; /* Slightly thicker border for emphasis */
-          border-radius: 6px; /* Slightly increased for cartoon feel */
-          padding: 4px 8px; /* Adjusted padding for mobile */
-          color: #000; /* Solid black */
-          text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
-          background: #ff463a;
-          border: 3px solid #0b0c0f; /* Solid blue border for contrast */
-          border-radius: 15px;
-          box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
-
-          @media (min-width: 768px) {
-            /* Medium screens */
-            font-size: 22px;
-            width: 40%;
-          }
-
-          @media (min-width: 1024px) {
-            /* Large screens */
-            font-size: 26px;
-            width: 30%;
-          }
+        .ant-radio-wrapper {
+          margin-bottom: $spacing-unit;
+          font-size: $navbar-font-size;
+          color: $harry-primary;
         }
       }
     }
 
-    .step-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-    .error-message {
-      color: red;
-      margin-top: 10px;
-      font-size: 20px;
-    }
-    .battery-choice-options {
-      display: flex;
-      gap: 30px;
-      margin-top: 20px;
-
-      .battery-choice-option {
-        position: relative;
-        width: 120px;
-        height: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: transform 0.2s;
-        background-color: rgba(white, 0.7); /* Brighter, cartoonish color */
-        border: 3px solid #0b0c0f; /* Solid blue border for contrast */
-        border-radius: 15px;
-        box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
-        &:hover {
-          transform: scale(1.1);
-          background-color: rgba(
-            255,
-            50,
-            50,
-            0.8
-          ); /* Even more saturated red on hover */
-          color: white;
-        }
-
-        &.ant-radio-button-wrapper-checked {
-          background-color: rgba(
-            255,
-            50,
-            50,
-            0.9
-          ); /* Even more saturated red on hover */
-
-          .choice-tick {
-            visibility: visible;
-          }
-        }
-
-        p {
-          z-index: 1;
-          color: #000;
-
-          font-size: 25px;
-        }
-
-        .choice-circle {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 30px;
-          height: 30px;
-          border-radius: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #fffde5; // Cream color for the background of choice circle
-          border: 1px solid #72656a; // Using a darker color for the border
-
-          .choice-tick {
-            opacity: 1;
-            font-size: large;
-            color: rgb(3, 108, 3);
-            font-weight: bold;
-          }
-        }
-      }
-    }
-
-    .loading-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-
-      p {
-        margin-top: 10px;
-        text-shadow: 3px 3px 0px #ffdd77; /* Cartoonish yellow shadow */
-      }
-    }
-
-    // Define common styles for both next and previous buttons
     .button-common {
       position: absolute;
       width: 70px;
       height: 70px;
       top: 50%;
-      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-      border: 2px solid #bbb7b7;
-      color: #4caf50;
+      background: linear-gradient(to bottom, $soft-yellow, $light-green);
+      border: $primary-border;
+      color: $primary-color;
       padding: 10px 20px;
       border-radius: 35px;
-      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      box-shadow: $solar-hover-box-shadow;
       transition: all 0.3s ease-out;
       opacity: 0.8;
       font-size: 30px;
 
       &:hover {
-        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
-        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+        background: linear-gradient(to bottom, $light-green, $soft-yellow);
+        box-shadow: $solar-hover-box-shadow;
+        transform: translateX(-50%) translateY(-50%) scale(1.05);
 
         .anticon {
           transform: scale(1.2);
@@ -332,16 +113,92 @@
       }
     }
 
-    .next-button {
-      @extend .button-common; // Use the common styles
-      right: 0px;
+    .previous-button {
+      @extend .button-common;
+      left: 40px;
       transform: translateX(-50%) translateY(-50%);
     }
+  }
 
-    .previous-button {
-      @extend .button-common; // Use the common styles
-      left: 70px;
-      transform: translateX(-50%) translateY(-50%);
+  .main-content {
+    flex: 1;
+    padding: $desktop-padding;
+    overflow-y: auto;
+    color: $harry-primary;
+
+    h1,
+    h2 {
+      color: $harry-primary;
+      text-shadow: $primary-text-shadow;
+      margin-bottom: $spacing-unit;
+    }
+
+    .installer-card {
+      border-radius: $harry-radius;
+      padding: $tablet-padding;
+      margin-bottom: $tablet-padding;
+      font-family: $harry-font;
+      border: $primary-border;
+      box-shadow: $solar-hover-box-shadow;
+
+      border-radius: $primary-border-radius;
+      transition: transform $medium-transition;
+      h3 {
+        font-size: $title-font-size;
+        color: $harry-primary;
+
+        margin-bottom: $spacing-unit;
+      }
+
+      p {
+        z-index: 1;
+        color: $harry-primary;
+
+        font-size: $quote-font-size;
+      }
+
+      button {
+        color: $harry-primary;
+
+        border-radius: $primary-border-radius;
+        border: $primary-border;
+        font-family: $harry-font;
+        font-size: $quote-font-size;
+
+        height: $button-height-tablet;
+        border: $primary-border;
+        box-shadow: $solar-hover-box-shadow;
+
+        border-radius: $primary-border-radius;
+        transition: transform $medium-transition;
+        &:hover {
+          background-color: $solar-primary;
+          transform: scale(1.1);
+          border: $primary-border;
+          box-shadow: $solar-hover-box-shadow;
+          color: $harry-shadow;
+
+          border-radius: $primary-border-radius;
+          transition: transform $medium-transition;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-desktop) {
+    .sidebar {
+      width: 35%;
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet-portrait) {
+    flex-direction: column-reverse;
+
+    .sidebar {
+      width: 100%;
+      position: relative;
+      border-right: none;
+      border-top: $primary-border;
     }
   }
 }

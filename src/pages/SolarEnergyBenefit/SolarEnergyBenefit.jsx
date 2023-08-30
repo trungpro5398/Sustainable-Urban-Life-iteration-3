@@ -16,16 +16,26 @@ import Navbar from "../../components/Navbar/Navbar";
 
 const { Panel } = Collapse;
 
-const HoverableLink = ({ url, children }) => {
-  return (
-    <span className="hoverable-container">
-      <a href={url} target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
-    </span>
-  );
-};
+/**
+ * This component is a styled anchor tag to show the "Read more" links.
+ * @param {string} url - The URL the link points to.
+ * @param {React.Node} children - The content inside the anchor tag.
+ */
+const HoverableLink = ({ url, children }) => (
+  <span className="hoverable-container">
+    <a href={url} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  </span>
+);
 
+/**
+ * This component represents each of the custom panels inside the collapse.
+ * @param {string} image - The URL of the image to be shown.
+ * @param {string} title - The title of the panel.
+ * @param {React.Node} children - The content inside the panel.
+ * @param {string} link - The URL for the "Read more" link.
+ */
 const CustomPanel = ({ image, title, children, link }) => (
   <div className="custom-panel">
     {image && <Image src={image} />}
@@ -36,7 +46,13 @@ const CustomPanel = ({ image, title, children, link }) => (
   </div>
 );
 
+/**
+ * The SolarEnergyBenefit component showcases the benefits of solar energy.
+ * It utilizes a collapsible component to display information regarding various benefits,
+ * along with associated images and "Read more" links.
+ */
 const SolarEnergyBenefit = () => {
+  // Initially, all panels are active (open)
   const [activeKeys, setActiveKeys] = useState([
     "1",
     "2",

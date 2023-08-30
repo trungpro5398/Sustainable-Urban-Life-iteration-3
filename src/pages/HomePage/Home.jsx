@@ -1,52 +1,60 @@
-// Inside Home.js
-
+// External Dependencies
 import React, { useState, useEffect } from "react";
-import HeroSection from "../../components/HeroSection/HeroSection";
-import Carousel from "../../components/Carousel/Carousel";
-import InfoBlocks from "../../components/InfoBlocks/InfoBlocks";
-import Testimonials from "../../components/Testimonials/Testimonials";
-import Footer from "../../components/Footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons"; // or whichever icon you choose
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
-// import Navbar from "../../components/Navbar/Navbar";
-import "./Home.scss";
+// Components
+import HeroSection from "../../components/HeroSection/HeroSection";
 import SubOptions from "../../components/SubOptions/SubOptions";
+
+// Styles
+import "./Home.scss";
+import InfoBlocks from "../../components/InfoBlocks/InfoBlocks";
+
+/**
+ * Home Component
+ *
+ * This component renders the home page of the application. It provides a hero section,
+ * sub-options, and a scroll-to-top button that appears when the user scrolls beyond a
+ * certain point on the page.
+ */
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Toggle the visibility of the scroll-to-top button
+  /**
+   * Toggles the visibility of the scroll-to-top button.
+   * It shows the button after the user has scrolled more than 300px.
+   */
   const toggleVisibility = () => {
     if (window.pageYOffset > 300) {
-      // Show the button after 300px of scrolling
       setIsVisible(true);
     } else {
       setIsVisible(false);
     }
   };
 
+  // Setting up the event listener for scrolling
   useEffect(() => {
     window.addEventListener("scroll", toggleVisibility);
 
-    // Clean up the event listener
+    // Cleanup: remove the event listener when the component is unmounted
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
-  // Scroll-to-top function
+  /**
+   * Scrolls the window to the top with a smooth scrolling effect.
+   */
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Optional: smooth scrolling effect
+      behavior: "smooth",
     });
   };
   return (
     <div className="HomePage">
       <HeroSection />
       <SubOptions />
-      {/* <Carousel /> */}
       <InfoBlocks />
-      {/* <Testimonials />
-      <Footer /> */}
       {isVisible && (
         <div onClick={scrollToTop} className="scroll-to-top">
           <FontAwesomeIcon icon={faChevronUp} className="icon" />

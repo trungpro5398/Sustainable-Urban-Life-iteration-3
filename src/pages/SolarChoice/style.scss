@@ -1,9 +1,27 @@
-.solar-choice-page{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.solar-choice-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 25px;
+
+    border-radius: 8px;
+
+    .ant-spin {
+      margin-bottom: 15px;
+    }
+
+    .ant-spin-text {
+      color: #273c75;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
 }

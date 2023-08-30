@@ -1,75 +1,96 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+// -------------------
+// IMPORTS
+// -------------------
 
+// React Dependencies
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// UI Components & Icons
 import { Button, Card, Spin, Radio } from "antd";
-import "./style.scss";
-import {
-  StarFilled,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
+import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHandPointRight,
-  faSmile,
-  faGrinStars,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
-import { updateField } from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust this path to your project's directory structure
+// Redux Actions
+import { updateField } from "../../../reduxToolkit/slices/solarFormSlice";
 
+// Styles
+import "./style.scss";
+
+/**
+ * Recommendation Component.
+ * This component provides a list of recommended installers based on user's preferences.
+ * @param {Function} previousStep - Function to handle the previous step action.
+ * @returns {JSX.Element} Rendered component.
+ */
 const Recommendation = ({ previousStep }) => {
+  // Component State
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-
-  useState(false);
-
   const [sortOpen, setSortOpen] = useState(false);
   const [sortOpenPrice, setSortOpenPrice] = useState(false);
-
-  const solarFormData = useSelector((state) => state.solarForm);
   const [installers, setInstallers] = useState([]);
-
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
-
   const [filterOpen, setFilterOpen] = useState(false);
   const [batteryOpen, setBatteryOpen] = useState(false);
-
   const [filterOpenSolarSystemSize, setFilterOpenSolarSystemSize] =
     useState(false);
 
-  // Use the batteryChoice from Redux store to select the appropriate dataset
+  // Redux Hooks
+  const dispatch = useDispatch();
+  const solarFormData = useSelector((state) => state.solarForm);
+
+  // Determine the appropriate dataset based on battery choice.
   const dataToUse =
     solarFormData.batteryChoice.wantBattery === "Yes"
       ? solarFormData.pricing.withBattery
       : solarFormData.pricing.withoutBattery;
 
+  /**
+   * This effect is responsible for filtering and sorting the installers data.
+   * It triggers every time the filter, sort order, or data changes.
+   * The logic involves:
+   * - Filtering the data based on the user's selected system size.
+   * - Sorting the filtered data based on price in the order selected by the user.
+   */
   useEffect(() => {
     let filteredData = dataToUse;
+
+    // Filter data based on system size
     if (filter) {
-      const filterValue = parseFloat(filter); // Converts "1.5kWh" to 1.5
+      const filterValue = parseFloat(filter);
       filteredData = dataToUse.filter(
         (item) => parseFloat(item.system_size) === filterValue
       );
     }
 
+    // Sort the filtered data based on price
     if (sort) {
       let sortedData = [...filteredData];
       sortedData.sort((a, b) => {
         const priceA = parseFloat(a.price || a.price_battery);
-        const priceB = parseFloat(b.price || b.price_battery);
+        const priceB = parseFloat(b.price || a.price_battery);
 
-        if (sort === "low") return priceA - priceB;
-        if (sort === "high") return priceB - priceA;
+        return sort === "low" ? priceA - priceB : priceB - priceA;
       });
+
       filteredData = sortedData;
     }
 
+    // Update the installers state with the sorted and filtered data
     setInstallers(filteredData);
   }, [filter, sort, dataToUse]);
+
+  /**
+   * Computes the recommended solar system size based on daily electricity usage.
+   *
+   * @param {number} dailyUsage - The daily electricity usage.
+   * @returns {string} - The recommended system size.
+   */
   const getRecommendedSize = (dailyUsage) => {
     if (dailyUsage < 6) return "1.5";
     if (dailyUsage >= 6 && dailyUsage < 15) return "3";
@@ -79,10 +100,20 @@ const Recommendation = ({ previousStep }) => {
   const recommendedSize = getRecommendedSize(
     solarFormData.electricityUsage.usageDaily
   );
-
+  /**
+   * Handles the logic when an installer is selected to be compared.
+   *
+   * @param {number} id - The ID of the installer.
+   */
   const addToCompare = (id) => {
     console.log(`Adding installer with ID ${id} to compare`);
   };
+
+  /**
+   * Provides a loading effect when moving to a different UI state.
+   *
+   * @param {Function} callback - The callback function to execute after loading.
+   */
   const handleClick = (callback) => {
     setLoading(true);
     setTimeout(() => {
@@ -90,6 +121,11 @@ const Recommendation = ({ previousStep }) => {
       callback && callback();
     }, 2000);
   };
+  /**
+   * Updates the Redux store based on user's battery choice.
+   *
+   * @param {string} choice - The battery choice made by the user.
+   */
   const handleBatteryChoice = (choice) => {
     dispatch(
       updateField({

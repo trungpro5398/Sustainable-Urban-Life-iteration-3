@@ -1,5 +1,8 @@
-.App {
+body {
+  color: #1e0e85; // Replace with your desired hex color code
+}
 
+.App {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,8 +27,6 @@
   align-items: center;
   z-index: 1000;
 }
-
-
 
 .passwordModal {
   position: fixed;
@@ -69,7 +70,7 @@
 
   @media (max-width: 480px) {
     width: 90%;
-    
+
     input {
       width: 100%;
     }

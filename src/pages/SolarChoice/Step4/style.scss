@@ -1,154 +1,146 @@
-@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* electricity-like font from Google Fonts */
+@import "../../../assets/scss/variables.scss";
 
-.electricity-usage {
-  height: 100vh;
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* Cartoon-like font */
+
+.location-step {
+  min-height: 100vh;
   width: 100vw;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Add a electricityish shadow */
-  filter: drop-shadow(8px 8px 10px rgba(0, 0, 0, 0.8));
-  font-family: "Patrick Hand", cursive; /* electricity-like font */
-  background-color: #f5cfcf; /* Creamy background for the electricity feel */
+  filter: drop-shadow($primary-box-shadow);
+  background-color: $light-green;
+  font-family: $primary-font;
 
-  .step-title {
+  h1 {
     text-align: center;
-    font-size: 70px;
-    color: #fc4445; /* Punchy red */
-    text-shadow: 4px 4px 0px #fabd03; /* Yellow shadow */
+    font-size: $title-font-size;
+    color: $primary-color;
+    text-shadow: $primary-text-shadow;
     margin-bottom: 20px;
     padding: 10px;
-    border-radius: 10px;
-    // background-color: #e4db66; /* electricity-like yellow background */
+    border-radius: $primary-border-radius;
   }
 
-  .electricity-usage-step {
-    background: #f4a460; /* Salmon background for contrast */
+  .location-step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 40px;
-    border: 6px solid #e85959; /* Thick dashed border */
-    border-radius: 20px;
-    box-shadow: 10px 10px 0px 0px #f64848; // offset shadow for electricity feel
-
-    .usage-instructions p {
-      font-size: 35px;
-      color: #352f44;
-      background: #f6e3b5; /* Light creamy background */
-      padding: 15px;
-      border: 4px solid #e85959; /* Thick dashed border */
-      border-radius: 20px;
-      box-shadow: 6px 6px 0px 0px #f64848; // offset shadow for electricity feel
-      text-shadow: 2px 2px 0px #fabd03;
-      margin-bottom: 25px;
-    }
-
-    .step-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    .usage-slider {
+    box-sizing: border-box;
+    background: $light-green;
+    border: $primary-border;
+    padding: 40px;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
+    .select-location {
       display: flex;
-      flex-direction: column;
       align-items: center;
 
-      .range-labels {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        font-size: 30px;
-        color: #352f44;
-        text-shadow: 2px 2px 0px #fabd03;
+      .location-icon {
+        margin-left: 15px;
+        cursor: pointer;
+        color: $primary-color;
 
-        &-low,
-        &-high {
-          background: #e4db66;
-          padding: 5px;
-          border-radius: 10px;
-        }
+        font-size: 45px;
       }
+    }
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 20px;
+    }
+    .ant-select {
+      margin: 30px 0;
+      position: relative; // Ensuring this is relatively positioned
+      border-radius: 10px;
+      width: 240px;
 
-      .electricity-usage-slider {
-        width: 100%;
-        background: #fabd03;
-        border-radius: 20px;
-        margin: 10px 0;
-
-        & .ant-slider-track {
-          background: #fc4445;
-        }
-
-        & .ant-slider-handle {
-          background: #352f44;
-          border: 3px solid #fc4445;
-          border-radius: 50%;
-        }
-      }
-      .electricity-usage-size {
-        margin-top: 5%;
-        font-size: 30px;
-        color: #352f44;
-        text-shadow: 2px 2px 0px #fabd03;
-      }
-      .daily-usage-display {
-        p {
-          font-size: 30px;
-          color: #352f44;
-          text-shadow: 2px 2px 0px #fabd03;
-        }
-      }
-      .electricity-usage-input-container {
+      .ant-select-selector {
+        height: 55px;
         display: flex;
         align-items: center;
-        margin-top: 15px;
+        justify-content: center;
+        max-width: 100%; // Set to take full width of parent
 
-        .electricity-usage-unit {
-          font-size: 30px;
-          color: #352f44;
-          margin-left: 10px;
-          text-shadow: 2px 2px 0px #fabd03;
-          .instruction-icon {
-            font-size: 40px;
-            margin-left: 10px;
-            cursor: pointer;
-            color: black;
-          }
+        background: #badc58;
+        border-radius: 10px;
+        border: $primary-border;
+        box-shadow: $solar-hover-box-shadow;
+
+        border-radius: $primary-border-radius;
+        transition: transform $medium-transition;
+        background-color: white;
+        &:hover {
+          background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+          border: $primary-border;
+          box-shadow: $solar-hover-box-shadow;
         }
 
-        .electricity-usage-input {
-          color: #352f44;
-          font-size: 25px;
-          width: 140px;
-          background: #e4db66;
-          border: 2px solid #e85959; /* Thick dashed border */
-          border-radius: 20px;
-          box-shadow: 4px 4px 0px 0px #f64848; // offset shadow for electricity feel
-          border-radius: 10px;
-          padding: 5px 10px;
+        .ant-select-selection-item,
+        .ant-select-selection-placeholder {
+          font-size: $primary-font-size;
+          color: $primary-color;
+
+          font-weight: bold;
         }
+      }
+
+      .ant-select-arrow {
+        color: $primary-color;
+
+        font-size: 1.4em;
+        position: absolute;
+        right: 10px; // Positioned within .ant-select
+        top: 50%;
       }
     }
 
-    .loading-section {
+    label,
+    p {
+      font-size: $harry-header-size;
+      color: $primary-color;
+      font-weight: 600;
+      margin-bottom: $spacing-unit;
+      font-family: $solar-font;
+    }
+
+    .ant-input {
+      margin-bottom: 25px;
+      width: 80%;
+      height: 55px;
+      font-size: 24px;
+      background: #dff9fb; /* Soft blue for input background */
+      border: 2px solid #273c75; /* Blue border for input */
+      border-radius: 8px;
+    }
+
+    .loading-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 25px;
+      background-color: rgba(
+        255,
+        218,
+        97,
+        0.6
+      ); /* Light yellow for loading container */
+      border-radius: 8px;
 
-      p {
-        color: #fffde5;
-        margin-top: 10px;
+      .ant-spin {
+        margin-bottom: 15px;
+      }
+
+      .ant-spin-text {
+        color: $primary-color;
+
+        font-weight: bold;
+        font-size: 20px;
       }
     }
 
@@ -158,20 +150,20 @@
       width: 70px;
       height: 70px;
       top: 50%;
-      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-      border: 2px solid #bbb7b7;
-      color: #4caf50;
+      background: linear-gradient(to bottom, $soft-yellow, $light-green);
+      border: $primary-border;
+      color: $primary-color;
       padding: 10px 20px;
       border-radius: 35px;
-      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      box-shadow: $solar-hover-box-shadow;
       transition: all 0.3s ease-out;
       opacity: 0.8;
       font-size: 30px;
 
       &:hover {
-        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
-        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+        background: linear-gradient(to bottom, $light-green, $soft-yellow);
+        box-shadow: $solar-hover-box-shadow;
+        transform: translateX(-50%) translateY(-50%) scale(1.05);
 
         .anticon {
           transform: scale(1.2);
@@ -180,46 +172,48 @@
     }
 
     .next-button {
-      @extend .button-common; // Use the common styles
+      @extend .button-common;
       right: 0px;
       transform: translateX(-50%) translateY(-50%);
     }
 
     .previous-button {
-      @extend .button-common; // Use the common styles
-      left: 70px;
+      @extend .button-common;
+      left: 8.75 * $spacing-unit;
       transform: translateX(-50%) translateY(-50%);
     }
   }
 }
 
-.electricity-modal {
+.location-modal {
   .ant-modal-content {
-    transition: transform 0.2s;
-    background: #e4db66;
-    border: 4px solid #e85959; /* Thick dashed border */
-    border-radius: 20px;
-    box-shadow: 5px 5px 0px 0px #f64848; // offset shadow for electricity feel
+    border-radius: 10px;
+    border: $primary-border;
+    box-shadow: $solar-hover-box-shadow;
+
+    border-radius: $primary-border-radius;
+    transition: transform $medium-transition;
+    background-color: white;
   }
 
-  .electricity-content {
+  .location-content {
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 15px;
   }
 
-  .electricity-item {
+  .location-item {
     display: flex;
-    background: #e4db66;
-    font-family: "Patrick Hand", cursive; /* Apply the cartoon font */
 
     align-items: center;
     gap: 10px;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 500;
+    color: $primary-color;
+
     p {
-      font-family: "Patrick Hand", cursive; /* Apply the cartoon font */
+      color: $primary-color;
 
       font-size: 18px;
       line-height: 24px;
@@ -227,11 +221,10 @@
     }
   }
 
-  .electricity-icon {
-    font-family: "Patrick Hand", cursive; /* Apply the cartoon font */
+  .location-icon {
+    color: $primary-color;
 
-    font-size: 20px;
-    color: #4b0082;
+    font-size: 30px;
     flex-shrink: 0; // prevents icon from shrinking
   }
 }

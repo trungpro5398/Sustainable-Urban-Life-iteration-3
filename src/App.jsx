@@ -1,58 +1,39 @@
-import React, { useState } from "react";
-import Swal from "sweetalert2";
-import "./App.scss";
-
-import Home from "./pages/HomePage/Home"; // assuming you've created a Home.js inside pages directory
-import AboutUs from "./pages/AboutUsPage/AboutUs";
+import React from "react";
 import { Provider } from "react-redux";
-import { store } from "./store";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+// Styles
+import "./App.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+// Redux store
+import { store } from "./store";
+
+// Pages
+import Home from "./pages/HomePage/Home";
+import AboutUs from "./pages/AboutUsPage/AboutUs";
 import SolarChoice from "./pages/SolarChoice/SolarChoice";
 import GovernmentSupport from "./pages/GovernmentSupport/GovernmentSupport";
 import SolarEnergyBenefit from "./pages/SolarEnergyBenefit/SolarEnergyBenefit";
 
+/**
+ * Main application component.
+ *
+ * This component sets up the Redux provider and React Router.
+ * It defines routes for different pages of the application.
+ */
 const App = () => {
-  const [isBlurred, setIsBlurred] = useState(false);
-  const [showPasswordModal, setShowPasswordModal] = useState(true);
-  const [password, setPassword] = useState("");
-
-  const handlePasswordCheck = async () => {
-    const response = await fetch(
-      "https://carbon-footprint-calculator-backend.onrender.com/api/check-password",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      }
-    );
-
-    const data = await response.json();
-    if (data.isValid) {
-      setIsBlurred(false);
-      setShowPasswordModal(false);
-      Swal.fire({
-        title: "Success!",
-        text: "Password is correct.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-    } else {
-      Swal.fire({
-        title: "Error!",
-        text: "Incorrect password!",
-        icon: "error",
-        confirmButtonText: "Try Again",
-      });
-    }
-  };
-
   return (
+    // Redux provider to make the Redux store available to all container components.
     <Provider store={store}>
+      {/* Set up the React Router */}
       <Router>
+        {/* Main app container */}
         <div className="App">
-          <div className={`content ${isBlurred ? "blurred" : ""}`}>
+          {/* Content container */}
+          <div className="content">
+            {/* Define the routes for the application */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/solar-choice" element={<SolarChoice />} />
@@ -67,19 +48,8 @@ const App = () => {
               />
             </Routes>
           </div>
-          {/* {showPasswordModal && (
-            <div className="passwordModal">
-              <input
-                type="password"
-                placeholder="Enter password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button onClick={handlePasswordCheck}>Submit</button>
-            </div>
-          )} */}
         </div>
       </Router>
-      <div className="App"></div>
     </Provider>
   );
 };

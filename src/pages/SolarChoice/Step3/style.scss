@@ -1,153 +1,172 @@
-@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* Cartoon-like font from Google Fonts */
+@import "../../../assets/scss/variables.scss";
 
-.bill-step {
-  font-family: "Patrick Hand", cursive; /* Cartoon-like font */
-  background-color: #ffcce5; /* Bright pastel pink background */
-  height: 100vh;
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* electricity-like font from Google Fonts */
+
+.electricity-usage {
+  min-height: 100vh;
   width: 100vw;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border: 5px solid #ff66cc; /* Brighter border */
+  filter: drop-shadow($primary-box-shadow);
+  background-color: $light-green;
+  font-family: $primary-font;
 
-  h1 {
-    color: black;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
-    margin-bottom: 80px;
-    font-size: 50px;
+  .step-title {
+    text-align: center;
+    font-size: $title-font-size;
+    text-shadow: $primary-text-shadow;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: $primary-border-radius;
   }
 
-  .bill-step-container {
-    margin-top: -2%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    border: 8px solid #62504b; /* Thicker border */
+  .electricity-usage-step {
+    background: $light-green;
+    border: $primary-border;
+    padding: 40px;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
 
-    box-shadow: 8px 8px 0px 0px #6e4032; // offset shadow for cartoon feel
+    .usage-instructions p {
+      font-size: $primary-font-size;
 
-    label,
-    p {
-      color: #fffde5;
-      font-weight: 600;
-      margin-bottom: 10px;
-      font-family: "Patrick Hand", cursive; /* Cartoon-like font */
+      background: $light-green;
+      padding: 15px;
+      border: $primary-border;
+      border-radius: $primary-border-radius;
+      box-shadow: $solar-hover-box-shadow;
+      text-shadow: $primary-text-shadow;
+      margin-bottom: 25px;
     }
-    h2 {
-      position: relative;
+
+    .step-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .usage-slider {
       display: flex;
+      flex-direction: column;
       align-items: center;
 
-      .info-icon {
+      .range-labels {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
         font-size: 30px;
-        margin-left: 10px;
-        cursor: pointer;
-        color: black;
+        text-shadow: $primary-text-shadow;
+
+        &-low,
+        &-high {
+          background: $soft-yellow;
+          padding: 5px;
+          border-radius: $primary-border-radius;
+        }
       }
-    }
-    .error-message {
-      color: red;
-      margin-top: 10px;
-    }
-    .ant-input {
-      margin-bottom: 20px;
-      width: 400px;
-      height: 50px;
-      font-size: 20px;
-      border: 3px solid #ff66cc; /* Brighter border */
-    }
 
-    .bill-cycle-options {
-      display: flex;
-      gap: 30px;
-      margin-top: 20px;
+      .electricity-usage-slider {
+        width: 100%;
+        background: $soft-yellow;
+        border-radius: $primary-border-radius;
+        margin: 10px 0;
 
-      .bill-cycle-option {
-        position: relative;
-        width: 120px;
-        height: 120px;
+        & .ant-slider-track {
+          background: $primary-color;
+        }
+
+        & .ant-slider-handle {
+          background: $harry-primary;
+          border: 3px solid $primary-color;
+          border-radius: 50%;
+        }
+      }
+
+      .electricity-usage-size {
+        margin-top: 5%;
+        font-size: 30px;
+        color: $harry-primary;
+        text-shadow: $primary-text-shadow;
+      }
+
+      .daily-usage-display {
+        p {
+          font-size: 30px;
+          color: $harry-primary;
+          text-shadow: $primary-text-shadow;
+        }
+      }
+
+      .electricity-usage-input-container {
         display: flex;
         align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        background-color: rgba(#7a6b71, 0.7);
-        border-radius: 10px;
-        transition: transform 0.2s;
-        border: 4px solid #6e4032; /* Thicker border */
-        box-shadow: 4px 4px 0px 0px #6e4032; // offset shadow for cartoon feel
+        margin-top: 15px;
 
-        &:hover {
-          transform: scale(1.1);
-          background-color: rgba(#6c230d, 0.9);
-        }
+        .electricity-usage-unit {
+          font-size: 30px;
+          color: $harry-primary;
+          margin-left: 10px;
+          text-shadow: $primary-text-shadow;
 
-        &.ant-radio-button-wrapper-checked {
-          background-color: rgba(#6c230d, 0.8);
-
-          .choice-tick {
-            visibility: visible;
+          .instruction-icon {
+            font-size: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            color: black;
           }
         }
 
-        p {
-          z-index: 1;
-          color: #fffde5; // Light cream color for text
+        .electricity-usage-input {
+          color: $harry-primary;
           font-size: 25px;
-        }
-
-        .choice-circle {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 30px;
-          height: 30px;
-          border-radius: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #fffde5; // Cream color for the background of choice circle
-          border: 1px solid #72656a; // Using a darker color for the border
-
-          .choice-tick {
-            opacity: 1;
-            font-size: large;
-            color: rgb(3, 108, 3);
-            font-weight: bold;
-          }
+          width: 140px;
+          border-radius: $primary-border-radius;
+          padding: 5px 10px;
+          background: $soft-yellow;
+          border: $primary-border;
+          box-shadow: $solar-hover-box-shadow;
         }
       }
     }
-    // Define common styles for both next and previous buttons
+
+    .loading-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+
+      p {
+        color: #fffde5;
+        margin-top: 10px;
+      }
+    }
+
     .button-common {
       position: absolute;
       width: 70px;
       height: 70px;
       top: 50%;
-      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-      border: 2px solid #bbb7b7;
-      color: #4caf50;
+      background: linear-gradient(to bottom, $soft-yellow, $light-green);
+      border: $primary-border;
       padding: 10px 20px;
       border-radius: 35px;
-      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      box-shadow: $solar-hover-box-shadow;
       transition: all 0.3s ease-out;
       opacity: 0.8;
       font-size: 30px;
 
       &:hover {
-        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
-        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+        background: linear-gradient(to bottom, $light-green, $soft-yellow);
+        box-shadow: $solar-hover-box-shadow;
+        transform: translateX(-50%) translateY(-50%) scale(1.05);
 
         .anticon {
           transform: scale(1.2);
@@ -156,40 +175,41 @@
     }
 
     .next-button {
-      @extend .button-common; // Use the common styles
+      @extend .button-common;
       right: 0px;
       transform: translateX(-50%) translateY(-50%);
     }
 
     .previous-button {
-      @extend .button-common; // Use the common styles
+      @extend .button-common;
       left: 70px;
       transform: translateX(-50%) translateY(-50%);
     }
   }
 }
 
-.cartoon-modal {
+.electricity-modal {
   .ant-modal-content {
-    border-radius: 10px;
     transition: transform 0.2s;
-    border: 4px solid #6e4032;
-
-    box-shadow: 4px 4px 0px 0px #6e4032; // offset shadow
+    border: $primary-border;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
   }
 
-  .cartoon-content {
+  .electricity-content {
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 15px;
   }
 
-  .cartoon-item {
+  .electricity-item {
     display: flex;
+
     align-items: center;
     gap: 10px;
-
+    font-size: 20px;
+    font-weight: 500;
     p {
       font-size: 18px;
       line-height: 24px;
@@ -197,8 +217,9 @@
     }
   }
 
-  .cartoon-icon {
+  .electricity-icon {
+    font-size: 20px;
     color: #4b0082;
-    flex-shrink: 0; // prevents icon from shrinking
+    flex-shrink: 0;
   }
 }

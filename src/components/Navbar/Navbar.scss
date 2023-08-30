@@ -1,3 +1,6 @@
+@import "../../assets/scss/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
 @keyframes iconRotate {
   from {
     transform: rotate(0deg);
@@ -6,56 +9,54 @@
     transform: rotate(15deg);
   }
 }
+
 .header {
   position: relative;
   padding: 15px 0;
   display: flex;
   justify-content: space-between;
-  width: 100%; // Instead of 100vh which sets it to viewport height
-
+  width: 100%;
   align-items: center;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   font-weight: 700;
   z-index: 1111;
-  font-family: "Patrick Hand", cursive; /* Cartoon font */
-  text-shadow: 2px 2px 0px #727234; /* Bright green shadow for cartoon effect */
-  justify-content: center;
+  font-family: Arial, sans-serif; /* Switched to a more professional font */
+  color: #333; /* Dark gray, more subdued */
+  color: $harry-primary;
+  text-shadow: none;
+  background-color: #f4f4f4; /* Neutral background */
 
   .logo-link {
     text-decoration: none;
   }
+
   .logo-icon,
   .logo-text,
   .nav-item {
-    color: #000; /* Solid black */
+    color: $harry-primary;
 
     &:hover {
-      border: 3px solid #0b0c0f; /* Solid blue border for contrast */
+      border: 1px solid #333; /* Subtle hover effect */
       border-radius: 5px;
-      background-color: #fad300;
-
-      box-shadow: 6px 6px 0px 0px #07090b; // offset shadow for cartoon feel
+      background-color: #e6efe9; /* Soft green for sustainability */
     }
   }
+
   &.home-header {
     .logo-icon,
     .logo-text,
     .nav-item {
-      color: #000; /* Solid black */
+      color: $harry-primary;
     }
     &:hover {
       .logo-icon,
       .logo-text,
       .nav-item {
         &:hover {
-          color: #000; /* Solid black */
-          background-color: #fad300;
+          color: #333; /* Maintain consistency */
+          background-color: #e6efe9; /* Sustainable hint */
         }
-      }
-
-      .nav-item:hover {
-        background-color: #fad300;
       }
     }
   }
@@ -69,89 +70,63 @@
 
 .logo-icon {
   border-radius: 5px;
-
-  color: #fff;
-  font-size: 35px;
+  color: #333;
+  font-size: 25px;
   padding: 5px 10px;
   &:hover {
-    animation: iconRotate 1s ease forwards;
+    animation: none; /* Removed for a more professional look */
   }
 }
 
 .logo-text {
-  border-radius: 5px;
-
-  color: #ffffff;
+  color: #333;
   padding: 5px 10px;
-
-  margin-left: 10px; // Space between icon and text
-  font-size: 30px;
+  margin-left: 10px;
+  font-size: 24px;
 }
 
 .navbar {
-  margin-left: 30%;
-
-  flex-direction: column; // For mobile: Stack nav items vertically
+  display: flex; /* Clean horizontal layout */
+  margin-left: auto;
   align-items: center;
-  margin-right: 0;
 }
 
 .nav-item {
-  color: #ffffff;
+  color: #333;
   text-decoration: none;
-  font-size: 30px;
-  margin-left: 0;
-  margin-bottom: 10px;
+  font-size: 18px;
+  margin-left: 25px;
   padding: 5px 10px;
   border-radius: 5px;
   transition: background-color 0.2s;
 
   &:hover {
-    color: #f76b1c;
-
-    background-color: rgba(255, 255, 255, 0.2);
+    color: #f76b1c; /* Bit of color for interactive elements */
+    background-color: #e6efe9;
   }
-  // Medium screens (tablets, small laptops):
+
   @media screen and (min-width: 768px) {
-    .navbar {
-      flex-direction: row;
-      margin-right: 20px;
-    }
-
-    .nav-item {
-      margin-left: 20px;
-      margin-bottom: 0;
-    }
+    font-size: 20px;
   }
 
-  // Large screens (desktops, large laptops):
   @media screen and (min-width: 1024px) {
-    .logo-icon {
-      font-size: 60px;
-    }
-    .logo-text {
-      font-size: 40px;
-    }
-    .nav-item {
-      font-size: 40px;
-    }
+    font-size: 22px;
   }
 }
 
 .cartoon-dropdown {
   .cartoon-dropdown-item {
-    font-family: "Patrick Hand", cursive;
+    font-family: Arial, sans-serif; /* Consistent font */
     transition: all 0.3s;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 400;
 
     &:hover {
-      background-color: #fad300;
-      color: #07090b;
-      border: 3px solid #0b0c0f;
+      background-color: #e6efe9;
+      color: #333;
+      border: 1px solid #333;
       border-radius: 5px;
       padding: 0px 5px;
-      box-shadow: 6px 6px 0px 0px #07090b;
     }
   }
 }

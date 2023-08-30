@@ -1,174 +1,161 @@
-// Basic cartoonish aesthetic
+// Variables for Color Scheme (basic cartoonish aesthetic)
 $primary-color: #32a89e;
 $secondary-color: #238a91;
 
-@keyframes swell {
-
-  0%,
-  100% {
-    transform: translateY(-10px);
-  }
-
-  50% {
-    transform: translateY(10px);
-  }
-}
-
-@keyframes iconRotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(15deg);
-  }
-}
-
+/**
+ * Main container for the "First Step"
+ * A full-screen centered flex container with a white background.
+ */
 .first-step-container {
-  height: 100vh;
+  position: relative;
+
   width: 100vw;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   background: #fff;
 
+  // Animated Text Presentation inside a bordered box
   .outer-text {
-    width: 80%; 
-    font-size: 24px; 
+    width: 80%;
+    padding: 10px;
+    font-size: 24px;
     text-align: center;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 10px;
-   
-    border: 5px solid $primary-color; // thick cartoonish border
-    background-color: #f2f7fa; // light background
-    box-shadow: 8px 8px 0px 0px $secondary-color; // offset shadow for cartoon feel
-    
+    border: 5px solid $primary-color;
+    background-color: #f2f7fa;
+    box-shadow: 8px 8px 0px 0px $secondary-color;
+
+    // Word representation with a cartoonish font
     h1 {
       margin-right: 15px;
       margin-top: -15px;
-      font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; // cartoonish font
-      color: $primary-color; // vibrant color
-      text-shadow: none; // reset text shadow
+      font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
+      color: $primary-color;
 
+      // Animated character representation within words
       span {
         display: inline-block;
         animation: swell 2.5s ease-in-out infinite;
-       
         -webkit-background-clip: text;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        color: linear-gradient(to top, $primary-color, $secondary-color); // reset text color
       }
     }
   }
 
+  // Start button with hover effects and offset shadow
   .start-button {
     margin-top: 5%;
-    transition: transform 0.3s ease;
     height: 50px;
-    color: #32a89e; // turquoise text
-    cursor: pointer;
+    color: #32a89e;
     background: transparent;
-    border-radius: 15px;
     font-size: 20px;
     font-weight: 500;
-    border: 3px solid $primary-color; // cartoonish border
-    box-shadow: 5px 5px 0px 0px $secondary-color; // offset shadow
+    border: 3px solid $primary-color;
+    border-radius: 15px;
+    box-shadow: 5px 5px 0px 0px $secondary-color;
+    transition: transform 0.3s ease;
+
     &:hover {
       box-shadow: 3px 3px 0px 0px $secondary-color;
       background: #01100f;
-      color: #fff; 
- 
+      color: #fff;
     }
   }
 
-  // ... [other styles remain unchanged]
-
-  
-
-
-
-  .moving-balloon {
+  // Balloon animation
+  .sun-animation {
     position: absolute;
     top: 5%;
-    left: -5%; // Start outside of the screen
-    animation: moveBalloon 20s linear infinite; // 10 seconds linear animation
-    background-image: url('../../../assets/images/hot-air-balloon.png');
+    left: -5%;
     width: 130px;
     height: 130px;
+    background-image: url("../../../assets/images/sun.gif");
     background-size: cover;
     background-position: center;
+    animation: moveBalloon 20s linear infinite;
   }
 
-  @keyframes moveBalloon {
-    100% {
-      transform: translateX(2000%); // Move to the other side
-    }
-  }
-
+  // Next button with hover effects
   .next-button {
     position: absolute;
-    width: 70px;
-    height: 70px;
     right: 20px;
     top: 50%;
-    transform: translateX(-50%) translateY(-50%); // Center the button both horizontally and vertically
-    background: linear-gradient(to bottom, #ffffff, #f2f2f2); // Subtle gradient from white to light gray
-    color: #4CAF50; // Green color for the text/icon to maintain the theme
-    padding: 10px 20px; // Padding for better appearance
-    border-radius: 35px; // Rounded edges
-    box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1); // Soft shadow for elevation
-    transition: all 0.3s ease-out; // Smooth transition
-    opacity: 0.8; // Slightly transparent to indicate that it's clickable
+    width: 70px;
+    height: 70px;
     font-size: 30px;
-    border: 5px solid $primary-color; // thick border
+    color: #4caf50;
+    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    border: 5px solid $primary-color;
+    border-radius: 35px;
     box-shadow: 8px 8px 0px 0px $secondary-color;
+    padding: 10px 20px;
+    opacity: 0.8;
+    transition: all 0.3s ease-out;
+
     &:hover {
-      // background: linear-gradient(to bottom, #f2f2f2, #ffffff); // Switch gradient direction on hover
-      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); // More pronounced shadow on hover
-      transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(-50%) translateY(-50%) scale(1.05);
 
       .anticon {
-        transform: scale(1.2); // Enlarges the icon slightly on hover for a fun interactive effect
+        transform: scale(1.2);
       }
     }
-
-
-  }
-
-}
- // Media Query for Medium screens
- @media (min-width: 768px) { // for tablets and above
-  .outer-text {
-    width: 60%;
-    font-size: 32px; // bigger font size
-  }
-
-  .start-button {
-    height: 70px;
-    font-size: 28px;
   }
 }
 
-// Media Query for Large screens
-@media (min-width: 1024px) { // for desktops and above
-  .outer-text {
-    width: 40%; 
-    font-size: 40px; 
+/**
+ * Animation Keyframes
+ */
+@keyframes swell {
+  0%,
+  100% {
+    transform: translateY(-10px);
   }
+  50% {
+    transform: translateY(10px);
+  }
+}
 
-  .start-button {
-    height: 90px;
-    font-size: 32px;
+@keyframes moveBalloon {
+  100% {
+    transform: translateX(2000%);
+  }
+}
+
+/**
+ * Media Queries for Responsive Design
+ */
+// Medium screens - Tablets and similar devices
+@media (min-width: 768px) {
+  .first-step-container {
+    .outer-text {
+      width: 60%;
+      font-size: 32px;
+    }
+    .start-button {
+      height: 70px;
+      font-size: 28px;
+    }
+  }
+}
+
+// Large screens - Desktops and above
+@media (min-width: 1024px) {
+  .first-step-container {
+    .outer-text {
+      width: 40%;
+      font-size: 40px;
+    }
+    .start-button {
+      height: 90px;
+      font-size: 32px;
+    }
   }
 }

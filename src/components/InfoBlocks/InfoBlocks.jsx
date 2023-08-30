@@ -1,3 +1,4 @@
+// External Dependencies
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -5,6 +6,11 @@ import {
   faCity,
   faBalanceScale,
 } from "@fortawesome/free-solid-svg-icons";
+import { Carousel } from "react-responsive-carousel";
+import { Image } from "antd";
+
+// Styles
+import "./InfoBlocks.scss";
 import s1 from "../../assets/images/solar-energy-benefit/s1.jpeg";
 import s2 from "../../assets/images/solar-energy-benefit/s2.webp";
 import s3 from "../../assets/images/solar-energy-benefit/s3.jpg";
@@ -25,10 +31,13 @@ import solar3 from "../../assets/images/solar-choice/solar3.png";
 import solar4 from "../../assets/images/solar-choice/solar4.png";
 import solar5 from "../../assets/images/solar-choice/solar5.png";
 import solar6 from "../../assets/images/solar-choice/solar6.png";
-import "./InfoBlocks.scss";
-import { Carousel } from "react-responsive-carousel";
-import { Image } from "antd";
-import "./InfoBlocks.scss";
+
+/**
+ * InfoBlocks Component
+ *
+ * Displays information blocks about renewable energy, urban planning, and governance policy.
+ * Each block contains an icon, title, list of points, and associated images showcased in a carousel.
+ */
 
 const InfoBlocks = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -36,9 +45,9 @@ const InfoBlocks = () => {
   const solarBenefits = `
   
   - Cost Savings: Reduce electricity bills and achieve yearly savings. 
-  - Eco-friendly: Decreases carbon emissions.
+  - Eco friendly: Decreases carbon emissions.
   - Government Support: Rebates like Victoria's $1,850 AUD for installations.
-  - Feed-in Tariffs: Earn from excess energy returned to the grid.
+  - Feed in Tariffs: Earn from excess energy returned to the grid.
   - Job Creation: Rise in solar industry jobs.
   - Property Value: Solar homes tend to have higher resale values.
   - Energy Independence: Reduced reliance on external sources.
@@ -110,7 +119,7 @@ const InfoBlocks = () => {
   ];
 
   return (
-    <div className="outer-wrapper">
+    <div className="outer-wrapper" id="info-blocks">
       <div className="headline-container">
         <h1>Shaping the Future, Sustainably.</h1>
         <p>

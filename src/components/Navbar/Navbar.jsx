@@ -21,7 +21,7 @@ const Navbar = ({ isHomePage }) => {
       </Menu.Item>
       <Menu.Item key="3">
         <Link to="/government-support" className="cartoon-dropdown-item">
-          Government support program
+          Government Support Program
         </Link>
       </Menu.Item>
     </Menu>

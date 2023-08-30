@@ -1,154 +1,194 @@
-@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* Cartoon-like font */
+/* Battery Choice Section */
+@import "../../../assets/scss/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
+.battery-choice {
+  font-family: $solar-font;
+  filter: drop-shadow($primary-box-shadow);
 
-@keyframes slideUpFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-8px);
-  }
-  60% {
-    transform: translateY(-4px);
-  }
-}
-.postcode-info {
-  background: rgba(255, 217, 163);
- 
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: "Patrick Hand", cursive; /* Cartoon font */
   justify-content: center;
-  h2 {
-    color: #2c363f; /* Contrasting header color */
-    border-bottom: 4px dashed #ff3e00; /* Vibrant dashed border */
-    padding-bottom: 15px;
-    margin-bottom: 25px;
-    font-size: 2rem;
+  padding: $desktop-padding;
+  box-sizing: border-box;
+  position: relative;
+  background-color: $light-green;
+
+  /* Step Title */
+  .step-title {
+    color: $primary-color;
+    text-shadow: $primary-text-shadow;
+    margin-bottom: 5 * $spacing-unit;
+    font-size: $title-font-size;
+    margin-bottom: 20px;
+
+    padding: 10px;
   }
 
-  p {
-    color: #2c363f;
-    line-height: 1.5;
-    font-size: 1.2rem;
-  }
-
-  .postcode-info-container {
-    width: 80%;
-    margin-top: 2%;
+  /* Battery Query */
+  .battery-query {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    padding: 30px;
+    gap: 20px;
+    font-size: $subtitle-font-size;
+
+    margin-bottom: $spacing-unit;
+
+    color: $primary-color;
+    justify-content: center;
+    span {
+      font-size: $subtitle-font-size;
+      color: $primary-color;
+      font-weight: 600;
+      margin-bottom: $spacing-unit;
+      font-family: $solar-font;
+    }
+  }
+
+  /* Battery Choice Step Container */
+  .battery-choice-step {
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
-    border: 4px solid #fe8258; /* Solid blue border for contrast */
-    border-radius: 15px;
-    box-shadow: 8px 8px 0px 0px #f44b12; // offset shadow for cartoon feel
+    align-items: center;
+    justify-content: center;
+    background: $light-green;
+    border: $primary-border;
+    padding: 4 * $spacing-unit;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
+    /* Usage Slider */
 
-    background: rgba(255, 217, 163, 0.7);
+    /* Battery Slider */
 
-    .charts {
+    /* Step Background Image */
+    .step-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Error Message */
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 20px;
+    }
+
+    /* Battery Choice Options */
+    .battery-choice-options {
       display: flex;
-      flex-direction: column; /* Make it vertical for responsiveness */
-      align-items: center;
-      justify-content: center;
-      margin-top: 40px;
+      gap: 30px;
+      margin-top: 20px;
 
-      .pie-container {
-        width: 100%; /* Make sure it takes full width in smaller screens */
-        text-align: center;
+      /* Battery Choice Option */
+      .battery-choice-option {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+        border: $primary-border;
+        box-shadow: $solar-hover-box-shadow;
+
+        border-radius: $primary-border-radius;
+        transition: transform $medium-transition;
+        /* Hover Effect */
+        &:hover {
+          transform: scale(1.1);
+          background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+        }
+
+        /* Checked Option */
+        &.ant-radio-button-wrapper-checked {
+          background: linear-gradient(
+            to bottom,
+            $solar-primary,
+            $soft-yellow
+          ); /* Even more saturated red on hover */
+
+          /* Choice Tick */
+          .choice-tick {
+            visibility: visible;
+          }
+        }
+
+        /* Choice Text */
         p {
-          margin-top: 15px;
+          z-index: 1;
+          color: $harry-shadow;
+
+          font-size: $quote-font-size;
+        }
+
+        /* Choice Circle */
+        .choice-circle {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #f4f4f4;
+          border: 1px solid $solar-primary;
+
+          .choice-tick {
+            opacity: 1;
+            font-size: $button-font-size;
+            color: $solar-primary;
+            font-weight: bold;
+          }
         }
       }
     }
-    .charts {
-      .pie-container {
-        display: flex;
-        flex-direction: column; /* Make it vertical for responsiveness */
-        align-items: center;
-        justify-content: center;
-      }
-      width: 100%;
-    }
-    .sun-info,
-    .system-efficiency
-    {
-      width: 40%;
-      margin-top: 40px;
-      background: rgba(255, 239, 213, 0.8);
-      padding: 25px 35px;
-      border: 4px solid #fe8258;
-      border-radius: 15px;
-      box-shadow: 8px 8px 0px 0px #f44b12; // offset shadow for cartoon feel
-      transform: scale(1); /* reset scale for bounce animation */
-      transition: transform 0.3s ease; /* ease transition for smoother effect */
-      animation: slideUpFadeIn 4s forwards, bounce 5s infinite alternate-reverse;
-      animation-delay: 0.2s; /* staggered animation for sequential appearance */
 
-      &:hover {
-        
-        scale: 1.05; /* Slight enlargement on hover */
-        background: rgba(249, 190, 94, 0.9);
-      }
+    /* Loading Section */
+    .loading-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
 
+      /* Loading Text */
       p {
-        color: #2c363f;
-        font-weight: bold;
-        font-size: 1.4rem;
-        margin-bottom: 25px;
+        margin-top: 10px;
+        text-shadow: 3px 3px 0px #ffdd77; /* Cartoonish yellow shadow */
       }
     }
-    .system-efficiency {
-      animation-delay: 0.4s; /* staggered delay for sequential appearance */
-    }
-
-
 
     .button-common {
       position: absolute;
       width: 70px;
       height: 70px;
       top: 50%;
-      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-      border: 2px solid #bbb7b7;
-      color: #4caf50;
+      background: linear-gradient(to bottom, $soft-yellow, $light-green);
+      border: $primary-border;
+      color: $primary-color;
       padding: 10px 20px;
       border-radius: 35px;
-      box-shadow: 0px 4px 8px rgba(121, 120, 120, 0.1);
+      box-shadow: $solar-hover-box-shadow;
       transition: all 0.3s ease-out;
       opacity: 0.8;
       font-size: 30px;
 
       &:hover {
-        background: linear-gradient(to bottom, #f2f2f2, #ffffff);
-        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-        transform: translateX(-50%) translateY(-50%) scale(1.05); // Slight enlargement on hover
+        background: linear-gradient(to bottom, $light-green, $soft-yellow);
+        box-shadow: $solar-hover-box-shadow;
+        transform: translateX(-50%) translateY(-50%) scale(1.05);
 
         .anticon {
           transform: scale(1.2);
@@ -156,49 +196,18 @@
       }
     }
 
+    /* Next Button */
     .next-button {
-      @extend .button-common; // Use the common styles
+      @extend .button-common;
       right: 0px;
       transform: translateX(-50%) translateY(-50%);
     }
 
+    /* Previous Button */
     .previous-button {
-      @extend .button-common; // Use the common styles
+      @extend .button-common;
       left: 70px;
       transform: translateX(-50%) translateY(-50%);
-    }
-  }
-
-  /* Media Queries for Responsiveness */
-  @media (min-width: 600px) and (max-width: 900px) {
-    h2 {
-      font-size: 1.7rem;
-    }
-    p {
-      font-size: 1rem;
-    }
-
-    .postcode-info-container {
-      .sun-info,
-      .system-efficiency p {
-        font-size: 1.2rem;
-      }
-    }
-  }
-
-  @media (max-width: 599px) {
-    h2 {
-      font-size: 1.5rem;
-    }
-    p {
-      font-size: 0.9rem;
-    }
-
-    .postcode-info-container {
-      .sun-info,
-      .system-efficiency p {
-        font-size: 1rem;
-      }
     }
   }
 }

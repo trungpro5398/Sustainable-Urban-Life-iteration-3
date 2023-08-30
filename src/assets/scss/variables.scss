@@ -1,0 +1,100 @@
+// _variables.scss
+
+// ===== COLORS =====
+$primary-color: #165c34; // Earthy green color representing sustainability
+$light-green: #e4f4e4; // Light green background for a refreshing look reminiscent of Australia's landscapes
+$secondary-green: #a8d3a7; // Lighter green border
+$hover-green: #b3d9b2; // Soft green shadow to provide depth
+$soft-yellow: #fafad2; // Soft yellow to resonate with solar energy
+$earthy-green-border: #92a788; // Earthy green border symbolizing sustainable living
+$hover-shadow: rgba(46, 92, 66, 0.15); // Darker shadow on hover for depth
+
+// Harry's Color Themes
+$harry-primary: #1e0e85; // Dark slate blue inspired by Munich nights and the depth of Harry's knowledge
+$harry-secondary: #b0e0e6; // Powder blue, symbolizing Harry's renewed energy in Victoria, Australia
+$harry-accent: #daa520; // A gold tone, reminiscent of the German flag, linking to his roots in Munich
+
+// Solar Panel's Color Themes
+$solar-primary: #ffd700; // Gold, symbolizing the energy of the sun
+$solar-secondary: #c0c0c0; // Silver, representing the solar panels' metallic surfaces
+
+// ===== FONTS =====
+$primary-font: "Arial, sans-serif"; // A versatile and readable font
+$harry-font: "Patrick Hand", cursive; // A personalized touch that resonates with Harry's friendly nature
+$solar-font: "Roboto, sans-serif"; // A sleek, modern font to give a tech feel for solar themes
+
+// ===== FONT SIZES =====
+
+$primary-font-size: 18px; // Standard text size for body or main content
+$harry-header-size: 40px; // Slightly bigger, emphasizing Harry's senior position and knowledge
+$secondary-font-size: 35px; // For secondary headers or sub-headings
+
+// New additions:
+$title-font-size: 50px; // For main titles or headings on the page
+$subtitle-font-size: 28px; // For sub-titles or smaller section headers
+$caption-font-size: 14px; // For captions under images or smaller annotations
+$navbar-font-size: 16px; // For navigation bar items
+$footer-font-size: 14px; // For footer text
+$quote-font-size: 20px; // For blockquotes or any quoted text
+$sidebar-font-size: 16px; // For any text within sidebars or secondary content areas
+$button-font-size: 16px; // For text within buttons
+$small-font-size: 12px; // For any smaller textual information like disclaimers, terms & conditions, etc.
+
+// ===== SHADOWS =====
+$primary-text-shadow: 2px 2px 0px #e4f4e4;
+$primary-box-shadow: 6px 6px 0px 0px #b3d9b2;
+$harry-shadow: 3px 3px 0px $harry-primary; // A shadow that echoes Harry's primary color
+// ===== HOVER SHADOWS =====
+$solar-hover-box-shadow: 0px 4px 15px 0px rgba($solar-primary, 0.8); // Slight radiant glow using the solar primary color
+$harry-hover-box-shadow: 0px 4px 15px 0px rgba($harry-primary, 0.8); // A subtle deep shadow using Harry's primary color
+// ===== BORDERS AND RADIUS =====
+$primary-border: 4px solid $secondary-green;
+$harry-border: 3px dashed $harry-accent; // Dashed border for a distinct look
+$primary-border-radius: 10px;
+$harry-radius: 15px; // Slightly rounded, mirroring Harry's holistic approach
+
+// ===== BREAKPOINTS =====
+$breakpoint-mobile: 480px;
+$breakpoint-tablet-portrait: 768px;
+$breakpoint-tablet-landscape: 1024px;
+$breakpoint-desktop: 1200px;
+$breakpoint-large-desktop: 1440px;
+
+// ===== SPACING =====
+$spacing-unit: 8px;
+$mobile-padding: $spacing-unit * 1.25;
+$tablet-padding: $spacing-unit * 2.5;
+$desktop-padding: $spacing-unit * 3.75;
+
+// ===== LAYOUT GRID =====
+$grid-gutter-width: $spacing-unit * 2;
+$grid-column-width: percentage(1/12); // Assuming a 12-column grid
+
+// ===== FONT SCALING =====
+$font-scale-mobile: 0.9;
+$font-scale-tablet: 1;
+$font-scale-desktop: 1.1;
+
+// ===== BUTTON SIZES =====
+$button-height-mobile: 40px;
+$button-height-tablet: 45px;
+$button-height-desktop: 50px;
+
+// ===== ICON SIZES =====
+$icon-size-mobile: 20px;
+$icon-size-tablet: 25px;
+$icon-size-desktop: 30px;
+
+// ===== Z-INDEX LAYERS =====
+$zindex-dropdown: 1000;
+$zindex-sticky: 1020;
+$zindex-fixed: 1030;
+$zindex-modal-backdrop: 1040;
+$zindex-modal: 1050;
+$zindex-popover: 1060;
+$zindex-tooltip: 1070;
+
+// ===== ANIMATION TIMINGS =====
+$fast-transition: 0.15s;
+$medium-transition: 0.3s;
+$slow-transition: 0.6s;

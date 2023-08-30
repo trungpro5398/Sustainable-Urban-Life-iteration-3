@@ -10,14 +10,35 @@ import {
 import { updateField } from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust this path to your project's directory structure
 import "./style.scss";
 
+/**
+ * BatteryChoice Component
+ *
+ * This component allows users to decide if they want to add a solar battery to their system
+ * and choose the size of the battery.
+ */
 const BatteryChoice = ({ nextStep, previousStep }) => {
+  // -------------------
+  // REDUX STATE MANAGEMENT
+  // -------------------
   const dispatch = useDispatch();
-  const batteryChoice = useSelector((state) => state.solarForm.batteryChoice); // Adjust the path if you have a different structure
+  const batteryChoice = useSelector((state) => state.solarForm.batteryChoice);
 
+  // -------------------
+  // LOCAL STATE MANAGEMENT
+  // -------------------
   const [loading, setLoading] = useState(false);
   const [choice, setChoice] = useState(batteryChoice.wantBattery);
-  const [batterySize, setBatterySize] = useState(batteryChoice.batterySize);
+  const [showError, setShowError] = useState(false);
 
+  // -------------------
+  // UTILITY FUNCTIONS
+  // -------------------
+  /**
+   * Update the Redux store for battery choice
+   *
+   * @param {string} key - The key for the field to be updated
+   * @param {any} value - The value to set for the key
+   */
   const updateChoiceToRedux = (key, value) => {
     dispatch(
       updateField({
@@ -28,11 +49,14 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
     );
   };
 
-  const [showError, setShowError] = useState(false);
-
+  /**
+   * Handles button click and loading animation,
+   * then calls the provided callback after a delay.
+   *
+   * @param {Function} callback - The callback to be executed after loading
+   */
   const handleClick = (callback) => {
     if (!batteryChoice.wantBattery) {
-      // If cycle hasn't been chosen, show an error and return early
       setShowError(true);
       return;
     }
@@ -45,18 +69,16 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
     }, 2000);
   };
 
-  // Update the redux store when the choice changes
+  /**
+   * Update the local state and the Redux store when battery choice changes.
+   *
+   * @param {Event} e - The event triggered by the Radio.Group onChange.
+   */
   const handleChoiceChange = (e) => {
     setShowError(false);
     const newChoice = e.target.value;
     setChoice(newChoice);
     updateChoiceToRedux("wantBattery", newChoice);
-  };
-
-  // Update the redux store when battery size changes
-  const handleBatterySizeChange = (value) => {
-    setBatterySize(value);
-    updateChoiceToRedux("batterySize", value);
   };
 
   return (
@@ -96,39 +118,7 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
               Please select Yes or No before proceeding.
             </p>
           )}
-          {/* {choice === "Yes" && (
-            <div className="usage-slider">
-              <div className="range-labels">
-                <span className="range-labels-low">0 kW</span>
-                <span className="range-labels-high">100 kW</span>
-              </div>
-              <Slider
-                min={1}
-                max={100}
-                step={0.1}
-                onChange={handleBatterySizeChange}
-                value={batterySize}
-                className="battery-slider"
-                tooltipVisible
-                tooltipPlacement="top"
-                tipFormatter={(value) => `${value}`}
-              />
-              <div className="battery-size">Battery System Size</div>
 
-              <div className="battery-input-container">
-                <InputNumber
-                  min={1}
-                  max={100}
-                  step={0.1}
-                  style={{ margin: "0 16px" }}
-                  value={batterySize}
-                  onChange={handleBatterySizeChange}
-                  className="battery-input"
-                />
-                <div className="battery-unit">kW</div>
-              </div>
-            </div>
-          )} */}
           <Button
             className="previous-button"
             icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}
