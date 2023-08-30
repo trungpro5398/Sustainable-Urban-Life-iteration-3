@@ -13,10 +13,10 @@ const Navbar = ({ isHomePage }) => {
         <Link to="/solar-choice">Solar Choice</Link>
       </Menu.Item>
       <Menu.Item key="2">
-        <Link to="/solution-2">Solar Energy Benefit</Link>
+        <Link to="/solar-energy-benefit">Solar Energy Benefit</Link>
       </Menu.Item>
       <Menu.Item key="3">
-        <Link to="/solution-3">Government support program</Link>
+        <Link to="/government-support">Government support program</Link>
       </Menu.Item>
     </Menu>
   );

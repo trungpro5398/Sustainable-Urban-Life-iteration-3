@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SolarChoice from "./pages/SolarChoice/SolarChoice";
 import GovernmentSupport from "./pages/GovernmentSupport/GovernmentSupport";
+import SolarEnergyBenefit from "./pages/SolarEnergyBenefit/SolarEnergyBenefit";
 
 const App = () => {
   const [isBlurred, setIsBlurred] = useState(false);
@@ -60,6 +61,10 @@ const App = () => {
                 element={<GovernmentSupport />}
               />
               <Route path="/about-us" element={<AboutUs />} />
+              <Route
+                path="/solar-energy-benefit"
+                element={<SolarEnergyBenefit />}
+              />
             </Routes>
           </div>
           {/* {showPasswordModal && (
