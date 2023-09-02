@@ -3,7 +3,7 @@
 // -------------------
 
 // React Dependencies
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // UI Components & Icons
 
 import { Button, Spin } from "antd";
@@ -69,7 +69,28 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
       value: 100 - parseFloat(data.percentage_installation),
     },
   ];
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      // Checking for the arrow right key
 
+      if (event.keyCode === 39) {
+        handleClick(nextStep); // go to the next step
+      }
+
+      // Checking for the arrow left key
+      if (event.keyCode === 37) {
+        handleClick(previousStep); // go to the previous step
+      }
+    };
+
+    // Adding the event listener
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup: remove the event listener when component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
   return (
     <div className="postcode-info">
       <h2>About solar panel installations in {data.place_name}</h2>

@@ -135,7 +135,22 @@ const Recommendation = ({ previousStep }) => {
       })
     );
   };
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      // Checking for the arrow left key
+      if (event.keyCode === 37) {
+        handleClick(previousStep); // go to the previous step
+      }
+    };
 
+    // Adding the event listener
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup: remove the event listener when component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
   return (
     <div className="recommendation-container">
       <div className="sidebar">

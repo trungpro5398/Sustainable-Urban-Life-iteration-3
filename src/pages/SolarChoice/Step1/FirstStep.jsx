@@ -1,5 +1,5 @@
 // External Dependencies
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Spin } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,6 +39,23 @@ const FirstStep = ({ nextStep }) => {
       }
     }, 2000);
   };
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      // Checking for the arrow right key
+      if (event.keyCode === 39) {
+        handleClick(); // go to the next step
+      }
+    };
+
+    // Adding the event listener
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup: remove the event listener when component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   return (
     <div className="first-step-container">

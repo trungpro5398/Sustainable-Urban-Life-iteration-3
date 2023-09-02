@@ -1,7 +1,6 @@
 // External Dependencies
 import React from "react";
 import { Row, Col } from "antd";
-import hero_bg from "../../assets/images/hero-bg.avif";
 // Components
 import Navbar from "../Navbar/Navbar";
 
@@ -87,7 +86,6 @@ const HeroSection = () => {
               </button>
             </Col>
           </Row>
-          <img src={hero_bg} alt="hero background" className="hero-image" />
         </div>
       </div>
     </section>

@@ -21,11 +21,9 @@
   margin-bottom: 10px;
   font-weight: 700;
   z-index: 1111;
-  font-family: Arial, sans-serif; /* Switched to a more professional font */
-  color: #333; /* Dark gray, more subdued */
-  color: $harry-primary;
-  text-shadow: none;
-  background-color: #f4f4f4; /* Neutral background */
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: $primary-color;
 
   .logo-link {
     text-decoration: none;
@@ -34,12 +32,10 @@
   .logo-icon,
   .logo-text,
   .nav-item {
-    color: $harry-primary;
-
     &:hover {
-      border: 1px solid #333; /* Subtle hover effect */
+      border: 1px solid $primary-color;
       border-radius: 5px;
-      background-color: #e6efe9; /* Soft green for sustainability */
+      background-color: lighten($primary-color, 30%); // Lighter shade for hover
     }
   }
 
@@ -47,15 +43,15 @@
     .logo-icon,
     .logo-text,
     .nav-item {
-      color: $harry-primary;
+      color: $primary-color;
     }
     &:hover {
       .logo-icon,
       .logo-text,
       .nav-item {
         &:hover {
-          color: #333; /* Maintain consistency */
-          background-color: #e6efe9; /* Sustainable hint */
+          color: darken($primary-color, 15%); // Slightly darker on hover
+          background-color: lighten($primary-color, 30%);
         }
       }
     }
@@ -70,29 +66,26 @@
 
 .logo-icon {
   border-radius: 5px;
-  color: #333;
+  color: $primary-color;
   font-size: 25px;
   padding: 5px 10px;
-  &:hover {
-    animation: none; /* Removed for a more professional look */
-  }
 }
 
 .logo-text {
-  color: #333;
+  color: $primary-color;
   padding: 5px 10px;
   margin-left: 10px;
   font-size: 24px;
 }
 
 .navbar {
-  display: flex; /* Clean horizontal layout */
+  display: flex;
   margin-left: auto;
   align-items: center;
 }
 
 .nav-item {
-  color: #333;
+  color: $primary-color;
   text-decoration: none;
   font-size: 18px;
   margin-left: 25px;
@@ -101,8 +94,8 @@
   transition: background-color 0.2s;
 
   &:hover {
-    color: #f76b1c; /* Bit of color for interactive elements */
-    background-color: #e6efe9;
+    color: darken($primary-color, 15%);
+    background-color: lighten($primary-color, 30%);
   }
 
   @media screen and (min-width: 768px) {
@@ -116,15 +109,15 @@
 
 .cartoon-dropdown {
   .cartoon-dropdown-item {
-    font-family: Arial, sans-serif; /* Consistent font */
+    font-family: Arial, sans-serif;
     transition: all 0.3s;
     font-size: 20px;
     font-weight: 400;
 
     &:hover {
-      background-color: #e6efe9;
-      color: #333;
-      border: 1px solid #333;
+      background-color: lighten($primary-color, 30%);
+      color: darken($primary-color, 15%);
+      border: 1px solid $primary-color;
       border-radius: 5px;
       padding: 0px 5px;
     }

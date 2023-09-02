@@ -3,7 +3,7 @@
 // -------------------
 
 // React Dependencies
-import React from "react";
+import React, { useEffect } from "react";
 
 // Redux Dependencies
 import { useDispatch, useSelector } from "react-redux";
@@ -179,7 +179,28 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
       })
     );
   };
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      // Checking for the arrow right key
 
+      if (event.keyCode === 39) {
+        handleClick(nextStep); // go to the next step
+      }
+
+      // Checking for the arrow left key
+      if (event.keyCode === 37) {
+        handleClick(previousStep); // go to the previous step
+      }
+    };
+
+    // Adding the event listener
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup: remove the event listener when component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
   // -------------------
   // COMPONENT JSX
   // -------------------

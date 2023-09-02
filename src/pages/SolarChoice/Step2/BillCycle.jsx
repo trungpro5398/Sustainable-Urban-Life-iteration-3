@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Radio, Button, Spin, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -142,7 +142,28 @@ const BillCycle = ({ nextStep, previousStep }) => {
       callback();
     }, 2000); // Simulate loading state with 2 seconds delay
   };
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      // Checking for the arrow right key
 
+      if (event.keyCode === 39) {
+        handleClick(nextStep); // go to the next step
+      }
+
+      // Checking for the arrow left key
+      if (event.keyCode === 37) {
+        handleClick(previousStep); // go to the previous step
+      }
+    };
+
+    // Adding the event listener
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup: remove the event listener when component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
   return (
     <div className="bill-step">
       <h1>Electricity Usage</h1>
