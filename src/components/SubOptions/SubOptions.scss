@@ -49,10 +49,14 @@
       &:hover,
       &:focus {
         transform: translateY(-5px);
+        border: $primary-border;
 
+        border-radius: $primary-border-radius;
+        background-color: $primary-color;
+        color: white;
         h3,
         p {
-          color: $hover-green; // Darker green on hover
+          color: white;
         }
       }
 

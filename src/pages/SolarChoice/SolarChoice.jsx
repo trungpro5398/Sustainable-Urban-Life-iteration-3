@@ -23,7 +23,7 @@ import { updateField } from "../../reduxToolkit/slices/solarFormSlice";
  */
 const SolarChoice = () => {
   const dispatch = useDispatch();
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [locationData, setLocationData] = useState(null);
 

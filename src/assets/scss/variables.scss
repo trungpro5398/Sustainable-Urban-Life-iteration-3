@@ -1,7 +1,7 @@
 // _variables.scss
 
 // ===== COLORS =====
-$primary-color: #165c34; // Earthy green color representing sustainability
+$primary-color: #28724d; // Earthy green color representing sustainability
 $light-green: #e4f4e4; // Light green background for a refreshing look reminiscent of Australia's landscapes
 $secondary-green: #a8d3a7; // Lighter green border
 $hover-green: #53db4e; // Soft green shadow to provide depth
@@ -50,7 +50,8 @@ $solar-button-hover-box-shadow: 0px 2px 8px 0px rgba($solar-primary, 0.4); // Sl
 $solar-hover-box-shadow: 0px 4px 15px 0px rgba($solar-primary, 0.4); // Slight radiant glow using the solar primary color
 $harry-hover-box-shadow: 0px 4px 15px 0px rgba($harry-primary, 0.4); // A subtle deep shadow using Harry's primary color
 // ===== BORDERS AND RADIUS =====
-$primary-border: 4px solid $secondary-green;
+
+$primary-border: 1px solid $primary-color;
 $button-primary-border: 2px solid $secondary-green;
 
 $harry-border: 3px dashed $harry-accent; // Dashed border for a distinct look

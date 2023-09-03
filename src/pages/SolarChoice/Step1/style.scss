@@ -1,6 +1,6 @@
 // Variables for Color Scheme (basic cartoonish aesthetic)
-$primary-color: #32a89e;
-$secondary-color: #238a91;
+@import "../../../assets/scss/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* electricity-like font from Google Fonts */
 
 /**
  * Main container for the "First Step"
@@ -16,11 +16,12 @@ $secondary-color: #238a91;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #fff;
+  filter: drop-shadow($primary-box-shadow);
+  background-color: $light-green;
+  font-family: $primary-font;
 
   // Animated Text Presentation inside a bordered box
   .outer-text {
-    width: 80%;
     padding: 10px;
     font-size: 24px;
     text-align: center;
@@ -28,15 +29,13 @@ $secondary-color: #238a91;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    border: 5px solid $primary-color;
-    background-color: #f2f7fa;
-    box-shadow: 8px 8px 0px 0px $secondary-color;
+    // border: 5px solid $primary-color;
+    // background-color: #f2f7fa;
 
     // Word representation with a cartoonish font
     h1 {
       margin-right: 15px;
       margin-top: -15px;
-      font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
       color: $primary-color;
 
       // Animated character representation within words
@@ -48,8 +47,25 @@ $secondary-color: #238a91;
       }
     }
   }
+  @keyframes slide {
+    0%,
+    100% {
+      right: 5px;
+    }
+    50% {
+      right: 17px;
+    }
+  }
+  // Keyframes for the expanding animation
+  @keyframes expand {
+    0% {
+      transform: translateY(-50%) translateX(0) scaleX(1);
+    }
+    100% {
+      transform: translateY(-50%) translateX(50%) scaleX(2);
+    }
+  }
 
-  // Start button with hover effects and offset shadow
   .start-button {
     margin-top: 5%;
     height: 50px;
@@ -57,56 +73,75 @@ $secondary-color: #238a91;
     background: transparent;
     font-size: 20px;
     font-weight: 500;
-    border: 3px solid $primary-color;
-    border-radius: 15px;
-    box-shadow: 5px 5px 0px 0px $secondary-color;
-    transition: transform 0.3s ease;
+    border: $primary-border;
+    box-shadow: $solar-hover-box-shadow;
+
+    border-radius: $primary-border-radius;
+    transition: transform $medium-transition;
+    position: relative; // added for relative positioning of the child
+    padding-right: 50px; // give space for the icon
+    .arrow-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: right 0.3s ease;
+      animation: slide 2s infinite; // this will make it move from left to right
+    }
 
     &:hover {
-      box-shadow: 3px 3px 0px 0px $secondary-color;
-      background: #01100f;
-      color: #fff;
+      color: #32a89e;
+
+      .arrow-icon {
+        // Apply the expanding animation
+        animation: expand 1s forwards;
+      }
     }
   }
 
-  // Balloon animation
-  .sun-animation {
-    position: absolute;
-    top: 5%;
-    left: -5%;
-    width: 130px;
-    height: 130px;
-    background-image: url("../../../assets/images/sun.gif");
-    background-size: cover;
-    background-position: center;
-    animation: moveBalloon 20s linear infinite;
-  }
+  // // Balloon animation
+  // .sun-animation {
+  //   position: absolute;
+  //   top: 5%;
+  //   left: -5%;
+  //   width: 130px;
+  //   height: 130px;
+  //   background-image: url("../../../assets/images/sun.gif");
+  //   background-size: cover;
+  //   background-position: center;
+  //   animation: moveBalloon 20s linear infinite;
+  // }
 
-  // Next button with hover effects
-  .next-button {
+  .button-common {
     position: absolute;
-    right: 20px;
-    top: 50%;
     width: 70px;
     height: 70px;
-    font-size: 30px;
-    color: #4caf50;
-    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-    border: 5px solid $primary-color;
-    border-radius: 35px;
-    box-shadow: 8px 8px 0px 0px $secondary-color;
+    top: 50%;
+    background: linear-gradient(to bottom, $soft-yellow, $light-green);
+    border: $primary-border;
     padding: 10px 20px;
-    opacity: 0.8;
+    border-radius: 35px;
+    box-shadow: $solar-hover-box-shadow;
     transition: all 0.3s ease-out;
+    opacity: 0.8;
+    font-size: 30px;
 
     &:hover {
-      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+      box-shadow: $solar-hover-box-shadow;
       transform: translateX(-50%) translateY(-50%) scale(1.05);
 
       .anticon {
         transform: scale(1.2);
+        color: #fff;
       }
     }
+  }
+
+  .next-button {
+    @extend .button-common;
+    right: 0px;
+    transform: translateX(-50%) translateY(-50%);
   }
 }
 
@@ -158,4 +193,21 @@ $secondary-color: #238a91;
       font-size: 32px;
     }
   }
+}
+// Increase specificity
+div.ant-btn.start-button {
+  background-color: #32a89e !important;
+  border-color: #32a89e !important;
+
+  &:hover,
+  &:focus {
+    background-color: #01100f !important;
+    border-color: #01100f !important;
+  }
+}
+
+div.ant-btn.start-button:focus,
+div.ant-btn.start-button:active {
+  outline: none !important;
+  box-shadow: none !important;
 }

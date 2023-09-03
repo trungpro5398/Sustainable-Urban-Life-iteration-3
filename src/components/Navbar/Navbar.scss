@@ -11,7 +11,7 @@
 }
 
 .header {
-  position: relative;
+  position: fixed;
   padding: 15px 0;
   display: flex;
   justify-content: space-between;
@@ -22,7 +22,6 @@
   font-weight: 700;
   z-index: 1111;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   color: $primary-color;
 
   .logo-link {
@@ -33,9 +32,11 @@
   .logo-text,
   .nav-item {
     &:hover {
-      border: 1px solid $primary-color;
-      border-radius: 5px;
-      background-color: lighten($primary-color, 30%); // Lighter shade for hover
+      border: $primary-border;
+
+      border-radius: $primary-border-radius;
+      background-color: $primary-color;
+      color: white;
     }
   }
 
@@ -50,8 +51,11 @@
       .logo-text,
       .nav-item {
         &:hover {
-          color: darken($primary-color, 15%); // Slightly darker on hover
-          background-color: lighten($primary-color, 30%);
+          border: $primary-border;
+
+          border-radius: $primary-border-radius;
+          background-color: $primary-color;
+          color: white;
         }
       }
     }
@@ -94,8 +98,11 @@
   transition: background-color 0.2s;
 
   &:hover {
-    color: darken($primary-color, 15%);
-    background-color: lighten($primary-color, 30%);
+    border: $primary-border;
+
+    border-radius: $primary-border-radius;
+    background-color: $primary-color;
+    color: white;
   }
 
   @media screen and (min-width: 768px) {
@@ -108,18 +115,21 @@
 }
 
 .cartoon-dropdown {
+  margin-top: 40px;
+  z-index: 100;
   .cartoon-dropdown-item {
     font-family: Arial, sans-serif;
     transition: all 0.3s;
-    font-size: 20px;
+    font-size: $quote-font-size;
     font-weight: 400;
 
     &:hover {
-      background-color: lighten($primary-color, 30%);
-      color: darken($primary-color, 15%);
-      border: 1px solid $primary-color;
-      border-radius: 5px;
-      padding: 0px 5px;
+      border: $primary-border;
+
+      border-radius: $primary-border-radius;
+      background-color: $primary-color;
+      color: white;
+      padding: 5px 10px;
     }
   }
 }

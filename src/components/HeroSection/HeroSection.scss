@@ -12,7 +12,7 @@
 
 .hero {
   position: relative;
-
+  background: $gradient-main;
   min-height: 100vh;
   min-width: 100vw;
   .container {
@@ -77,11 +77,18 @@
         color: $primary-color;
 
         &:hover {
-          background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+          border: $primary-border;
+
+          border-radius: $primary-border-radius;
+          background-color: $primary-color;
+          color: white;
         }
       }
       .cta-button-1 {
-        background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+        border: $primary-border;
+        border-radius: $primary-border-radius;
+        background-color: $primary-color;
+        color: white;
       }
     }
   }

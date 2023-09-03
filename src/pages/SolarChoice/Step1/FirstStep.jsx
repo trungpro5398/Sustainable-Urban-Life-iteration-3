@@ -80,12 +80,11 @@ const FirstStep = ({ nextStep }) => {
         <Spin />
       ) : (
         <>
-          <Button
-            className="start-button"
-            icon={<ArrowRightOutlined />}
-            onClick={handleClick}
-          >
-            Make the first step now
+          <Button className="start-button" onClick={handleClick}>
+            Make the first step now{" "}
+            <span className="arrow-icon">
+              <ArrowRightOutlined />
+            </span>
           </Button>
 
           <Button
