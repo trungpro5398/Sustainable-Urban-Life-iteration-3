@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { updateField } from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust this path to your project's directory structure
 import "./style.scss";
+import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 /**
  * BatteryChoice Component
@@ -107,9 +108,7 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
       <h1 className="step-title">Electricity Consumption</h1>
 
       {loading ? (
-        <div className="loading-section">
-          <Spin size="large" tip="Preparing your solar journey..."></Spin>
-        </div>
+        <CustomLoadingSpinner />
       ) : (
         <div className="battery-choice-step">
           <div className="battery-query">

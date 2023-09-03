@@ -13,6 +13,7 @@ import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 // Redux Dependencies
 import { useSelector } from "react-redux";
+import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 // Array of colors for the pie chart
 
@@ -99,9 +100,7 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
       </p>
 
       {loading ? (
-        <div className="loading-container">
-          <Spin size="large" tip="Preparing your solar journey..."></Spin>
-        </div>
+        <CustomLoadingSpinner />
       ) : (
         <div className="postcode-info-container">
           <div className="charts">

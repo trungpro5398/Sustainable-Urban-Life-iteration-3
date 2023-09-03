@@ -20,6 +20,7 @@ import { updateField } from "../../../reduxToolkit/slices/solarFormSlice";
 
 // Styles
 import "./style.scss";
+import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 /**
  * Recommendation Component.
@@ -288,7 +289,7 @@ const Recommendation = ({ previousStep }) => {
         <h1>Discover the Best Installers</h1>
         <h2>Find the perfect fit tailored to your preferences.</h2>
         {loading ? (
-          <Spin size="large" tip="Preparing your solar journey..." />
+          <CustomLoadingSpinner />
         ) : (
           installers.map((installer, index) => (
             <Card key={index} className="installer-card">

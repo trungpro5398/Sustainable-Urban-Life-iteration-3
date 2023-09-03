@@ -1,4 +1,5 @@
 @import "~react-responsive-carousel/lib/styles/carousel.min.css";
+@import "../../assets/scss/variables.scss";
 
 @keyframes iconRotate {
   from {
@@ -14,7 +15,6 @@
   align-items: center;
   flex-direction: column;
   width: 100vw;
-  background: #f4f4f4; /* Neutral color for a cleaner look */
   font-family: Arial, sans-serif; /* More professional font */
   min-height: 100vh;
   position: relative;
@@ -29,12 +29,13 @@
       font-size: 48px;
       margin-bottom: 5%;
       font-weight: bold;
-      color: #333;
+      color: $primary-color; // Earthy green for a sustainable touch
     }
 
     p {
       font-size: 24px;
-      color: #555;
+      color: $primary-color; // Earthy green for a sustainable touch
+
       max-width: 800px;
       margin: 0 auto;
       line-height: 1.5;
@@ -60,26 +61,6 @@
       transition: transform 0.2s ease, box-shadow 0.3s ease,
         border-color 0.3s ease;
       border-radius: 5px;
-
-      &.active {
-        transform: scale(1.03);
-        background-color: #e6efe9; /* Soft green for sustainability */
-      }
-      &:hover,
-      &:focus {
-        transform: scale(1.03);
-        background-color: #e6efe9;
-      }
-
-      .fa-icon {
-        flex: 0 0 auto;
-        margin-right: 20px;
-        transition: transform 0.3s ease;
-        &:hover {
-          animation: iconRotate 0.3s ease forwards;
-        }
-      }
-
       .text-section {
         transition: color 0.3s ease;
         width: 500px;
@@ -87,11 +68,50 @@
         h2 {
           margin-bottom: 10px;
           font-size: 24px;
-          color: #333;
+          color: $primary-color; // Earthy green for a sustainable touch
         }
-        p {
-          font-size: 20px;
-          color: #555;
+        span {
+          font-size: $sidebar-font-size;
+          color: $primary-color; // Earthy green for a sustainable touch
+        }
+      }
+      .fa-icon {
+        flex: 0 0 auto;
+        margin-right: 20px;
+        transition: transform 0.3s ease;
+        color: $primary-color; // Earthy green for a sustainable touch
+
+        &:hover {
+          animation: iconRotate 0.3s ease forwards;
+        }
+      }
+      &.active {
+        transform: scale(1.03);
+        background-color: $primary-color;
+        .fa-icon {
+          color: white;
+        }
+
+        h2 {
+          color: white;
+        }
+        span {
+          color: white;
+        }
+      }
+      &:hover,
+      &:focus {
+        transform: scale(1.03);
+        background-color: $primary-color;
+        color: white;
+        .fa-icon {
+          color: white;
+        }
+        h2 {
+          color: white;
+        }
+        span {
+          color: white;
         }
       }
     }

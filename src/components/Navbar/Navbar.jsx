@@ -5,7 +5,6 @@ import { DownOutlined } from "@ant-design/icons";
 import "./Navbar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTree } from "@fortawesome/free-solid-svg-icons";
-
 const Navbar = ({ isHomePage }) => {
   const menu = (
     <Menu className="cartoon-dropdown">

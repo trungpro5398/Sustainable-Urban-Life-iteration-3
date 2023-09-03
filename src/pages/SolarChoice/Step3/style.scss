@@ -10,8 +10,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow($primary-box-shadow);
-  background-color: $light-green;
+  color: $primary-color;
+  background: $gradient-main;
   font-family: $primary-font;
 
   .step-title {
@@ -24,21 +24,14 @@
   }
 
   .electricity-usage-step {
-    background: $light-green;
     border: $primary-border;
     padding: 40px;
     border-radius: $primary-border-radius;
     box-shadow: $solar-hover-box-shadow;
-
+    background: white;
     .usage-instructions p {
-      font-size: $primary-font-size;
+      font-size: $subtitle-font-size;
 
-      background: $light-green;
-      padding: 15px;
-      border: $primary-border;
-      border-radius: $primary-border-radius;
-      box-shadow: $solar-hover-box-shadow;
-      text-shadow: $primary-text-shadow;
       margin-bottom: 25px;
     }
 
@@ -66,7 +59,6 @@
 
         &-low,
         &-high {
-          background: $soft-yellow;
           padding: 5px;
           border-radius: $primary-border-radius;
         }
@@ -74,7 +66,7 @@
 
       .electricity-usage-slider {
         width: 100%;
-        background: $soft-yellow;
+        background: $solar-primary;
         border-radius: $primary-border-radius;
         margin: 10px 0;
 
@@ -83,7 +75,8 @@
         }
 
         & .ant-slider-handle {
-          background: $harry-primary;
+          color: $primary-color;
+
           border: 3px solid $primary-color;
           border-radius: 50%;
         }
@@ -92,14 +85,25 @@
       .electricity-usage-size {
         margin-top: 5%;
         font-size: 30px;
-        color: $harry-primary;
+        color: $primary-color;
+
         text-shadow: $primary-text-shadow;
+        // If you want to style the custom content
+        .ant-tooltip-inner {
+          background-color: #28724d !important; // to ensure the background color applies
+          color: white !important; // to ensure the text color applies
+        }
+
+        .ant-tooltip-arrow {
+          border-color: #28724d !important;
+        }
       }
 
       .daily-usage-display {
         p {
           font-size: 30px;
-          color: $harry-primary;
+          color: $primary-color;
+
           text-shadow: $primary-text-shadow;
         }
       }
@@ -108,10 +112,12 @@
         display: flex;
         align-items: center;
         margin-top: 15px;
+        color: $primary-color;
 
         .electricity-usage-unit {
           font-size: 30px;
-          color: $harry-primary;
+          color: $primary-color;
+
           margin-left: 10px;
           text-shadow: $primary-text-shadow;
 
@@ -119,17 +125,18 @@
             font-size: 40px;
             margin-left: 10px;
             cursor: pointer;
-            color: black;
+            color: $primary-color;
           }
         }
 
         .electricity-usage-input {
-          color: $harry-primary;
+          color: $primary-color;
+
           font-size: 25px;
           width: 140px;
           border-radius: $primary-border-radius;
           padding: 5px 10px;
-          background: $soft-yellow;
+
           border: $primary-border;
           box-shadow: $solar-hover-box-shadow;
         }
@@ -144,7 +151,8 @@
       padding: 20px;
 
       p {
-        color: #fffde5;
+        color: $primary-color;
+
         margin-top: 10px;
       }
     }
@@ -189,6 +197,7 @@
 }
 
 .electricity-modal {
+  z-index: 1000;
   .ant-modal-content {
     transition: transform 0.2s;
     border: $primary-border;
@@ -205,10 +214,11 @@
 
   .electricity-item {
     display: flex;
+    color: $primary-color;
 
     align-items: center;
     gap: 10px;
-    font-size: 20px;
+    font-size: $caption-font-size * 1.8;
     font-weight: 500;
     p {
       font-size: 18px;
@@ -219,7 +229,8 @@
 
   .electricity-icon {
     font-size: 20px;
-    color: #4b0082;
+    color: $primary-color;
+
     flex-shrink: 0;
   }
 }

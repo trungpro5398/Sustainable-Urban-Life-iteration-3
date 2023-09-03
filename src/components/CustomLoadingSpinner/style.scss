@@ -1,0 +1,24 @@
+// style.scss
+@import "../../assets/scss/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+.custom-spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+
+  img {
+    background: transparent;
+    width: 100%; // Adjust the size as needed
+  }
+
+  p {
+    font-size: $title-font-size;
+    color: $primary-color;
+
+    font-family: $primary-font;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); // Giving it a slight shadow for depth
+  }
+}

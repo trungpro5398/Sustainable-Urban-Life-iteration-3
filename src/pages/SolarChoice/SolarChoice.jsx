@@ -14,6 +14,7 @@ import Recommendation from "./Step7/Recommendation";
 import Navbar from "../../components/Navbar/Navbar";
 
 import { updateField } from "../../reduxToolkit/slices/solarFormSlice";
+import CustomLoadingSpinner from "../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 /**
  * SolarChoice Component
@@ -87,9 +88,7 @@ const SolarChoice = () => {
       <Navbar isHomePage={false} />
 
       {isLoading ? (
-        <div className="loading-container">
-          <Spin size="large" tip="Charging solar energy..." />
-        </div>
+        <CustomLoadingSpinner />
       ) : (
         <>
           {step === 1 && <FirstStep nextStep={handleNextStep} />}

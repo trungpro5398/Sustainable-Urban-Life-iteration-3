@@ -11,7 +11,8 @@
   align-items: center;
   justify-content: center;
 
-  filter: drop-shadow($primary-box-shadow);
+  color: $primary-color;
+  background: $gradient-main;
   font-family: $primary-font;
 
   h1 {
@@ -31,7 +32,7 @@
     justify-content: center;
     padding: 40px;
     box-sizing: border-box;
-    background: $light-green;
+    background: white;
     border: $primary-border;
     padding: 40px;
     border-radius: $primary-border-radius;
@@ -58,6 +59,7 @@
       position: relative; // Ensuring this is relatively positioned
       border-radius: 10px;
       width: 240px;
+      background: white;
 
       .ant-select-selector {
         height: 55px;

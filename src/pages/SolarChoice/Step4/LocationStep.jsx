@@ -16,6 +16,7 @@ import {
   selectSolarForm,
   updatePostcodeInfo,
 } from "../../../reduxToolkit/slices/solarFormSlice";
+import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 /**
  * LocationStep Component
@@ -109,9 +110,7 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
       <h1>Location</h1>
 
       {loading ? (
-        <div className="loading-container">
-          <Spin size="large" tip="Preparing your solar journey..."></Spin>
-        </div>
+        <CustomLoadingSpinner />
       ) : (
         <div className="location-step-container">
           <p>Which suburb are you located in?</p>

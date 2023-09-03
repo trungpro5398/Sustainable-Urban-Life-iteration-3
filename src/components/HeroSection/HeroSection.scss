@@ -44,6 +44,8 @@
 
         border-radius: 10px;
         h1 {
+          color: $primary-color;
+
           margin-right: 10px;
           span {
             display: inline-block;
@@ -53,6 +55,8 @@
       }
 
       p {
+        color: $primary-color;
+
         width: 70%;
         margin-bottom: 20px;
         font-size: $subtitle-font-size;

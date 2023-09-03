@@ -16,6 +16,7 @@ import {
   updateField,
   selectSolarForm,
 } from "../../../reduxToolkit/slices/solarFormSlice";
+import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 /**
  * Component to select billing cycle for electricity usage.
@@ -169,7 +170,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
       <h1>Electricity Usage</h1>
 
       {loading ? (
-        <Spin size="large" tip="Charging solar energy..." />
+        <CustomLoadingSpinner />
       ) : (
         <div className="bill-step-container">
           <h2>

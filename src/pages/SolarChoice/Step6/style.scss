@@ -15,8 +15,9 @@
   padding: $desktop-padding;
   box-sizing: border-box;
   position: relative;
-  background-color: $light-green;
-
+  color: $primary-color;
+  background: $gradient-main;
+  font-family: $primary-font;
   /* Step Title */
   .step-title {
     color: $primary-color;
@@ -55,7 +56,7 @@
     box-sizing: border-box;
     align-items: center;
     justify-content: center;
-    background: $light-green;
+    background: white;
     border: $primary-border;
     padding: 4 * $spacing-unit;
     border-radius: $primary-border-radius;
@@ -98,9 +99,12 @@
         justify-content: center;
         cursor: pointer;
         transition: transform 0.2s;
+        font-size: $quote-font-size;
+
         border: $primary-border;
         box-shadow: $solar-hover-box-shadow;
-
+        color: $primary-color;
+        font-weight: 700;
         border-radius: $primary-border-radius;
         transition: transform $medium-transition;
         /* Hover Effect */
@@ -142,13 +146,18 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          background-color: #f4f4f4;
-          border: 1px solid $solar-primary;
+          border: $primary-border;
+          box-shadow: $solar-hover-box-shadow;
+          color: $primary-color;
+
+          border-radius: 50%;
+          transition: transform $medium-transition;
 
           .choice-tick {
             opacity: 1;
             font-size: $button-font-size;
-            color: $solar-primary;
+            color: $primary-color;
+
             font-weight: bold;
           }
         }

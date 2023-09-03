@@ -9,8 +9,9 @@
   position: relative;
   font-family: $solar-font;
   filter: drop-shadow($primary-box-shadow);
-
-  background-color: $light-green;
+  color: $primary-color;
+  background: $gradient-main;
+  font-family: $primary-font;
 
   .sidebar {
     width: 25%;
@@ -29,14 +30,15 @@
       cursor: pointer;
       transition: color $medium-transition;
       font-size: $subtitle-font-size;
-      color: $harry-primary;
+      color: $primary-color;
 
       border-bottom: $primary-border;
       margin-bottom: $spacing-unit;
       padding-bottom: $spacing-unit;
 
       &:hover {
-        color: $harry-primary;
+        color: $primary-color;
+
         text-shadow: $primary-text-shadow;
       }
     }
@@ -63,7 +65,8 @@
 
         .ant-radio-wrapper {
           margin-bottom: $spacing-unit;
-          color: $harry-primary;
+          color: $primary-color;
+
           font-size: $navbar-font-size;
         }
       }
@@ -82,7 +85,7 @@
         .ant-radio-wrapper {
           margin-bottom: $spacing-unit;
           font-size: $navbar-font-size;
-          color: $harry-primary;
+          color: $primary-color;
         }
       }
     }
@@ -124,11 +127,12 @@
     flex: 1;
     padding: $desktop-padding;
     overflow-y: auto;
-    color: $harry-primary;
+    color: $primary-color;
 
     h1,
     h2 {
-      color: $harry-primary;
+      color: $primary-color;
+
       text-shadow: $primary-text-shadow;
       margin-bottom: $spacing-unit;
     }
@@ -145,20 +149,20 @@
       transition: transform $medium-transition;
       h3 {
         font-size: $title-font-size;
-        color: $harry-primary;
+        color: $primary-color;
 
         margin-bottom: $spacing-unit;
       }
 
       p {
         z-index: 1;
-        color: $harry-primary;
+        color: $primary-color;
 
         font-size: $quote-font-size;
       }
 
       button {
-        color: $harry-primary;
+        color: $primary-color;
 
         border-radius: $primary-border-radius;
         border: $primary-border;

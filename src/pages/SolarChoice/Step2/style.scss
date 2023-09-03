@@ -14,19 +14,22 @@
   padding: $desktop-padding;
   box-sizing: border-box;
   position: relative;
-  background-color: $light-green;
+  color: $primary-color;
+  background: $gradient-main;
+  font-family: $primary-font;
 
   h1 {
     text-shadow: $primary-text-shadow;
     margin-bottom: 5 * $spacing-unit;
     font-size: $title-font-size;
     margin-bottom: 20px;
+    font-family: $primary-font;
 
     padding: 10px;
   }
 
   .bill-step-container {
-    margin-top: -2%;
+    background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,7 +37,6 @@
     padding: $desktop-padding;
     box-sizing: border-box;
 
-    background: $light-green;
     border: $primary-border;
     padding: 40px;
     border-radius: $primary-border-radius;
@@ -56,7 +58,7 @@
         font-size: $icon-size-desktop;
         margin-left: $spacing-unit;
         cursor: pointer;
-        color: $solar-primary;
+        color: $primary-color;
       }
     }
 
@@ -91,7 +93,7 @@
 
         border-radius: $primary-border-radius;
         transition: transform $medium-transition;
-        color: $harry-primary;
+        color: $primary-color;
 
         &:hover {
           transform: scale(1.1);
@@ -175,15 +177,24 @@
 }
 
 .cartoon-modal {
+  .ant-modal-title {
+    color: $primary-color;
+    font-size: $subtitle-font-size;
+  }
+
   .ant-modal-content {
+    border: $button-primary-border;
+    box-shadow: $solar-hover-box-shadow;
+
     border-radius: $primary-border-radius;
     transition: transform $medium-transition;
-    border: 4px solid $solar-secondary;
-    box-shadow: $solar-hover-box-shadow;
+    color: $primary-color;
   }
 
   .cartoon-content {
     display: flex;
+    color: $primary-color;
+
     flex-direction: column;
     gap: 1.875 * $spacing-unit;
     padding: 1.875 * $spacing-unit;
@@ -198,11 +209,13 @@
       font-size: 2.25 * $spacing-unit;
       line-height: 3 * $spacing-unit;
       margin: 0;
+      color: $primary-color;
     }
   }
 
   .cartoon-icon {
-    color: $harry-primary;
+    color: $primary-color;
+
     flex-shrink: 0;
   }
 }

@@ -13,7 +13,7 @@ import {
 } from "../../../reduxToolkit/slices/solarFormSlice";
 
 // UI Components & Icons
-import { Slider, Spin, Button, Modal, message, Input } from "antd";
+import { Slider, Spin, Button, Modal, message, Input, Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -26,6 +26,7 @@ import {
 
 // Styles
 import "./style.scss";
+import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 /**
  * ElectricityUsage Component: Allows users to select their electricity usage.
@@ -89,6 +90,21 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
         divisor = 1;
     }
     return usageValue / divisor;
+  };
+  const CustomHandle = (props) => {
+    const { value, dragging, index, ...restProps } = props;
+    return (
+      <Tooltip
+        prefixCls="ant-tooltip"
+        overlay={`${value} kWh`}
+        visible={dragging}
+        placement="top"
+        key={index}
+        overlayStyle={{ backgroundColor: "#28724d", color: "white" }} // Add this line
+      >
+        <Slider.Handle value={value} {...restProps} />
+      </Tooltip>
+    );
   };
 
   /**
@@ -209,9 +225,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
     <div className="electricity-usage">
       <h1 className="step-title">Electricity Consumption</h1>
       {loading ? (
-        <div className="loading-section">
-          <Spin size="large" tip="Preparing your solar journey..."></Spin>
-        </div>
+        <CustomLoadingSpinner />
       ) : (
         <div className="electricity-usage-step">
           <div className="usage-instructions">
@@ -233,9 +247,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
               onChange={handleUsageChange}
               value={electricityUsage.usageValue}
               className="electricity-usage-slider"
-              tooltipVisible
-              tooltipPlacement="bottom"
-              tipFormatter={(value) => `${value} kWh`}
+              handle={CustomHandle}
             />
 
             <div className="electricity-usage-size">Electricity usage</div>

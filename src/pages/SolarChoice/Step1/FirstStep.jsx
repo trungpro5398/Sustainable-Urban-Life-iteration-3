@@ -1,12 +1,13 @@
 // External Dependencies
 import React, { useState, useEffect } from "react";
-import { Button, Spin } from "antd";
+import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 // Styles
 import "./style.scss";
+import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 
 /**
  * FirstStep Component
@@ -37,7 +38,7 @@ const FirstStep = ({ nextStep }) => {
       if (typeof nextStep === "function") {
         nextStep();
       }
-    }, 2000);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const FirstStep = ({ nextStep }) => {
 
       {/* Loading Spinner or Action Buttons based on loading state */}
       {loading ? (
-        <Spin />
+        <CustomLoadingSpinner />
       ) : (
         <>
           <Button className="start-button" onClick={handleClick}>

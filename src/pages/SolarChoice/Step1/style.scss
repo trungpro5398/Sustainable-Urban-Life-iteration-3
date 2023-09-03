@@ -62,15 +62,13 @@
       transform: translateY(-50%) translateX(0) scaleX(1);
     }
     100% {
-      transform: translateY(-50%) translateX(50%) scaleX(2);
+      transform: translateY(-50%) translateX(50%) scaleX(1.2);
     }
   }
 
   .start-button {
     margin-top: 5%;
     height: 50px;
-    color: #32a89e;
-    background: transparent;
     font-size: 20px;
     font-weight: 500;
     border: $primary-border;
@@ -80,9 +78,25 @@
     transition: transform $medium-transition;
     position: relative; // added for relative positioning of the child
     padding-right: 50px; // give space for the icon
+    // Override primary button color
+    &.ant-btn {
+      color: #32a89e;
+
+      &:hover,
+      &:focus {
+        transform: scale(1.1);
+        background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+        color: #32a89e;
+        border: $primary-border;
+        box-shadow: $solar-hover-box-shadow;
+
+        border-radius: $primary-border-radius;
+        transition: transform $medium-transition;
+      }
+    }
     .arrow-icon {
       position: absolute;
-      right: 10px;
+      right: 15px;
       top: 50%;
       transform: translateY(-50%);
       transition: right 0.3s ease;
@@ -125,7 +139,18 @@
     transition: all 0.3s ease-out;
     opacity: 0.8;
     font-size: 30px;
+    &.ant-btn {
+      color: #32a89e;
 
+      &:hover,
+      &:focus {
+        background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+        box-shadow: $solar-hover-box-shadow;
+        transform: translateX(-50%) translateY(-50%) scale(1.05);
+        color: #32a89e;
+        transform: scale(1.2);
+      }
+    }
     &:hover {
       background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
       box-shadow: $solar-hover-box-shadow;
@@ -193,21 +218,4 @@
       font-size: 32px;
     }
   }
-}
-// Increase specificity
-div.ant-btn.start-button {
-  background-color: #32a89e !important;
-  border-color: #32a89e !important;
-
-  &:hover,
-  &:focus {
-    background-color: #01100f !important;
-    border-color: #01100f !important;
-  }
-}
-
-div.ant-btn.start-button:focus,
-div.ant-btn.start-button:active {
-  outline: none !important;
-  box-shadow: none !important;
 }

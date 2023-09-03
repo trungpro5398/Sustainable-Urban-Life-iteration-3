@@ -51,8 +51,8 @@ $solar-hover-box-shadow: 0px 4px 15px 0px rgba($solar-primary, 0.4); // Slight r
 $harry-hover-box-shadow: 0px 4px 15px 0px rgba($harry-primary, 0.4); // A subtle deep shadow using Harry's primary color
 // ===== BORDERS AND RADIUS =====
 
-$primary-border: 1px solid $primary-color;
-$button-primary-border: 2px solid $secondary-green;
+$primary-border: 2px solid $primary-color;
+$button-primary-border: 3px solid $primary-color;
 
 $harry-border: 3px dashed $harry-accent; // Dashed border for a distinct look
 $primary-border-radius: 6px;
