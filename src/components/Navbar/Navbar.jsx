@@ -23,6 +23,11 @@ const Navbar = ({ isHomePage }) => {
           Government Support Program
         </Link>
       </Menu.Item>
+      <Menu.Item key="4">
+        <Link to="/estimation" className="cartoon-dropdown-item">
+          Calculate Solar Potential
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 

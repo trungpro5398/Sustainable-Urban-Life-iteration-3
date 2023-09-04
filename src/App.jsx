@@ -16,6 +16,7 @@ import AboutUs from "./pages/AboutUsPage/AboutUs";
 import SolarChoice from "./pages/SolarChoice/SolarChoice";
 import GovernmentSupport from "./pages/GovernmentSupport/GovernmentSupport";
 import SolarEnergyBenefit from "./pages/SolarEnergyBenefit/SolarEnergyBenefit";
+import Estimation from "./pages/Estimation/Estimation";
 
 /**
  * Main application component.
@@ -42,6 +43,8 @@ const App = () => {
                 element={<GovernmentSupport />}
               />
               <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/estimation" element={<Estimation />} />
+
               <Route
                 path="/solar-energy-benefit"
                 element={<SolarEnergyBenefit />}
