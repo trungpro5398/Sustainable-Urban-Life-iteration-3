@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import "./Navbar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTree } from "@fortawesome/free-solid-svg-icons";
+import iconweb1 from "../../assets/images/icon-web/iconweb1.png";
+import iconweb2 from "../../assets/images/icon-web/iconweb2.png";
+
 const Navbar = ({ isHomePage }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const menu = (
     <Menu className="cartoon-dropdown">
       <Menu.Item key="1">
@@ -35,7 +40,14 @@ const Navbar = ({ isHomePage }) => {
     <header className={`header ${isHomePage ? "home-header" : ""}`}>
       <Link to="/" className="logo-link">
         <div className="logo-container">
-          <FontAwesomeIcon icon={faTree} size="2x" className="logo-icon" />
+          {/* <FontAwesomeIcon icon={faTree} size="2x" className="logo-icon" /> */}
+          <img
+            src={isHovered ? iconweb2 : iconweb1}
+            className="logo-icon"
+            alt=""
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          />
           <span className="logo-text">Sustainable Urban Life</span>
         </div>
       </Link>

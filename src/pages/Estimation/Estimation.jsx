@@ -19,6 +19,7 @@ const libraries = ["drawing", "places"];
 
 const Estimation = () => {
   const googleMapsApiKey = "AIzaSyBKa8pMdDd-8T-Ox9feuS2vI5vO9_J41Ls";
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   const [area, setArea] = useState(0); // Store the area of the drawn polygon
   const [mapsLoaded, setMapsLoaded] = useState(false);
@@ -41,6 +42,7 @@ const Estimation = () => {
     if (autocomplete !== null) {
       const place = autocomplete.getPlace();
       const location = place.geometry.location;
+      setSelectedAddress(place.formatted_address); // Set the selected address
       setCenter({
         lat: location.lat(),
         lng: location.lng(),
@@ -72,7 +74,11 @@ const Estimation = () => {
                       onLoad={onLoad}
                       onPlaceChanged={onPlaceChanged}
                     >
-                      <Input placeholder="Enter your address here" />
+                      <Input
+                        value={selectedAddress}
+                        onChange={(e) => setSelectedAddress(e.target.value)}
+                        placeholder="Enter your address here"
+                      />
                     </Autocomplete>
                   </label>
                   <p>
