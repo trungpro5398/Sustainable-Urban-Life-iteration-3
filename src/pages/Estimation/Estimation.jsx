@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "antd";
+import Joyride, { STATUS } from "react-joyride";
 
 import {
   GoogleMap,
@@ -27,6 +28,44 @@ const Estimation = () => {
     lat: -3.745,
     lng: -38.523,
   });
+  const [runTour, setRunTour] = useState(true);
+  const [steps, setSteps] = useState([
+    {
+      target: "label",
+      content: "Start by entering your address in this field.",
+      placement: "top",
+    },
+    {
+      target: ".ggMap",
+      content:
+        "Draw a shape on the map to represent your roof area. Just click to create each point and close the shape by joining the first and last point.",
+      placement: "top",
+    },
+
+    {
+      target: ".estimated-values",
+      content:
+        "Here you'll see the calculations based on the area you've drawn.",
+      placement: "left",
+    },
+  ]);
+
+  useEffect(() => {
+    // Check if the user has visited the page before
+    const firstTime = localStorage.getItem("firstTime");
+    if (!firstTime) {
+      setRunTour(true);
+      localStorage.setItem("firstTime", "false");
+    }
+  }, []);
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      setRunTour(false);
+    }
+  };
   const calculateArea = (polygon) => {
     const path = polygon.getPath();
     const area = window.google.maps.geometry.spherical.computeArea(path);
@@ -66,6 +105,15 @@ const Estimation = () => {
         >
           {mapsLoaded ? (
             <div className="container-0">
+              <Joyride
+                steps={steps}
+                run={runTour}
+                continuous={true}
+                scrollToFirstStep={true}
+                showProgress={true}
+                showSkipButton={true}
+                callback={handleJoyrideCallback}
+              />
               <div className="container-1">
                 <div className="address-input">
                   <label>
@@ -124,29 +172,31 @@ const Estimation = () => {
                 </div>
               </div>
 
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={20}
-              >
-                <DrawingManagerF
-                  onPolygonComplete={(polygon) => calculateArea(polygon)}
-                  options={{
-                    drawingMode: "polygon",
-                    drawingControl: true,
-                    drawingControlOptions: {
-                      position: window.google.maps.ControlPosition.TOP_CENTER,
-                      drawingModes: ["polygon"],
-                    },
-                    polygonOptions: {
-                      fillColor: "blue",
-                      strokeColor: "blue",
-                      editable: true,
-                      draggable: true,
-                    },
-                  }}
-                />
-              </GoogleMap>
+              <div className="ggMap">
+                <GoogleMap
+                  mapContainerStyle={containerStyle}
+                  center={center}
+                  zoom={20}
+                >
+                  <DrawingManagerF
+                    onPolygonComplete={(polygon) => calculateArea(polygon)}
+                    options={{
+                      drawingMode: "polygon",
+                      drawingControl: true,
+                      drawingControlOptions: {
+                        position: window.google.maps.ControlPosition.TOP_CENTER,
+                        drawingModes: ["polygon"],
+                      },
+                      polygonOptions: {
+                        fillColor: "blue",
+                        strokeColor: "blue",
+                        editable: true,
+                        draggable: true,
+                      },
+                    }}
+                  />
+                </GoogleMap>
+              </div>
             </div>
           ) : (
             <CustomLoadingSpinner />

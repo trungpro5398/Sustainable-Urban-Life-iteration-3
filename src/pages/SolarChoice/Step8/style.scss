@@ -1,0 +1,214 @@
+@import "../../../assets/scss/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+.quiz-step {
+  filter: drop-shadow($primary-box-shadow);
+
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $desktop-padding;
+  box-sizing: border-box;
+  position: relative;
+  color: $primary-color;
+  background: $gradient-main;
+  font-family: $primary-font;
+  h1 {
+    text-shadow: $primary-text-shadow;
+    margin-bottom: 5 * $spacing-unit;
+    font-size: $title-font-size;
+    margin-bottom: 20px;
+    font-family: $primary-font;
+
+    padding: 10px;
+  }
+  .quiz-container {
+    width: 60%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    border: $primary-border;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
+    .ant-progress-circle {
+      &.ant-progress-status-normal .ant-progress-inner {
+        margin-top: 20px !important;
+
+        border-radius: 50% !important;
+        box-shadow: $solar-hover-box-shadow;
+
+        .ant-progress-text {
+          font-size: 24px !important;
+          font-weight: 700 !important;
+          color: $primary-color !important;
+        }
+
+        &:after {
+          content: "" !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          border-radius: 50% !important;
+          background: linear-gradient(
+            to bottom,
+            $solar-primary,
+            $soft-yellow
+          ) !important;
+          z-index: -1 !important;
+        }
+      }
+
+      .ant-progress-circle-path {
+        stroke-width: 8px !important; // Width of the circle's path itself
+        stroke-linecap: round !important; // To give rounded ends to the path
+        background: black !important;
+        transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s,
+          stroke-width 0.3s !important;
+      }
+    }
+    .question {
+      width: 80%;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      p {
+        width: 100%;
+        font-size: 25px;
+        font-weight: 600;
+        margin-bottom: $spacing-unit * 3;
+        font-family: $solar-font;
+      }
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        width: 40%; // Adjust this width to your preference
+      }
+      button {
+        border: $primary-border;
+        box-shadow: $solar-hover-box-shadow;
+        font-size: 20px;
+
+        border-radius: $primary-border-radius;
+        transition: transform $medium-transition;
+        color: $primary-color;
+        padding: 0.5rem 4rem;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        &:hover,
+        &.selected {
+          transform: scale(1.1);
+          background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+        }
+      }
+    }
+    // Custom Progress Circle
+    .ant-progress-inner {
+      position: relative; // Needed for positioning the progress text
+
+      &:after {
+        // Adding gradient to the progress circle
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        background: linear-gradient(to bottom, $soft-yellow, $light-green);
+        z-index: -1;
+      }
+
+      .ant-progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $primary-color;
+      }
+    }
+
+    .ant-progress-circle-path {
+      stroke-linecap: round; // Make the progress end rounded
+      transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s, stroke-width 0.3s; // Adding smooth transition
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); // Adding subtle shadow to the progress stroke
+    }
+
+    .error-notification {
+      font-size: 12px;
+      color: red; // choose an appropriate red color
+      margin-top: $spacing-unit;
+      display: none; // Initially hidden. Can be shown using JavaScript logic.
+    }
+
+    .buttonSubmit {
+      border: $primary-border;
+      box-shadow: $solar-hover-box-shadow;
+      font-size: 20px;
+
+      border-radius: $primary-border-radius;
+      transition: transform $medium-transition;
+      color: $primary-color;
+      padding: 0.5rem 4rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-bottom: 20px;
+      &:hover,
+      &.selected {
+        transform: scale(1.1);
+        background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
+      }
+    }
+    .result {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $primary-color;
+    }
+  }
+
+  .button-common {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    top: 50%;
+    background: linear-gradient(to bottom, $soft-yellow, $light-green);
+    border: $primary-border;
+    padding: 10px 20px;
+    border-radius: 35px;
+    box-shadow: $solar-hover-box-shadow;
+    transition: all 0.3s ease-out;
+    opacity: 0.8;
+    font-size: 30px;
+
+    &:hover {
+      background: linear-gradient(to bottom, $light-green, $soft-yellow);
+      box-shadow: $solar-hover-box-shadow;
+      transform: translateX(-50%) translateY(-50%) scale(1.05);
+
+      .anticon {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .previous-button {
+    @extend .button-common;
+    left: 8.75 * $spacing-unit;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}

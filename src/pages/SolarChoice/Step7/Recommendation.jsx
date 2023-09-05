@@ -21,6 +21,7 @@ import { updateField } from "../../../reduxToolkit/slices/solarFormSlice";
 // Styles
 import "./style.scss";
 import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
+import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 /**
  * Recommendation Component.
@@ -31,16 +32,18 @@ import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/Custo
 const Recommendation = ({ previousStep }) => {
   // Component State
   const [loading, setLoading] = useState(false);
-  const [sortOpen, setSortOpen] = useState(false);
-  const [sortOpenPrice, setSortOpenPrice] = useState(false);
+  const [sortOpen, setSortOpen] = useState(true);
+  const [sortOpenPrice, setSortOpenPrice] = useState(true);
   const [installers, setInstallers] = useState([]);
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [batteryOpen, setBatteryOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(true);
+  const [batteryOpen, setBatteryOpen] = useState(true);
   const [filterOpenSolarSystemSize, setFilterOpenSolarSystemSize] =
-    useState(false);
-
+    useState(true);
+  // Joyride state
+  const [run, setRun] = useState(false);
+  const [stepIndex, setStepIndex] = useState(0);
   // Redux Hooks
   const dispatch = useDispatch();
   const solarFormData = useSelector((state) => state.solarForm);
@@ -50,7 +53,40 @@ const Recommendation = ({ previousStep }) => {
     solarFormData.batteryChoice.wantBattery === "Yes"
       ? solarFormData.pricing.withBattery
       : solarFormData.pricing.withoutBattery;
-
+  // Joyride steps
+  const [steps] = useState([
+    {
+      target: ".battery-choice-section",
+      content: "Choose whether you want a battery with your solar system.",
+      placement: "right",
+    },
+    {
+      target: ".filter-section",
+      content: "This section allows you to filter the installers.",
+      placement: "right",
+    },
+    {
+      target: ".filter-section-solar",
+      content: "Filter installers by solar system size.",
+      placement: "right",
+    },
+    {
+      target: ".sort-section",
+      content: "This section allows you to sort the installers.",
+      placement: "right",
+    },
+    {
+      target: ".sort-section-price",
+      content: "Sort installers by price.",
+      placement: "right",
+    },
+    {
+      target: ".main-content",
+      content:
+        "Check out the recommended installers based on your preferences.",
+      placement: "left",
+    },
+  ]);
   /**
    * This effect is responsible for filtering and sorting the installers data.
    * It triggers every time the filter, sort order, or data changes.
@@ -137,6 +173,12 @@ const Recommendation = ({ previousStep }) => {
     );
   };
   useEffect(() => {
+    // Check if the user has visited the page before
+    const firstTime = localStorage.getItem("firstTime");
+    if (!firstTime) {
+      setRun(true);
+      localStorage.setItem("firstTime", "false");
+    }
     const handleKeyPress = (event) => {
       // Checking for the arrow left key
       if (event.keyCode === 37) {
@@ -152,23 +194,50 @@ const Recommendation = ({ previousStep }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
+  const handleJoyrideCallback = (data) => {
+    const { action, index, status, type } = data;
+
+    if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      // Update state to advance the tour
+      setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
+    }
+
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Tour is finished
+      setRun(false);
+    }
+  };
   return (
     <div className="recommendation-container">
+      <Joyride
+        steps={steps}
+        run={true}
+        stepIndex={stepIndex}
+        continuous={true}
+        scrollToFirstStep={true}
+        showProgress={true}
+        showSkipButton={true}
+        callback={handleJoyrideCallback}
+      />
+
       <div className="sidebar">
         <div className="filter-sort-container">
           <div className="battery-choice-section">
-            <h3 onClick={() => setBatteryOpen(!filterOpen)}>
+            <h3 onClick={() => setBatteryOpen(!batteryOpen)}>
               Battery Choice{" "}
               {batteryOpen ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
             </h3>
-            <Radio.Group
-              value={solarFormData.batteryChoice.wantBattery}
-              onChange={(e) => handleBatteryChoice(e.target.value)}
-              className="custom-radio-group"
-            >
-              <Radio value="Yes">Yes</Radio>
-              <Radio value="No">No</Radio>
-            </Radio.Group>
+            {batteryOpen && (
+              <Radio.Group
+                value={solarFormData.batteryChoice.wantBattery}
+                onChange={(e) => handleBatteryChoice(e.target.value)}
+                className="custom-radio-group"
+              >
+                <Radio value="Yes">Yes</Radio>
+                <Radio value="No">No</Radio>
+              </Radio.Group>
+            )}
           </div>
 
           <div className="filter-section">

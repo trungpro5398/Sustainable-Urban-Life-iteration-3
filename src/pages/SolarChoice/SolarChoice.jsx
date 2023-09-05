@@ -2,7 +2,7 @@ import "./style.scss";
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Spin } from "antd";
+import { Progress, Modal, Steps } from "antd";
 
 import FirstStep from "./Step1/FirstStep";
 import BillCycle from "./Step2/BillCycle";
@@ -15,7 +15,12 @@ import Navbar from "../../components/Navbar/Navbar";
 
 import { updateField } from "../../reduxToolkit/slices/solarFormSlice";
 import CustomLoadingSpinner from "../../components/CustomLoadingSpinner/CustomLoadingSpinner";
+import { useSelector } from "react-redux";
+import { selectSolarForm } from "../../reduxToolkit/slices/solarFormSlice";
+import Quiz from "./Step8/Quiz";
 
+const { Step } = Steps;
+const { confirm } = Modal;
 /**
  * SolarChoice Component
  * This is a multi-step form for users to make solar-related decisions. Each step corresponds to
@@ -27,6 +32,17 @@ const SolarChoice = () => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [locationData, setLocationData] = useState(null);
+  const solarForm = useSelector(selectSolarForm);
+  const stepNames = [
+    "Introduction",
+    "Billing Cycle",
+    "Electricity Usage",
+    "Location",
+    "Postcode Info",
+    "Battery Choice",
+    "Recommendation",
+    "Quiz",
+  ];
 
   /**
    * Fetches necessary data when the component mounts and dispatches it to Redux store.
@@ -83,9 +99,66 @@ const SolarChoice = () => {
   // Handles navigation to the previous step in the form
   const handlePreviousStep = () => setStep((prevStep) => prevStep - 1);
 
+  const handleStepChange = (currentStep) => {
+    // You can add more specific conditions here
+    // if (currentStep > 1 && !stepCompletionStatus[currentStep - 1]) {
+    //   alert("Please complete the current step first!");
+    //   return;
+    // }
+    const stepConditionsMet = () => {
+      if (currentStep === 4 && !solarForm.location.suburb) {
+        alert("Please complete the location details first!");
+        return false;
+      }
+
+      if (currentStep === 6 && !solarForm.batteryChoice.wantBattery) {
+        alert("Please choose a battery option first!");
+        return false;
+      }
+
+      return true;
+    };
+
+    // Confirm user's action before changing step
+    confirm({
+      title: "Do you want to move to this step?",
+      content:
+        "Make sure you have saved or noted any important information from the current step.",
+      onOk() {
+        if (stepConditionsMet()) {
+          setStep(currentStep + 1); // Adjust based on your indexing
+        }
+      },
+      onCancel() {},
+    });
+  };
+
+  const stepCompletionStatus = [
+    true,
+    solarForm.billingCycle.cycle,
+    solarForm.electricityUsage.usageValue,
+    solarForm.location.suburb,
+    solarForm.postcodeInfo.data,
+    solarForm.batteryChoice.wantBattery,
+    true,
+    true,
+  ];
   return (
     <div className="solar-choice-page">
       <Navbar isHomePage={false} />
+      {/* Add Steps */}
+      <div className="steps-container">
+        <Steps current={step - 1} onChange={handleStepChange}>
+          {stepCompletionStatus.map((isComplete, index) => (
+            <Step
+              key={index}
+              title={isComplete ? "Completed" : "Pending"}
+              description={stepNames[index]}
+              className={step - 1 === index ? "active-step" : "inactive-step"}
+            />
+          ))}
+        </Steps>
+      </div>
 
       {isLoading ? (
         <CustomLoadingSpinner />
@@ -125,6 +198,7 @@ const SolarChoice = () => {
             />
           )}
           {step === 7 && <Recommendation previousStep={handlePreviousStep} />}
+          {step === 8 && <Quiz previousStep={handlePreviousStep} />}
         </>
       )}
     </div>

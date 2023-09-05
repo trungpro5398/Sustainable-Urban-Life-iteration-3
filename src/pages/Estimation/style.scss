@@ -19,6 +19,77 @@
   right: 0;
   bottom: 0;
   border: $primary-border;
+  @import "../../assets/scss/variables.scss";
+
+  // Existing SCSS
+  // ...
+
+  // SCSS for react-joyride
+  .joyride-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); // semi-transparent overlay
+    z-index: 9999; // Very high z-index to ensure overlay is above other elements
+  }
+
+  .joyride-tooltip {
+    position: absolute;
+    background-color: white;
+    padding: $spacing-unit;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
+    z-index: 10000; // Even higher than the overlay to ensure it's the topmost element
+    font-family: $primary-font;
+    color: $primary-color;
+
+    .joyride-content {
+      padding: $spacing-unit;
+      font-size: $primary-font-size;
+      text-align: left;
+
+      h4 {
+        font-size: $title-font-size;
+        margin-bottom: $spacing-unit;
+        text-shadow: $primary-text-shadow;
+      }
+
+      p {
+        font-size: $primary-font-size;
+      }
+    }
+
+    .joyride-buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: $spacing-unit;
+
+      button {
+        background-color: $primary-color;
+        color: white;
+        padding: 8px $spacing-unit;
+        border: none;
+        border-radius: $primary-border-radius;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: darken(
+            $primary-color,
+            10%
+          ); // Slightly darkened on hover
+        }
+
+        &.joyride-skip-button {
+          background-color: transparent;
+          color: $primary-color;
+          margin-right: $spacing-unit;
+        }
+      }
+    }
+  }
 
   h1 {
     text-shadow: $primary-text-shadow;

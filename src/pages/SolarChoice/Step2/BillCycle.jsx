@@ -17,6 +17,7 @@ import {
   selectSolarForm,
 } from "../../../reduxToolkit/slices/solarFormSlice";
 import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
+import Joyride, { STATUS } from "react-joyride";
 
 /**
  * Component to select billing cycle for electricity usage.
@@ -32,7 +33,45 @@ const BillCycle = ({ nextStep, previousStep }) => {
   // Redux
   const cycle = useSelector(selectSolarForm);
   const dispatch = useDispatch();
+  const [runTour, setRunTour] = useState(true);
 
+  const [steps, setSteps] = useState([
+    {
+      target: "label",
+      content: "Start by entering your address in this field.",
+      placement: "top-start",
+    },
+    {
+      target: ".ggMap",
+      content:
+        "Draw a shape on the map to represent your roof area. Just click to create each point and close the shape by joining the first and last point.",
+      placement: "top",
+    },
+
+    {
+      target: ".estimated-values",
+      content:
+        "Here you'll see the calculations based on the area you've drawn.",
+      placement: "left",
+    },
+  ]);
+
+  useEffect(() => {
+    // Check if the user has visited the page before
+    const firstTime = localStorage.getItem("firstTime");
+    if (!firstTime) {
+      setRunTour(true);
+      localStorage.setItem("firstTime", "false");
+    }
+  }, []);
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      setRunTour(false);
+    }
+  };
   /**
    * Content for the Information modal.
    */
@@ -173,6 +212,15 @@ const BillCycle = ({ nextStep, previousStep }) => {
         <CustomLoadingSpinner />
       ) : (
         <div className="bill-step-container">
+          <Joyride
+            steps={steps}
+            run={runTour}
+            continuous={true}
+            scrollToFirstStep={true}
+            showProgress={true}
+            showSkipButton={true}
+            callback={handleJoyrideCallback}
+          />
           <h2>
             Which is your billing cycle?
             <FontAwesomeIcon

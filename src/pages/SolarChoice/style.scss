@@ -1,9 +1,64 @@
+@import "../../assets/scss/variables.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* electricity-like font from Google Fonts */
+
 .solar-choice-page {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+
+  .steps-container {
+    width: 96%;
+    position: relative;
+    padding: 20px;
+    z-index: 100; // to ensure it stays on top of other components
+    // border: $primary-border;
+    // box-shadow: $solar-hover-box-shadow;
+    // border-radius: $primary-border-radius;
+    // transition: transform $medium-transition;
+    .ant-steps-item-description {
+      // Add your custom styles here, for example:
+      color: $primary-color !important;
+      font-size: 16px !important;
+      font-weight: bold !important;
+    }
+    .ant-steps-item {
+      background: white !important;
+      .ant-steps-item-title {
+        color: $primary-color !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+      }
+
+      &:hover {
+        .ant-steps-item-icon {
+          background: $primary-color !important;
+          color: white !important;
+        }
+      }
+    }
+
+    .active-step {
+      .ant-steps-item-icon {
+        background: $primary-color !important;
+        color: white !important;
+      }
+    }
+
+    .ant-steps-item-finish .ant-steps-item-title,
+    .inactive-step .ant-steps-item-title {
+      color: $primary-color;
+    }
+
+    .active-step {
+      .ant-steps-item-icon {
+        background: $primary-color !important;
+        color: white !important;
+      }
+    }
+  }
 
   .loading-container {
     display: flex;
