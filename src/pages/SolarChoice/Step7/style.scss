@@ -81,17 +81,15 @@
 
   .sidebar {
     width: 25%;
-    padding: $mobile-padding;
-    border-radius: $primary-border-radius;
     border: $primary-border;
-    box-shadow: $solar-hover-box-shadow;
-
-    border-radius: $primary-border-radius;
     transition: transform $medium-transition;
     border-left: none;
+    padding-left: 60px;
     border-top: none;
     border-bottom: none;
     background-color: white;
+    overflow-y: auto;
+
     h3 {
       cursor: pointer;
       transition: color $medium-transition;
@@ -125,7 +123,7 @@
         align-items: start;
 
         h3 {
-          font-size: $harry-header-size;
+          font-size: 30px;
           font-weight: 800;
         }
 
@@ -145,7 +143,7 @@
         flex-direction: column;
         align-items: start;
         h3 {
-          font-size: $secondary-font-size;
+          font-size: 30px;
         }
 
         .ant-radio-wrapper {

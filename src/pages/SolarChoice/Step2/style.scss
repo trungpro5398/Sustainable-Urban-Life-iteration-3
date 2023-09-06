@@ -135,43 +135,6 @@
         }
       }
     }
-
-    .button-common {
-      position: absolute;
-      width: 70px;
-      height: 70px;
-      top: 50%;
-      background: linear-gradient(to bottom, $soft-yellow, $light-green);
-      border: $primary-border;
-      padding: 10px 20px;
-      border-radius: 35px;
-      box-shadow: $solar-hover-box-shadow;
-      transition: all 0.3s ease-out;
-      opacity: 0.8;
-      font-size: 30px;
-
-      &:hover {
-        background: linear-gradient(to bottom, $light-green, $soft-yellow);
-        box-shadow: $solar-hover-box-shadow;
-        transform: translateX(-50%) translateY(-50%) scale(1.05);
-
-        .anticon {
-          transform: scale(1.2);
-        }
-      }
-    }
-
-    .next-button {
-      @extend .button-common;
-      right: 0px;
-      transform: translateX(-50%) translateY(-50%);
-    }
-
-    .previous-button {
-      @extend .button-common;
-      left: 8.75 * $spacing-unit;
-      transform: translateX(-50%) translateY(-50%);
-    }
   }
 }
 

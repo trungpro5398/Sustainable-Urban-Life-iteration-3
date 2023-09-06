@@ -3,7 +3,7 @@
 // -------------------
 
 // React Dependencies
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // Redux Dependencies
 import { useDispatch, useSelector } from "react-redux";
@@ -18,15 +18,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
   faArrowLeft,
-  faQuestionCircle,
+  faTree,
   faLightbulb,
-  faHandPointRight,
+  faWind,
   faSlidersH,
 } from "@fortawesome/free-solid-svg-icons";
+import Joyride, { STATUS } from "react-joyride";
 
 // Styles
 import "./style.scss";
 import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
+import NavigationButtons from "../../../components/NavigationButtons/NavigationButtons";
 
 /**
  * ElectricityUsage Component: Allows users to select their electricity usage.
@@ -47,10 +49,47 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
   // LOCAL STATE MANAGEMENT
   // -------------------
 
-  const [isModalVisible, setModalVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
-
+  const [runTour, setRunTour] = useState(true);
+  const [steps, setSteps] = useState([
+    {
+      target: ".electricity-usage-slider",
+      content:
+        "You can also use the slider to indicate your electricity consumption.",
+      placement: "top-start",
+    },
+    {
+      target: ".electricity-usage-input-container",
+      content:
+        "You can also type in your electricity consumption in this field.",
+      placement: "top",
+    },
+    {
+      target: ".daily-usage-display",
+      content:
+        "This information will help us determine your daily electricity usage and determine which size of the solar system is suitable for you.",
+      placement: "top",
+    },
+    {
+      target: ".info-container-1",
+      content:
+        "2 kWh/day * 0.5 kg CO2/kWh = 1 kg of CO2 emissions per day. Now, to estimate the number of trees needed to offset 1 kg of CO2, we can use a rough approximation that a tree can absorb about 22 kg of CO2 per year.",
+      placement: "top-start",
+    },
+    {
+      target: ".info-container-2",
+      content:
+        "1 kg CO2 / 22 kg CO2 per tree per year ≈ 0.0455 trees per day. So, using these rough estimates, your daily electricity usage of 2 kWh might be equivalent to the emissions that would require roughly 0.0455 trees per day to offset",
+      placement: "top",
+    },
+    {
+      target: ".info-container-3",
+      content:
+        "For air conditioner using electricity kwh divide by 2.3kw to get how many hours can the daily usage supply an air conditioner",
+      placement: "top",
+    },
+  ]);
   // -------------------
   // UTILITY FUNCTIONS
   // -------------------
@@ -187,6 +226,15 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
     dispatch(
       updateField({ section: "electricityUsage", field: "usageValue", value })
     );
+    if (electricityUsage.usageValue > 0) {
+      dispatch(
+        updateField({
+          section: "electricityUsage",
+          field: "isCompleted",
+          value: true,
+        })
+      );
+    }
     dispatch(
       updateField({
         section: "electricityUsage",
@@ -196,6 +244,13 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
     );
   };
   useEffect(() => {
+    // Check if the user has visited the page before
+    const firstTime = localStorage.getItem("firstTime");
+    if (!firstTime) {
+      setRunTour(true);
+      localStorage.setItem("firstTime", "false");
+    }
+
     const handleKeyPress = (event) => {
       // Checking for the arrow right key
 
@@ -217,10 +272,18 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
   // -------------------
   // COMPONENT JSX
   // -------------------
 
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      setRunTour(false);
+    }
+  };
   return (
     <div className="electricity-usage">
       <h1 className="step-title">Electricity Consumption</h1>
@@ -228,6 +291,15 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
         <CustomLoadingSpinner />
       ) : (
         <div className="electricity-usage-step">
+          <Joyride
+            steps={steps}
+            run={runTour}
+            continuous={true}
+            scrollToFirstStep={true}
+            showProgress={true}
+            showSkipButton={true}
+            callback={handleJoyrideCallback}
+          />
           <div className="usage-instructions">
             <p>
               Please slide to indicate your {billingCycle.cycle} electricity
@@ -240,6 +312,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
               <span className="range-labels-low">Low</span>
               <span className="range-labels-high">High</span>
             </div>
+
             <Slider
               min={1}
               max={rangeUsage(10000)}
@@ -258,57 +331,8 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
                 onChange={(e) => handleUsageChange(e.target.value)}
                 className="electricity-usage-input"
               />
-              <div className="electricity-usage-unit">
-                kWh
-                <FontAwesomeIcon
-                  icon={faQuestionCircle}
-                  className="instruction-icon"
-                  onClick={() => setModalVisible(true)}
-                  onMouseEnter={() => setModalVisible(true)}
-                />
-              </div>
+              <div className="electricity-usage-unit">kWh</div>
             </div>
-            <Modal
-              title={
-                <div className="electricity-item">
-                  <FontAwesomeIcon
-                    icon={faLightbulb}
-                    className="electricity-icon"
-                  />
-                  How to Adjust Electricity Consumption
-                </div>
-              }
-              visible={isModalVisible}
-              onCancel={() => setModalVisible(false)}
-              footer={null}
-              centered
-              className="electricity-modal"
-            >
-              <div className="electricity-content">
-                <div className="electricity-item">
-                  <FontAwesomeIcon
-                    icon={faHandPointRight}
-                    size="2x"
-                    className="electricity-icon"
-                  />
-                  <p>
-                    You can input the consumption directly into the provided
-                    field.
-                  </p>
-                </div>
-                <div className="electricity-item">
-                  <FontAwesomeIcon
-                    icon={faSlidersH}
-                    size="2x"
-                    className="electricity-icon"
-                  />
-                  <p>
-                    Or use the slider to adjust the value. Both methods will
-                    synchronize.
-                  </p>
-                </div>
-              </div>
-            </Modal>
 
             <div className="daily-usage-display">
               <p>
@@ -317,6 +341,46 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
                   {electricityUsage.usageDaily?.toFixed(2) || 0} kWh
                 </strong>
               </p>
+            </div>
+            {/* New Containers Section */}
+            <div className="info-containers">
+              {/* First Container - CO2 Emissions */}
+              <div className="info-container info-container-1">
+                <FontAwesomeIcon
+                  icon={faLightbulb}
+                  className="container-icon"
+                />
+                <span className="container-content">
+                  <h3>CO2 Emissions</h3>
+                  <p>
+                    {(electricityUsage.usageDaily * 0.5).toFixed(2)} kg of CO2
+                    emissions per day.
+                  </p>
+                </span>
+              </div>
+
+              {/* Second Container - Equivalent tree planting */}
+              <div className="info-container info-container-2">
+                <FontAwesomeIcon icon={faTree} className="container-icon" />{" "}
+                <span className="container-content">
+                  <h3>Equivalent tree planting</h3>
+                  <p>
+                    {((electricityUsage.usageDaily * 0.5) / 22).toFixed(4)} per
+                    day.
+                  </p>
+                </span>
+                {/* Using a tree icon for this section */}
+              </div>
+
+              {/* Third Container - Air Conditioner Hours */}
+              <div className="info-container info-container-3">
+                <FontAwesomeIcon icon={faWind} className="container-icon" />{" "}
+                <span className="container-content">
+                  <h3>Air Conditioner Hours</h3>
+                  <p>{(electricityUsage.usageDaily / 2.3).toFixed(2)} hours.</p>
+                </span>
+                {/* Using a wind (or fan) icon for AC context */}
+              </div>
             </div>
           </div>
 
@@ -327,18 +391,13 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
             </div>
           )}
 
-          <Button
-            className="previous-button"
-            icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}
-            onClick={() => handleClick(previousStep)}
-            shape="circle"
-          ></Button>
-          <Button
-            className="next-button"
-            icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
-            onClick={() => handleClick(nextStep)}
-            shape="circle"
-          ></Button>
+          <NavigationButtons
+            nextStep={nextStep}
+            previousStep={previousStep}
+            condition={true}
+            setShowError={null}
+            setLoading={setLoading}
+          />
         </div>
       )}
     </div>

@@ -4,7 +4,6 @@
 
 // React Dependencies
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
 // UI Components & Icons
 import { Button, Card, Spin, Radio } from "antd";
@@ -16,6 +15,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // Redux Actions
+import { useSelector, useDispatch } from "react-redux";
+
 import { updateField } from "../../../reduxToolkit/slices/solarFormSlice";
 
 // Styles
@@ -29,7 +30,7 @@ import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
  * @param {Function} previousStep - Function to handle the previous step action.
  * @returns {JSX.Element} Rendered component.
  */
-const Recommendation = ({ previousStep }) => {
+const Recommendation = ({ previousStep, nextStep }) => {
   // Component State
   const [loading, setLoading] = useState(false);
   const [sortOpen, setSortOpen] = useState(true);
@@ -142,8 +143,30 @@ const Recommendation = ({ previousStep }) => {
    *
    * @param {number} id - The ID of the installer.
    */
-  const addToCompare = (id) => {
-    console.log(`Adding installer with ID ${id} to compare`);
+  const addToCompare = (systemSize, price) => {
+    // Dispatching the updateField action with the necessary payload
+    dispatch(
+      updateField({
+        section: "annualBillSavings",
+        field: "solarPowerSystem",
+        value: systemSize,
+      })
+    );
+    dispatch(
+      updateField({
+        section: "rebate",
+        field: "price_installation",
+        value: price,
+      })
+    );
+    dispatch(
+      updateField({
+        section: "pricing",
+        field: "isCompleted",
+        value: true,
+      })
+    );
+    handleClick(nextStep);
   };
 
   /**
@@ -367,8 +390,15 @@ const Recommendation = ({ previousStep }) => {
               <p>System Size: {installer.system_size} kW</p>
               <p>Price: ${installer.price || installer.price_battery}</p>
 
-              <Button onClick={() => addToCompare(installer.id)}>
-                Add to Compare
+              <Button
+                onClick={() => {
+                  addToCompare(
+                    installer.system_size + "kw",
+                    installer.price || installer.price_battery
+                  );
+                }}
+              >
+                Discover cost savings
               </Button>
             </Card>
           ))

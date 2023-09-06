@@ -20,7 +20,7 @@
   bottom: 0;
   border: $primary-border;
   @import "../../assets/scss/variables.scss";
-
+  overflow-y: scroll;
   // Existing SCSS
   // ...
 
@@ -141,6 +141,7 @@
 
     .estimated-row {
       display: flex;
+      height: 50%;
       justify-content: space-between;
       align-items: center;
       padding: 12px 20px;

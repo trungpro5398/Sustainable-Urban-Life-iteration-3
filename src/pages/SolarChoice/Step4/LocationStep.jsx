@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Select, Button, Spin, Modal } from "antd";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faArrowLeft,
-  faInfoCircle,
-  faLightbulb,
-  faSearch,
-  faMousePointer,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateField,
@@ -17,6 +10,8 @@ import {
   updatePostcodeInfo,
 } from "../../../reduxToolkit/slices/solarFormSlice";
 import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
+import Joyride, { STATUS } from "react-joyride";
+import NavigationButtons from "../../../components/NavigationButtons/NavigationButtons";
 
 /**
  * LocationStep Component
@@ -30,6 +25,7 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
   // -------------------
   // REDUX STATE MANAGEMENT
   // -------------------
+  console.log(data);
   const locationData = useSelector(selectSolarForm).location;
   const dispatch = useDispatch();
 
@@ -37,9 +33,16 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
   // LOCAL STATE MANAGEMENT
   // -------------------
   const [loading, setLoading] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
   const [showError, setShowError] = useState(false);
-
+  const [runTour, setRunTour] = useState(true);
+  const [steps, setSteps] = useState([
+    {
+      target: ".select-location",
+      content:
+        " Type or select your suburb directly into the input box to search for matching suburbs. Location is one of the most important variables in calculating solar performance. We use this to apply the sunlight radiation that your system will receive. Your address will also affect the size the soalr rebate you will receive when you purchase your system.",
+      placement: "top-start",
+    },
+  ]);
   // -------------------
   // UTILITY FUNCTIONS
   // -------------------
@@ -66,24 +69,47 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
   const handleSuburbChange = (value) => {
     setShowError(false);
     dispatch(updateField({ section: "location", field: "suburb", value }));
+    dispatch(
+      updateField({
+        section: "location",
+        field: "isCompleted",
+        value: true,
+      })
+    );
+    const postcode = data.filter((suburb) => suburb.place_name === value)[0]
+      .postcode;
+    dispatch(
+      updateField({ section: "location", field: "postcode", value: postcode })
+    );
 
     const selectedSuburbInfo = data.find((loc) => loc.place_name === value);
     dispatch(updatePostcodeInfo(selectedSuburbInfo));
   };
 
   // Extract unique suburbs with postcode and place name
-  const uniqueSuburbs = Array.from(
-    new Set(
-      data.map((loc) => ({
+
+  const uniqueSuburbsSet = new Set(
+    data?.map((loc) =>
+      JSON.stringify({
         key: loc.postcode + loc.place_name,
         postcode: loc.postcode,
         place_name: loc.place_name,
-      }))
-    ),
-    JSON.stringify
-  ).map(JSON.parse);
+      })
+    )
+  );
+
+  const uniqueSuburbs = [...uniqueSuburbsSet].map((suburbStr) =>
+    JSON.parse(suburbStr)
+  );
 
   useEffect(() => {
+    // Check if the user has visited the page before
+    const firstTime = localStorage.getItem("firstTime");
+    if (!firstTime) {
+      setRunTour(true);
+      localStorage.setItem("firstTime", "false");
+    }
+
     const handleKeyPress = (event) => {
       // Checking for the arrow right key
 
@@ -105,6 +131,13 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      setRunTour(false);
+    }
+  };
   return (
     <div className="location-step">
       <h1>Location</h1>
@@ -113,6 +146,16 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
         <CustomLoadingSpinner />
       ) : (
         <div className="location-step-container">
+          <Joyride
+            steps={steps}
+            run={runTour}
+            continuous={true}
+            scrollToFirstStep={true}
+            showProgress={true}
+            showSkipButton={true}
+            stepIndex={0}
+            callback={handleJoyrideCallback}
+          />
           <p>Which suburb are you located in?</p>
           <div className="select-location">
             <Select
@@ -140,63 +183,20 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
                 </Select.Option>
               ))}
             </Select>
-            <FontAwesomeIcon
-              icon={faInfoCircle}
-              className="location-icon"
-              onClick={() => setModalVisible(true)}
-              onMouseEnter={() => setModalVisible(true)}
-            />
           </div>
           {showError && (
             <p className="error-message">
               Please select a suburb before proceeding.
             </p>
           )}
-          <Modal
-            title={
-              <div className="location-item">
-                <FontAwesomeIcon icon={faLightbulb} className="location-icon" />
-                How to Choose a Suburb
-              </div>
-            }
-            visible={isModalVisible}
-            onCancel={() => setModalVisible(false)}
-            footer={null}
-            centered
-            className="location-modal"
-          >
-            <div className="location-content">
-              <div className="location-item">
-                <FontAwesomeIcon icon={faSearch} className="location-icon" />
-                <p>
-                  Type or select your suburb directly into the input box to
-                  search for matching suburbs.
-                </p>
-              </div>
-              <div className="location-item">
-                <FontAwesomeIcon
-                  icon={faMousePointer}
-                  className="location-icon"
-                />
-                <p>
-                  Scroll through the list and select a suburb from the dropdown.
-                </p>
-              </div>
-            </div>
-          </Modal>
 
-          <Button
-            className="previous-button"
-            icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}
-            onClick={() => handleClick(previousStep)}
-            shape="circle"
-          ></Button>
-          <Button
-            className="next-button"
-            icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
-            onClick={() => handleClick(nextStep)}
-            shape="circle"
-          ></Button>
+          <NavigationButtons
+            nextStep={nextStep}
+            previousStep={previousStep}
+            condition={locationData.suburb}
+            setShowError={setShowError}
+            setLoading={setLoading}
+          />
         </div>
       )}
     </div>

@@ -63,7 +63,6 @@ const SolarEnergyBenefit = () => {
     "7",
     "8",
     "9",
-    "10",
   ]); // Initially all panels are active (open)
 
   return (
@@ -104,31 +103,14 @@ const SolarEnergyBenefit = () => {
           </CustomPanel>
         </Panel>
 
-        <Panel header="2.	Financial Savings:" key="2" className="question-panel">
-          <CustomPanel
-            image={s2}
-            title="2.	Financial Savings:"
-            link="https://www.cleanenergycouncil.org.au/resources/technologies/solar-energy"
-          >
-            <p>
-              • Solar panels can result in significant financial savings over
-              time.
-            </p>
-            <span>
-              • On average, a 6.6 kW solar system can save homeowners around
-              $400 to $800 AUD annually, according to the Clean Energy Council.
-            </span>
-          </CustomPanel>
-        </Panel>
-
         <Panel
-          header="3.	Environmentally Friendly:"
-          key="3"
+          header="2.	Environmentally Friendly:"
+          key="2"
           className="question-panel"
         >
           <CustomPanel
             image={s3}
-            title="3.	Environmentally Friendly:"
+            title="2.	Environmentally Friendly:"
             link="https://www.solar.vic.gov.au/apply?gclid=Cj0KCQjwi7GnBhDXARIsAFLvH4lq3j_jtiYxxPP4zqn2QibCt42WF9nUT3TFiZvDU5IH_hv706BB1rgaAlB2EALw_wcB"
           >
             <p>
@@ -144,13 +126,13 @@ const SolarEnergyBenefit = () => {
         </Panel>
 
         <Panel
-          header="4.	Government Incentives:"
-          key="4"
+          header="3.	Government Incentives:"
+          key="3"
           className="question-panel"
         >
           <CustomPanel
-            image={s4}
-            title="4.	Government Incentives:"
+            image={s3}
+            title="3.	Government Incentives:"
             link="https://engage.vic.gov.au/minimum-feed-tariff-review-202223"
           >
             <p>
@@ -164,27 +146,27 @@ const SolarEnergyBenefit = () => {
             </span>
           </CustomPanel>
         </Panel>
-        <Panel header="5.	Feed-in Tariffs:" key="5" className="question-panel">
+        <Panel header="4.	Feed-in Tariffs:" key="4" className="question-panel">
+          <CustomPanel
+            image={s4}
+            title="4.	Feed-in Tariffs:"
+            link="https://engage.vic.gov.au/minimum-feed-tariff-review-202223"
+          >
+            <p>
+              • Victoria provides feed-in tariffs for excess solar energy that
+              is exported back to the grid.
+            </p>
+            <span>
+              • The current minimum feed-in tariff rate in Victoria is around
+              10.2 cents per kilowatt-hour, as per the Essential Services
+              Commission.
+            </span>
+          </CustomPanel>
+        </Panel>
+        <Panel header="5.	Job Creation:" key="5" className="question-panel">
           <CustomPanel
             image={s5}
-            title="5.	Feed-in Tariffs:"
-            link="https://engage.vic.gov.au/minimum-feed-tariff-review-202223"
-          >
-            <p>
-              • Victoria provides feed-in tariffs for excess solar energy that
-              is exported back to the grid.
-            </p>
-            <span>
-              • The current minimum feed-in tariff rate in Victoria is around
-              10.2 cents per kilowatt-hour, as per the Essential Services
-              Commission.
-            </span>
-          </CustomPanel>
-        </Panel>
-        <Panel header="6.	Job Creation:" key="6" className="question-panel">
-          <CustomPanel
-            image={s6}
-            title="6.	Job Creation:"
+            title="5.	Job Creation:"
             link="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/employment-renewable-energy-activities-australia/latest-release#:~:text=The%20increase%20of%20FTE%20employment,(1%2C220%20additional%20FTE%20jobs)."
           >
             <p>
@@ -198,13 +180,13 @@ const SolarEnergyBenefit = () => {
           </CustomPanel>
         </Panel>
         <Panel
-          header="7.	Increased Property Value:"
-          key="7"
+          header="6.	Increased Property Value:"
+          key="6"
           className="question-panel"
         >
           <CustomPanel
-            image={s7}
-            title="7.	Increased Property Value:"
+            image={s6}
+            title="6.	Increased Property Value:"
             link="https://newscenter.lbl.gov/2015/01/13/berkeley-lab-illuminates-price-premiums-u-s-solar-home-sales/"
           >
             <p>
@@ -220,11 +202,11 @@ const SolarEnergyBenefit = () => {
           </CustomPanel>
         </Panel>
         <Panel
-          header="8.	Energy Independence:"
-          key="8"
+          header="7.	Energy Independence:"
+          key="7"
           className="question-panel"
         >
-          <CustomPanel image={s8} title="8.	Energy Independence:">
+          <CustomPanel image={s7} title="7.	Energy Independence:">
             <p>
               • Solar energy reduces reliance on external energy sources,
               enhancing energy security.
@@ -236,11 +218,11 @@ const SolarEnergyBenefit = () => {
           </CustomPanel>
         </Panel>
         <Panel
-          header="9.	Supports Grid Stability:"
-          key="9"
+          header="8.	Supports Grid Stability:"
+          key="8"
           className="question-panel"
         >
-          <CustomPanel image={s9} title="9.	Supports Grid Stability:">
+          <CustomPanel image={s8} title="8.	Supports Grid Stability:">
             <p>
               • Solar installations can help stabilize the grid by generating
               power during peak demand periods.
@@ -252,11 +234,11 @@ const SolarEnergyBenefit = () => {
           </CustomPanel>
         </Panel>
         <Panel
-          header="10.	Technological Advancements:"
-          key="10"
+          header="9.	Technological Advancements:"
+          key="9"
           className="question-panel"
         >
-          <CustomPanel image={s10} title="10.	Technological Advancements:">
+          <CustomPanel image={s9} title="9.	Technological Advancements:">
             <p>
               • Solar technology continues to improve, making it more efficient
               and affordable.

@@ -1,214 +1,336 @@
 @import "../../../assets/scss/variables.scss";
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
-.quiz-step {
-  filter: drop-shadow($primary-box-shadow);
-
+.annual-bill-savings {
   min-height: 100vh;
   width: 100vw;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: $desktop-padding;
-  box-sizing: border-box;
-  position: relative;
+
   color: $primary-color;
   background: $gradient-main;
   font-family: $primary-font;
-  h1 {
+  p {
+    font-size: 20px;
+    color: $primary-color;
     text-shadow: $primary-text-shadow;
-    margin-bottom: 5 * $spacing-unit;
-    font-size: $title-font-size;
-    margin-bottom: 20px;
-    font-family: $primary-font;
-
-    padding: 10px;
+    font-weight: bold;
   }
-  .quiz-container {
-    width: 60%;
-    background: white;
+  .row {
+    margin-top: 20px;
+
+    span {
+      color: $primary-color;
+      font-weight: bold;
+      font-size: 20px;
+
+      text-shadow: $primary-text-shadow;
+    }
+  }
+  .error-text {
+    color: red;
+    margin-top: 5px;
+    font-size: 20px;
+  }
+
+  .solar-input-display {
+    color: $primary-color;
+    text-shadow: $primary-text-shadow;
+    font-weight: bold;
+    span {
+      font-size: 20px;
+    }
+  }
+  h1 {
+    font-size: 40px;
+    color: $primary-color;
+    text-shadow: $primary-text-shadow;
+    font-weight: bold;
+  }
+  .annual-bill-savings-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
 
+    padding: 40px;
+    box-sizing: border-box;
+    background: white;
+    border: $primary-border;
+    padding: 40px;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
+    h2 {
+      font-weight: bold;
+    }
+    .compass-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 100%; /* Adjust according to your compass size */
+      align-items: center;
+      justify-content: center;
+      height: 100%; /* Adjust according to your compass size */
+      .tooltip {
+        position: relative;
+
+        color: $primary-color;
+
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: nowrap;
+        font-size: 14px; /* Adjust as needed */
+      }
+      .compass-container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        background-color: #f0f0f0; // a light gray background to distinguish the compass
+        border-radius: 50%; // makes it circular
+      }
+    }
+
+    .annual-slider .slider-handle {
+      width: 20px;
+      height: 20px;
+      background-color: #4a90e2; /* Color of the handle */
+      border: none; /* Remove any border */
+      border-radius: 50%; /* Make it round */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add some shadow for depth */
+    }
+
+    /* For the hover effect */
+    .annual-slider .slider-handle:hover {
+      background-color: #357abd;
+    }
+
+    .progress-label {
+      position: absolute;
+      top: -25px; // or adjust as needed to position above the progress bar
+      transform: translateX(-50%); // centers the label on the progress position
+      font-weight: bold;
+      background-color: #fff; // optional, to ensure the label is readable
+      padding: 0 5px; // optional, some padding for the label
+    }
+
+    // Ensure the container holding the progress bar and label is relative
+    .ant-progress-outer {
+      position: relative;
+    }
+
+    .compass-needle {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      transform-origin: center;
+      transition: transform 0.3s ease;
+      left: 50%; // centering the needle
+      top: 50%;
+      margin-top: -25px; // half of the needle's height
+      margin-left: -25px; // half of the needle's width
+
+      &.N {
+        transform: rotate(0deg);
+      }
+      &.NE {
+        transform: rotate(45deg);
+      }
+      &.E {
+        transform: rotate(90deg);
+      }
+      &.SE {
+        transform: rotate(135deg);
+      }
+      &.S {
+        transform: rotate(180deg);
+      }
+      &.SW {
+        transform: rotate(-135deg);
+      }
+      &.W {
+        transform: rotate(-90deg);
+      }
+      &.NW {
+        transform: rotate(-45deg);
+      }
+    }
+    .error-text-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .direction-box {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      text-align: center;
+      line-height: 50px;
+      border-radius: 5px; // slightly rounded corners
+      color: black; // default font color
+      background: white;
+      border: $primary-border;
+      border-radius: $primary-border-radius;
+      box-shadow: $solar-hover-box-shadow;
+      &:hover,
+      &.active {
+        background-color: #28724d; // green background
+        color: white; // white font
+      }
+
+      &.N {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &.NE {
+        top: 0;
+        right: 0;
+      } // adjustment to better position the boxes
+      &.E {
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+      }
+      &.SE {
+        bottom: 0;
+        right: 0;
+      }
+      &.S {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &.SW {
+        bottom: 0;
+        left: 0;
+      }
+      &.W {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      &.NW {
+        top: 0;
+        left: 0;
+      }
+    }
+  }
+  .annual-slider {
+    width: 100%;
+    background: $solar-primary;
+    border-radius: $primary-border-radius;
+    margin: 10px 0;
+
+    & .ant-slider-track {
+      background: $primary-color;
+    }
+
+    & .ant-slider-handle {
+      color: $primary-color;
+
+      border: 3px solid $primary-color;
+      border-radius: 50%;
+    }
+  }
+
+  .annual-usage-size {
+    margin-top: 5%;
+    font-size: 30px;
+    color: $primary-color;
+
+    text-shadow: $primary-text-shadow;
+    // If you want to style the custom content
+    .ant-tooltip-inner {
+      background-color: #28724d !important; // to ensure the background color applies
+      color: white !important; // to ensure the text color applies
+    }
+
+    .ant-tooltip-arrow {
+      border-color: #28724d !important;
+    }
+  }
+  button {
+    margin-top: 20px;
+    display: flex; // to keep icon and text aligned
+    align-items: center; // vertical centering of items
+    justify-content: center; // horizontal centering of items
+    padding: 8px 16px; // adjust as needed
     border: $primary-border;
     border-radius: $primary-border-radius;
     box-shadow: $solar-hover-box-shadow;
-    .ant-progress-circle {
-      &.ant-progress-status-normal .ant-progress-inner {
-        margin-top: 20px !important;
-
-        border-radius: 50% !important;
-        box-shadow: $solar-hover-box-shadow;
-
-        .ant-progress-text {
-          font-size: 24px !important;
-          font-weight: 700 !important;
-          color: $primary-color !important;
-        }
-
-        &:after {
-          content: "" !important;
-          position: absolute !important;
-          top: 0 !important;
-          left: 0 !important;
-          right: 0 !important;
-          bottom: 0 !important;
-          border-radius: 50% !important;
-          background: linear-gradient(
-            to bottom,
-            $solar-primary,
-            $soft-yellow
-          ) !important;
-          z-index: -1 !important;
-        }
-      }
-
-      .ant-progress-circle-path {
-        stroke-width: 8px !important; // Width of the circle's path itself
-        stroke-linecap: round !important; // To give rounded ends to the path
-        background: black !important;
-        transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s,
-          stroke-width 0.3s !important;
-      }
-    }
-    .question {
-      width: 80%;
-      margin-bottom: 1.5rem;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      p {
-        width: 100%;
-        font-size: 25px;
-        font-weight: 600;
-        margin-bottom: $spacing-unit * 3;
-        font-family: $solar-font;
-      }
-      .button-group {
-        display: flex;
-        justify-content: space-between;
-        width: 40%; // Adjust this width to your preference
-      }
-      button {
-        border: $primary-border;
-        box-shadow: $solar-hover-box-shadow;
-        font-size: 20px;
-
-        border-radius: $primary-border-radius;
-        transition: transform $medium-transition;
-        color: $primary-color;
-        padding: 0.5rem 4rem;
-        margin-right: 0.5rem;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        &:hover,
-        &.selected {
-          transform: scale(1.1);
-          background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
-        }
-      }
-    }
-    // Custom Progress Circle
-    .ant-progress-inner {
-      position: relative; // Needed for positioning the progress text
-
-      &:after {
-        // Adding gradient to the progress circle
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: 50%;
-        background: linear-gradient(to bottom, $soft-yellow, $light-green);
-        z-index: -1;
-      }
-
-      .ant-progress-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: $primary-color;
-      }
-    }
-
-    .ant-progress-circle-path {
-      stroke-linecap: round; // Make the progress end rounded
-      transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s, stroke-width 0.3s; // Adding smooth transition
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); // Adding subtle shadow to the progress stroke
-    }
-
-    .error-notification {
-      font-size: 12px;
-      color: red; // choose an appropriate red color
-      margin-top: $spacing-unit;
-      display: none; // Initially hidden. Can be shown using JavaScript logic.
-    }
-
-    .buttonSubmit {
-      border: $primary-border;
-      box-shadow: $solar-hover-box-shadow;
-      font-size: 20px;
-
-      border-radius: $primary-border-radius;
-      transition: transform $medium-transition;
-      color: $primary-color;
-      padding: 0.5rem 4rem;
-      margin-right: 0.5rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin-bottom: 20px;
-      &:hover,
-      &.selected {
-        transform: scale(1.1);
-        background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
-      }
-    }
-    .result {
-      margin-top: 1.5rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: $primary-color;
-    }
-  }
-
-  .button-common {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    top: 50%;
-    background: linear-gradient(to bottom, $soft-yellow, $light-green);
-    border: $primary-border;
-    padding: 10px 20px;
-    border-radius: 35px;
-    box-shadow: $solar-hover-box-shadow;
-    transition: all 0.3s ease-out;
-    opacity: 0.8;
-    font-size: 30px;
-
+    background: white;
+    color: $primary-color; // assuming this is the text color you want for the button
+    font-size: 24px;
     &:hover {
-      background: linear-gradient(to bottom, $light-green, $soft-yellow);
-      box-shadow: $solar-hover-box-shadow;
-      transform: translateX(-50%) translateY(-50%) scale(1.05);
+      transform: scale(1.05);
+      background: $primary-color;
+      color: white;
+    }
 
-      .anticon {
-        transform: scale(1.2);
-      }
+    svg {
+      // styles for the icon, assuming you're using an SVG icon
+      margin-right: 8px; // space between icon and text
     }
   }
+}
+.ant-select {
+  margin: 30px 0;
+  position: relative;
+  border-radius: 10px;
+  background: white;
 
-  .previous-button {
-    @extend .button-common;
-    left: 8.75 * $spacing-unit;
-    transform: translateX(-50%) translateY(-50%);
+  // Styling the main select container
+  &:hover,
+  &:focus,
+  &:active {
+    border: 2px solid #28724d; // Adjust the border style as per your requirement
+  }
+
+  .ant-select-selector {
+    height: 75px;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   max-width: 100%;
+    //   border-radius: 10px;
+    //   border: $primary-border;
+    //   padding: 40px;
+    //   border-radius: $primary-border-radius;
+    //   box-shadow: $solar-hover-box-shadow;
+    //   background-color: white;
+
+    //   // Adjust the font size here if you want to modify for the whole select
+    //   font-size: $primary-font-size;
+
+    //   &:hover {
+    //     background-color: #28724d;
+    //     color: white;
+    //   }
+
+    //   // Adjusting the font size and color of the selected item or placeholder
+    //   .ant-select-selection-item,
+    //   .ant-select-selection-placeholder {
+    //     font-size: $primary-font-size; // Modify the font size if needed
+    //     color: $primary-color;
+    //     font-weight: bold;
+
+    //     &:hover,
+    //     &:focus,
+    //     &:active {
+    //       color: white; // Change the font color to white on hover/focus/active
+    //     }
+    //   }
+    // }
+
+    // .ant-select-arrow {
+    //   color: $primary-color;
+    //   font-size: 1.4em;
+    //   position: absolute;
+    //   right: 10px;
+    //   top: 50%;
+    // }
   }
 }

@@ -77,38 +77,21 @@
     border-radius: $primary-border-radius;
     transition: transform $medium-transition;
     position: relative; // added for relative positioning of the child
-    padding-right: 50px; // give space for the icon
     // Override primary button color
     &.ant-btn {
-      color: #32a89e;
+      color: $primary-color;
 
       &:hover,
       &:focus {
         transform: scale(1.1);
         background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
-        color: #32a89e;
+        color: $primary-color;
+
         border: $primary-border;
         box-shadow: $solar-hover-box-shadow;
 
         border-radius: $primary-border-radius;
         transition: transform $medium-transition;
-      }
-    }
-    .arrow-icon {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      transition: right 0.3s ease;
-      animation: slide 2s infinite; // this will make it move from left to right
-    }
-
-    &:hover {
-      color: #32a89e;
-
-      .arrow-icon {
-        // Apply the expanding animation
-        animation: expand 1s forwards;
       }
     }
   }
@@ -139,18 +122,7 @@
     transition: all 0.3s ease-out;
     opacity: 0.8;
     font-size: 30px;
-    &.ant-btn {
-      color: #32a89e;
 
-      &:hover,
-      &:focus {
-        background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
-        box-shadow: $solar-hover-box-shadow;
-        transform: translateX(-50%) translateY(-50%) scale(1.05);
-        color: #32a89e;
-        transform: scale(1.2);
-      }
-    }
     &:hover {
       background: linear-gradient(to bottom, $solar-primary, $soft-yellow);
       box-shadow: $solar-hover-box-shadow;

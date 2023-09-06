@@ -1,0 +1,18 @@
+.calculated-loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+
+  p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  img {
+    width: 80px; // adjust based on the GIF size you want
+    height: 80px;
+  }
+}

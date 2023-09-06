@@ -1,0 +1,17 @@
+.custom-handle {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  &.dragging {
+    background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  }
+}

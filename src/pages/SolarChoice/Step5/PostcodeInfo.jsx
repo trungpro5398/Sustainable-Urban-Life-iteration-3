@@ -6,14 +6,22 @@
 import React, { useState, useEffect } from "react";
 // UI Components & Icons
 
-import { Button, Spin } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.scss";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import {
+  BarChart,
+  XAxis,
+  YAxis,
+  Bar,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
+import { useDispatch, useSelector } from "react-redux";
+import { updateField } from "../../../reduxToolkit/slices/solarFormSlice";
 // Redux Dependencies
-import { useSelector } from "react-redux";
 import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
+import Joyride, { STATUS } from "react-joyride";
+import NavigationButtons from "../../../components/NavigationButtons/NavigationButtons";
 
 // Array of colors for the pie chart
 
@@ -39,12 +47,47 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
   // -------------------
   // Get postcode data from Redux store
   const data = useSelector((state) => state.solarForm.postcodeInfo.data);
-
   // -------------------
   // LOCAL STATE MANAGEMENT
   // -------------------
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  dispatch(
+    updateField({
+      section: "postcodeInfo",
+      field: "isCompleted",
+      value: true,
+    })
+  );
+  const [runTour, setRunTour] = useState(true);
+  const systemEfficiencies = [
+    { name: "1.5kw", value: parseFloat(data["1.5kw"]) },
+    { name: "3kw", value: parseFloat(data["3kw"]) },
+    { name: "6kw", value: parseFloat(data["6kw"]) },
+    { name: "10kw", value: parseFloat(data["10kw"]) },
+  ];
 
+  const [steps, setSteps] = useState([
+    {
+      target: ".charts",
+      content:
+        "Here you'll see the percentage of households with solar panels and without solar panels.",
+      placement: "top",
+    },
+    {
+      target: ".sun-info",
+      content:
+        "Here you'll see the average hours of peak sun your rooftop receives per day.",
+      placement: "top",
+    },
+
+    {
+      target: ".system-efficiency",
+      content:
+        "Here you'll see the estimated kWh per day for different system sizes.",
+      placement: "left",
+    },
+  ]);
   // -------------------
   // UTILITY FUNCTIONS
   // -------------------
@@ -71,7 +114,20 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
     },
   ];
   useEffect(() => {
+    dispatch(
+      updateField({
+        section: "location",
+        field: "isCompleted",
+        value: true,
+      })
+    );
     const handleKeyPress = (event) => {
+      // Check if the user has visited the page before
+      const firstTime = localStorage.getItem("firstTime");
+      if (!firstTime) {
+        setRunTour(true);
+        localStorage.setItem("firstTime", "false");
+      }
       // Checking for the arrow right key
 
       if (event.keyCode === 39) {
@@ -92,6 +148,13 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      setRunTour(false);
+    }
+  };
   return (
     <div className="postcode-info">
       <h2>About solar panel installations in {data.place_name}</h2>
@@ -103,8 +166,19 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
         <CustomLoadingSpinner />
       ) : (
         <div className="postcode-info-container">
+          <Joyride
+            steps={steps}
+            run={runTour}
+            continuous={true}
+            scrollToFirstStep={true}
+            showProgress={true}
+            showSkipButton={true}
+            callback={handleJoyrideCallback}
+          />
           <div className="charts">
             <div className="pie-container">
+              <h1>Solar Data Overview</h1>
+
               <PieChart width={250} height={250}>
                 <Pie
                   data={solarData}
@@ -125,6 +199,7 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
                 <Tooltip />
                 <Legend verticalAlign="bottom" height={36} />
               </PieChart>
+
               <p>
                 {data.percentage_installation}% of households have solar panels
               </p>
@@ -138,25 +213,55 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
             </p>
           </div>
 
-          <div className="system-efficiency">
-            <p>1.5kw system will produce about {data["1.5kw"]} kWh per day.</p>
-            <p>3kw system will produce about {data["3kw"]} kWh per day.</p>
-            <p>5kw system will produce about {data["5kw"]} kWh per day.</p>
-            <p>10kw system will produce about {data["10kw"]} kWh per day.</p>
+          <div className="system-efficiency-chart">
+            <h1>System Efficiency Overview</h1>
+
+            <ResponsiveContainer width={500} height={300}>
+              <BarChart
+                layout="vertical"
+                width={500}
+                height={400}
+                data={systemEfficiencies}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  type="number"
+                  label={{
+                    value: "Average Power Generation (kWh)",
+                    position: "insideBottom",
+                    offset: -5,
+                    style: {
+                      backgroundColor: "rgba(255, 255, 255, 0.7)",
+                    },
+                  }}
+                />
+                <YAxis
+                  type="category"
+                  dataKey="name"
+                  label={{
+                    value: "Solar System Size",
+                    angle: -90,
+                    position: "insideLeft",
+                    offset: 0,
+                  }}
+                />
+                <Tooltip />
+                <Bar
+                  dataKey="value"
+                  fill="#82ca9d"
+                  label={{ position: "right" }}
+                />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
 
-          <Button
-            className="previous-button"
-            icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}
-            onClick={() => handleClick(previousStep)}
-            shape="circle"
-          ></Button>
-          <Button
-            className="next-button"
-            icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
-            onClick={() => handleClick(nextStep)}
-            shape="circle"
-          ></Button>
+          <NavigationButtons
+            nextStep={nextStep}
+            previousStep={previousStep}
+            condition={true}
+            setShowError={null}
+            setLoading={setLoading}
+          />
         </div>
       )}
     </div>

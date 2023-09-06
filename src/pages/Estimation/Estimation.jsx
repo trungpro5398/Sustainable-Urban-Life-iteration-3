@@ -28,18 +28,14 @@ const Estimation = () => {
     lat: -3.745,
     lng: -38.523,
   });
+  const [currentPolygon, setCurrentPolygon] = useState(null);
+
   const [runTour, setRunTour] = useState(true);
   const [steps, setSteps] = useState([
     {
       target: "label",
       content: "Start by entering your address in this field.",
-      placement: "top",
-    },
-    {
-      target: ".ggMap",
-      content:
-        "Draw a shape on the map to represent your roof area. Just click to create each point and close the shape by joining the first and last point.",
-      placement: "top",
+      placement: "top-start",
     },
 
     {
@@ -47,6 +43,34 @@ const Estimation = () => {
       content:
         "Here you'll see the calculations based on the area you've drawn.",
       placement: "left",
+    },
+    {
+      target: ".ggMap",
+      content:
+        "Draw a shape on the map to represent your roof area. Just click to create each point and close the shape by joining the first and last point.",
+      placement: "top",
+    },
+    {
+      target: ".gm-control-active:nth-child(1)", // This will likely target the zoom in button.
+      content: "Use this button to zoom in.",
+      placement: "right",
+    },
+    {
+      target: ".gm-style-mtc", // This will likely target the satellite/roadmap toggle.
+      content: "Switch between satellite and roadmap views using this toggle.",
+      placement: "top",
+    },
+
+    {
+      target: ".gm-svpc-control", // Street View Pegman control
+      content: "Drag this figure to a road to enter Street View mode.",
+      placement: "left",
+    },
+    {
+      target: "button[title='Draw a shape']", // Drawing polygon button
+      content:
+        "Click this button and then draw a polygon on the map by connecting multiple points.",
+      placement: "top",
     },
   ]);
 
@@ -88,6 +112,29 @@ const Estimation = () => {
       });
     } else {
       console.log("Autocomplete is not loaded yet!");
+    }
+  };
+  const handlePolygonComplete = (polygon) => {
+    if (currentPolygon) {
+      currentPolygon.setMap(null); // Remove the previous polygon from the map
+    }
+    calculateArea(polygon);
+    setCurrentPolygon(polygon);
+
+    // Listen for right-clicks on the polygon
+    polygon.addListener("rightclick", () => {
+      undoLastPoint(polygon);
+    });
+  };
+
+  const undoLastPoint = (polygon) => {
+    if (!polygon || !polygon.latLngs || !polygon.latLngs.g) return;
+
+    const path = polygon.latLngs.g[0];
+
+    if (path && path.getLength() > 0) {
+      console.log("Removing last point");
+      path.removeAt(path.getLength() - 1); // Remove the last point
     }
   };
 
@@ -150,25 +197,25 @@ const Estimation = () => {
                       Estimated System Size:
                     </span>
                     <span className="estimated-value">
-                      {Math.round(area * 0.01)} kW
+                      {area > 0 ? Math.round(1.4524 * area - 7.5538) : 0} kW
                     </span>
                   </div>
-                  <div className="estimated-row">
+                  {/* <div className="estimated-row">
                     <span className="estimated-label">
                       Average Daily Output:
                     </span>
                     <span className="estimated-value">
                       {Math.round(area * 0.01 * 5)} kWh
                     </span>
-                  </div>
-                  <div className="estimated-row">
+                  </div> */}
+                  {/* <div className="estimated-row">
                     <span className="estimated-label">
                       Estimated Yearly Output:
                     </span>
                     <span className="estimated-value">
                       {Math.round(area * 0.01 * 5 * 365)} kWh
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -177,9 +224,11 @@ const Estimation = () => {
                   mapContainerStyle={containerStyle}
                   center={center}
                   zoom={20}
+                  mapTypeId="satellite" // <-- Add this line
+                  mapTypeControl={true} // <-- Add this line if you want a control to switch between map types
                 >
                   <DrawingManagerF
-                    onPolygonComplete={(polygon) => calculateArea(polygon)}
+                    onPolygonComplete={handlePolygonComplete}
                     options={{
                       drawingMode: "polygon",
                       drawingControl: true,
@@ -200,12 +249,6 @@ const Estimation = () => {
             </div>
           ) : (
             <CustomLoadingSpinner />
-          )}
-          {area > 0 && (
-            <p className="estimation-text">
-              The estimated solar potential for the selected area is
-              approximately {Math.round(area * 150)}W.
-            </p>
           )}
         </LoadScript>
       ) : (

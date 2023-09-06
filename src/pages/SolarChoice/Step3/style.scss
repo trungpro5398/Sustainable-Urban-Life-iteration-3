@@ -156,42 +156,41 @@
         margin-top: 10px;
       }
     }
+    .info-containers {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
 
-    .button-common {
-      position: absolute;
-      width: 70px;
-      height: 70px;
-      top: 50%;
-      background: linear-gradient(to bottom, $soft-yellow, $light-green);
-      border: $primary-border;
-      padding: 10px 20px;
-      border-radius: 35px;
-      box-shadow: $solar-hover-box-shadow;
-      transition: all 0.3s ease-out;
-      opacity: 0.8;
-      font-size: 30px;
-
-      &:hover {
-        background: linear-gradient(to bottom, $light-green, $soft-yellow);
+      .info-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+        border: $primary-border;
+        border-radius: $primary-border-radius;
         box-shadow: $solar-hover-box-shadow;
-        transform: translateX(-50%) translateY(-50%) scale(1.05);
+        background: white;
+        &:hover {
+          transform: scale(1.05);
+          background: $primary-color;
+          color: white;
+        }
+        .container-icon {
+          font-size: 50px;
 
-        .anticon {
-          transform: scale(1.2);
+          flex-shrink: 0;
+        }
+        .container-content {
+          p {
+            font-size: 20px;
+          }
         }
       }
-    }
-
-    .next-button {
-      @extend .button-common;
-      right: 0px;
-      transform: translateX(-50%) translateY(-50%);
-    }
-
-    .previous-button {
-      @extend .button-common;
-      left: 70px;
-      transform: translateX(-50%) translateY(-50%);
     }
   }
 }

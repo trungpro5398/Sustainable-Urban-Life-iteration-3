@@ -1,9 +1,13 @@
 // External Dependencies
 import React from "react";
 import { Row, Col } from "antd";
+import { Carousel as ResponsiveCarousel } from "react-responsive-carousel";
+
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 // Components
 import Navbar from "../Navbar/Navbar";
-
+import background_1 from "../../assets/images/hero-section/background-1.jpeg";
+import background_2 from "../../assets/images/hero-section/background-2.jpeg";
 // Styles
 import "./HeroSection.scss";
 
@@ -38,14 +42,59 @@ const HeroSection = () => {
       infoBlocks.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+  };
   return (
     <section className="hero">
       <Navbar isHomePage={true} />
 
       <div className="container">
+        <ResponsiveCarousel
+          showArrows={true}
+          infiniteLoop={true}
+          showThumbs={false}
+          showStatus={false}
+          autoPlay={true}
+          interval={4000}
+        >
+          <div className="carousel-item">
+            <div className="carousel-content">
+              <h1>Sustainable Renewable Solution</h1>
+              <p>
+                Embrace an eco-friendly approach to urban living with
+                innovative, sustainable solutions that not only benefit the
+                environment but also significantly reduce energy costs.
+              </p>
+            </div>
+          </div>
+          <div
+            className="carousel-item"
+            style={{
+              backgroundImage: `linear-gradient(
+              rgba(0, 0, 0, 0.5),
+              rgba(0, 0, 0, 0.1)
+            ),url(${background_2})`,
+            }}
+          >
+            <div className="carousel-content">
+              <h1>Discover and Learn</h1>
+              <p>
+                Explore the transformative power of solar energy. See how
+                government support and initiatives are accelerating the adoption
+                of green technologies in urban settings.
+              </p>
+            </div>
+          </div>
+        </ResponsiveCarousel>
         <div className="hero-overlay">
           {/* Animated Welcome Text */}
+
           <div className="outer-text">
             {smallText.map((word, wordIndex) => (
               <h1 key={wordIndex}>
@@ -71,20 +120,20 @@ const HeroSection = () => {
           <Row gutter={16}>
             <Col>
               <button
-                className="cta-button  cta-button-1"
+                className="cta-button "
                 onClick={handleButtonClickToSubOptions}
               >
                 Learn More
               </button>
             </Col>
-            <Col>
+            {/* <Col>
               <button
                 className="cta-button"
                 onClick={handleButtonClickToInfoBlocks}
               >
                 See How It Works
               </button>
-            </Col>
+            </Col> */}
           </Row>
         </div>
       </div>

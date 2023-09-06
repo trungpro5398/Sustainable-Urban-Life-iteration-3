@@ -75,13 +75,12 @@
     }
 
     .sub-description {
-      font-size: 20px;
+      font-size: 30px;
       margin: 8px 0 15px;
       color: $primary-color;
-      color: $primary-color;
-      background: $gradient-main;
       padding: 10px;
       border-radius: 5px;
+      font-weight: 600;
     }
 
     .sub-img {
@@ -123,10 +122,11 @@
         flex-grow: 1;
         padding-left: 25px;
         font-family: "Arial", sans-serif;
-
+        display: flex;
+        flex-direction: column;
         a {
           color: $primary-color;
-
+          margin-top: 10px;
           text-decoration: none;
           padding: 10px 15px;
           border: 2px solid #2b8a3e;

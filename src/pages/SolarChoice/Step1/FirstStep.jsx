@@ -82,10 +82,10 @@ const FirstStep = ({ nextStep }) => {
       ) : (
         <>
           <Button className="start-button" onClick={handleClick}>
-            Make the first step now{" "}
-            <span className="arrow-icon">
+            Make the first step now
+            {/* <span className="arrow-icon">
               <ArrowRightOutlined />
-            </span>
+            </span> */}
           </Button>
 
           <Button
