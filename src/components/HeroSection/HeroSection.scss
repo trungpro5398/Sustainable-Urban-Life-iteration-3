@@ -42,10 +42,25 @@
         background-position: center;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
 
         pointer-events: none; // ensure it doesn't interfere with any interactive elements
         z-index: -1; // push it behind the actual content
+      }
+      // Black overlay covering 50% of the container from the right
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          -65deg,
+          rgba(0, 0, 0, 0.5) 55%,
+          transparent 45%
+        );
+
+        z-index: 10; // Ensure it's on top, but you might need to adjust this depending on your needs
       }
       .carousel-content {
         padding: 20px;
@@ -53,6 +68,8 @@
         font-size: 35px;
         width: 40%;
         margin-right: 10%;
+        z-index: 20; // Assign a higher z-index
+
         @include desktop-1440 {
           width: 50%;
           font-size: 35px;

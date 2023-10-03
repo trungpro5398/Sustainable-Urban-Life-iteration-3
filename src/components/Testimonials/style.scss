@@ -1,0 +1,86 @@
+@import "../../assets/scss/variables.scss";
+@import "../../styles/breakpoints";
+
+.container-testimonials {
+  background-color: #f7f7f7;
+  padding: 3rem 5%;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  width: 100vw;
+  h2 {
+    color: $primary-color;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  .testimonials {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .testimonial {
+      flex-basis: calc(33% - 2rem);
+      max-width: calc(33% - 2rem);
+      background-color: #ffffff;
+      margin: 1rem;
+      padding: 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        color: $primary-color;
+
+        position: relative;
+
+        &::before,
+        &::after {
+          content: '"';
+          font-size: 2rem;
+          color: $primary-color;
+
+          position: absolute;
+        }
+
+        &::before {
+          top: 0;
+          left: -10px;
+        }
+
+        &::after {
+          bottom: 0;
+          right: -10px;
+        }
+      }
+
+      span {
+        display: block;
+        text-align: right;
+        color: $primary-color;
+
+        font-weight: 600;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .testimonials .testimonial {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}

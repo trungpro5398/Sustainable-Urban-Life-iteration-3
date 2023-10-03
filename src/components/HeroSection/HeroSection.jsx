@@ -62,6 +62,7 @@ const HeroSection = () => {
           showStatus={false}
           autoPlay={true}
           interval={4000}
+          showIndicators={false} // This will hide the dots
         >
           <div className="carousel-item">
             <div className="carousel-content">

@@ -20,9 +20,7 @@
   bottom: 0;
   border: $primary-border;
   @import "../../assets/scss/variables.scss";
-  overflow-y: scroll;
-  // Existing SCSS
-  // ...
+  overflow-y: auto; // makes it vertically scrollable if content overflows
 
   // SCSS for react-joyride
   .joyride-overlay {
@@ -104,7 +102,6 @@
     font-size: $primary-font-size;
     font-weight: 600;
     margin-bottom: $spacing-unit;
-    font-family: $solar-font;
   }
   .container-0 {
     box-sizing: border-box;
@@ -158,7 +155,6 @@
       font-size: $primary-font-size;
       font-weight: 600;
       margin-bottom: $spacing-unit;
-      font-family: $solar-font;
     }
   }
 }

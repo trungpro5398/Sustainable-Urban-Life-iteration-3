@@ -16,12 +16,10 @@
   color: $primary-color;
   background: $gradient-main;
   font-family: $primary-font;
-  h1 {
+  h2 {
     text-shadow: $primary-text-shadow;
     margin-bottom: 5 * $spacing-unit;
-    font-size: $title-font-size;
     margin-bottom: 20px;
-    font-family: $primary-font;
 
     padding: 10px;
   }
@@ -52,8 +50,8 @@
 
   .progress-container {
     position: fixed;
-    top: 48%;
-    right: 9.8%; // Adjust this as needed for the desired distance from the right edge
+    top: 40%;
+    right: 10px; // Adjust this as needed for the desired distance from the right edge
     transform: translateY(-50%);
     box-sizing: border-box;
     background: white;
@@ -133,7 +131,6 @@
         font-size: 25px;
         font-weight: 600;
         margin-bottom: $spacing-unit * 3;
-        font-family: $solar-font;
       }
       .button-group {
         display: flex;

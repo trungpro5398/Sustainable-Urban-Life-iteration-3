@@ -31,7 +31,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
     {
       target: ".MonthlyCycle",
       content: "Monthly means you're billed every month.",
-      placement: "top-start",
+      placement: "left",
     },
     {
       target: ".QuarterlyCycle",
@@ -80,13 +80,18 @@ const BillCycle = ({ nextStep, previousStep }) => {
       value={cycle.billingCycle?.cycle}
     >
       {["Monthly", "Quarterly", "Yearly"].map((choice) => (
-        <div className={choice + "Cycle"} key={choice}>
+        <div
+          className={choice + "Cycle"}
+          key={choice}
+          data-testid={choice.toLowerCase() + "-cycle-container"}
+        >
           <Radio.Button
             className="bill-cycle-option"
             value={choice.toLowerCase()}
             onClick={() => {
               handleRadioClick(choice.toLowerCase());
             }}
+            data-testid={choice.toLowerCase() + "-cycle-option"}
           >
             <p>{choice}</p>
             <div className="choice-circle">
@@ -104,7 +109,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
    * Error message for when no billing cycle is selected.
    */
   const ErrorMessage = () => (
-    <p className="error-message">
+    <p className="error-message" data-testid="error-message">
       Please select a billing cycle before proceeding.
     </p>
   );
@@ -159,7 +164,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
         <CustomLoadingSpinner />
       ) : (
         <div className="bill-step-container">
-          <Joyride
+          {/* <Joyride
             steps={steps}
             run={runTour}
             continuous={true}
@@ -168,7 +173,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
             showSkipButton={true}
             callback={handleJoyrideCallback}
             stepIndex={0}
-          />
+          /> */}
           <h2>Which is your billing cycle?</h2>
 
           <BillingCycleOptions cycle={cycle} dispatch={dispatch} />

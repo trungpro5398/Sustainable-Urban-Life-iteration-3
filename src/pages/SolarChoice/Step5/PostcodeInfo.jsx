@@ -82,7 +82,7 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
     },
 
     {
-      target: ".system-efficiency",
+      target: ".system-efficiency-chart",
       content:
         "Here you'll see the estimated kWh per day for different system sizes.",
       placement: "left",
@@ -177,7 +177,7 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
           />
           <div className="charts">
             <div className="pie-container">
-              <h1>Solar Data Overview</h1>
+              <h3>Solar Data Overview</h3>
 
               <PieChart width={250} height={250}>
                 <Pie
@@ -214,7 +214,7 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
           </div>
 
           <div className="system-efficiency-chart">
-            <h1>System Efficiency Overview</h1>
+            <h4>System Efficiency Overview (Daily)</h4>
 
             <ResponsiveContainer width={500} height={300}>
               <BarChart
@@ -227,9 +227,10 @@ const PostcodeInfo = ({ nextStep, previousStep }) => {
                 <XAxis
                   type="number"
                   label={{
-                    value: "Average Power Generation (kWh)",
+                    value: "Average Power Generation (kWh/day)",
+
                     position: "insideBottom",
-                    offset: -5,
+                    offset: -1,
                     style: {
                       backgroundColor: "rgba(255, 255, 255, 0.7)",
                     },

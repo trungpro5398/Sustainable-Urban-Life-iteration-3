@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Radio } from "antd";
+import { Radio, Slider, Input } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBatteryThreeQuarters } from "@fortawesome/free-solid-svg-icons";
 import { updateField } from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust this path to your project's directory structure
@@ -20,7 +20,6 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
   // -------------------
   const dispatch = useDispatch();
   const batteryChoice = useSelector((state) => state.solarForm.batteryChoice);
-
   // -------------------
   // LOCAL STATE MANAGEMENT
   // -------------------
@@ -105,9 +104,10 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
   return (
     <div className="battery-choice">
-      <h1 className="step-title">Electricity Consumption</h1>
+      <h2 className="step-title">Battery choice</h2>
 
       {loading ? (
         <CustomLoadingSpinner />
@@ -122,21 +122,24 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
             value={batteryChoice?.wantBattery}
           >
             {["No", "Yes"].map((option) => (
-              <Radio.Button
-                className="battery-choice-option"
-                value={option}
-                key={option}
-                onClick={() => handleRadioClick(option)}
-              >
-                <p>{option}</p>
-                <div className="choice-circle">
-                  {batteryChoice?.wantBattery === option && (
-                    <div className="choice-tick">✓</div>
-                  )}
-                </div>
-              </Radio.Button>
+              <div data-testid={option + "-option"} key={option}>
+                <Radio.Button
+                  className="battery-choice-option"
+                  value={option}
+                  key={option}
+                  onClick={() => handleRadioClick(option)}
+                >
+                  <p>{option}</p>
+                  <div className="choice-circle">
+                    {batteryChoice?.wantBattery === option && (
+                      <div className="choice-tick">✓</div>
+                    )}
+                  </div>
+                </Radio.Button>
+              </div>
             ))}
           </Radio.Group>
+
           {showError && (
             <p className="error-message">
               Please select Yes or No before proceeding.

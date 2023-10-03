@@ -30,7 +30,25 @@ const Navbar = ({ isHomePage }) => {
         <Popup
           trigger={
             <span className="nav-item">
-              Solutions <i className="dropdown-icon">▼</i>
+              Solar Info <i className="dropdown-icon">▼</i>
+            </span>
+          }
+          position="bottom center"
+          on="hover"
+        >
+          <div className="menu">
+            <Link to="/solar-energy-benefit" className="menu-item">
+              Solar Energy Benefit
+            </Link>
+            <Link to="/government-support" className="menu-item">
+              Government Support Program
+            </Link>
+          </div>
+        </Popup>
+        <Popup
+          trigger={
+            <span className="nav-item">
+              Solar Solutions <i className="dropdown-icon">▼</i>
             </span>
           }
           position="bottom center"
@@ -40,12 +58,7 @@ const Navbar = ({ isHomePage }) => {
             <Link to="/solar-choice" className="menu-item">
               Solar Choice
             </Link>
-            <Link to="/solar-energy-benefit" className="menu-item">
-              Solar Energy Benefit
-            </Link>
-            <Link to="/government-support" className="menu-item">
-              Government Support Program
-            </Link>
+
             <Link to="/estimation" className="menu-item">
               Calculate Solar Potential
             </Link>

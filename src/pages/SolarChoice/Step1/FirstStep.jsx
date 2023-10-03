@@ -23,10 +23,6 @@ const FirstStep = ({ nextStep }) => {
   // State to manage loading effect
   const [loading, setLoading] = useState(false);
 
-  // Introductory text and its breakdown for animation purposes
-  const text = "Your Journey to Solar Begins Here";
-  const smallText = text.split(" ");
-
   /**
    * Handles button click.
    * Sets loading state, waits for a duration and then triggers the nextStep callback.
@@ -61,35 +57,24 @@ const FirstStep = ({ nextStep }) => {
   return (
     <div className="first-step-container">
       {/* Animated Text Presentation */}
-      <div className="outer-text">
-        {smallText.map((word, wordIndex) => (
-          <h1 key={wordIndex}>
-            {word.split("").map((char, charIndex) => (
-              <span
-                style={{ animationDelay: `${charIndex * 0.1}s` }}
-                key={charIndex}
-              >
-                {char}
-              </span>
-            ))}
-          </h1>
-        ))}
-      </div>
+      <h2>Your Journey to Solar Begins Here</h2>
 
       {/* Loading Spinner or Action Buttons based on loading state */}
       {loading ? (
         <CustomLoadingSpinner />
       ) : (
         <>
-          <Button className="start-button" onClick={handleClick}>
+          <Button
+            className="start-button"
+            onClick={handleClick}
+            data-testid="start-button"
+          >
             Make the first step now
-            {/* <span className="arrow-icon">
-              <ArrowRightOutlined />
-            </span> */}
           </Button>
 
           <Button
             className="next-button"
+            data-testid="next-button"
             icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
             onClick={handleClick}
             shape="circle"

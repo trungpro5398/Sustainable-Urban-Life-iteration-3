@@ -1,4 +1,14 @@
 @import "./assets/scss/variables.scss";
+@import "./styles/breakpoints";
+html {
+  font-size: 16px; // Base size, 1rem = 16px
+  font-family: "Montserrat", sans-serif;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 .App {
   display: flex;
@@ -6,71 +16,277 @@
   align-items: center;
   position: relative;
   .content {
-    max-width: 1440px;
+    max-width: 90rem; // 1440px/16px
     &.blurred {
-      filter: blur(8px);
+      filter: blur(0.5rem); // 8px/16px
     }
   }
 }
 
-.passwordModalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+body {
+  font-family: "Montserrat", sans-serif;
 }
 
-.passwordModal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 300px;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+h1 {
+  font-size: 6rem; // 96px/16px
+  line-height: 7rem;
+  letter-spacing: -0.015em;
+  color: inherit;
+  @include desktop-1440 {
+    font-size: 5.375rem;
+    line-height: 6.25rem;
+  }
+  @include desktop {
+    font-size: 4.75rem;
+    line-height: 5.625rem;
+  }
+  @include tablet {
+    font-size: 3.5rem;
+    line-height: 4.25rem;
+  }
+  @include mobile {
+    font-size: 2.25rem;
+    line-height: 2.625rem;
+  }
+}
 
-  input {
-    width: 80%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    font-size: 16px;
-    background-color: #f4f4f4;
+h2 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3.75rem; // 60px/16px
+  line-height: 4.5625rem;
+  letter-spacing: -0.005em;
+  color: inherit;
+
+  @include desktop-1440 {
+    font-size: 3.375rem;
+    line-height: 4.0625rem;
+  }
+  @include desktop {
+    font-size: 3rem;
+    line-height: 3.625rem;
+  }
+  @include tablet {
+    font-size: 2.5rem;
+    line-height: 3.125rem;
+  }
+  @include mobile {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+}
+
+h3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.5rem;
+  line-height: 3.0625rem;
+  color: inherit;
+
+  @include desktop-1440 {
+    font-size: 2.25rem;
+    line-height: 2.6875rem;
+  }
+  @include desktop {
+    font-size: 2rem;
+    line-height: 2.4375rem;
+  }
+  @include tablet {
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+  }
+  @include mobile {
+    font-size: 1.5rem;
+    line-height: 1.8125rem;
+  }
+}
+
+h4 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.8125rem;
+  letter-spacing: 0.0025em;
+  color: inherit;
+
+  @include desktop-1440 {
+    font-size: 1.375rem;
+    line-height: 1.6875rem;
+  }
+  @include desktop {
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+  }
+  @include tablet {
+    font-size: 1.125rem;
+    line-height: 1.375rem;
+  }
+  @include mobile {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+}
+
+h5 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  color: inherit;
+
+  @include desktop-1440 {
+    font-size: 1.1875rem;
+    line-height: 1.4375rem;
+  }
+  @include desktop {
+    font-size: 1.125rem;
+    line-height: 1.375rem;
+  }
+  @include tablet {
+    font-size: 1.0625rem;
+    line-height: 1.3125rem;
+  }
+  @include mobile {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+}
+
+h6 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.1em;
+  color: inherit;
+
+  @include desktop-1440 {
+    font-size: 0.9375rem;
+    line-height: 1.1875rem;
+  }
+  @include desktop {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+  }
+  @include tablet {
+    font-size: 0.8125rem;
+    line-height: 1.0625rem;
+  }
+  @include mobile {
+    font-size: 0.75rem;
+    line-height: 0.9375rem;
+  }
+}
+
+.subtitle-1 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.0015em;
+  color: inherit;
+
+  @include desktop-1440 {
+    font-size: 0.9375rem;
+    line-height: 1.1875rem;
+  }
+  @include desktop {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+  }
+  @include tablet {
+    font-size: 0.8125rem;
+    line-height: 1.0625rem;
+  }
+  @include mobile {
+    font-size: 0.75rem;
+    line-height: 0.9375rem;
+  }
+}
+
+.subtitle-2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.001em;
+  color: inherit;
+
+  @include desktop-1440 {
+    font-size: 13px;
+    line-height: 16px;
   }
 
-  button {
-    padding: 12px 15px;
-    background-color: #3498db;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #2980b9;
-    }
+  @include desktop {
+    font-size: 12px;
+    line-height: 15px;
   }
 
-  @media (max-width: 480px) {
-    width: 90%;
+  @include tablet {
+    font-size: 11px;
+    line-height: 14px;
+  }
 
-    input {
-      width: 100%;
-    }
+  @include mobile {
+    font-size: 10px;
+    line-height: 13px;
+  }
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: inherit;
+  @include desktop-1440 {
+    font-size: 0.9375rem;
+    line-height: 1.4375rem;
+  }
+  @include desktop {
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+  }
+  @include tablet {
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+  }
+  @include mobile {
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+  }
+}
+
+button {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 0.1875rem; // 3px/16px
+  border: $primary-border;
+  background: transparent;
+  border-radius: $primary-border-radius;
+  transition: transform $medium-transition;
+  color: white;
+  border-color: white;
+  &:hover {
+    border-radius: $primary-border-radius;
+    background-color: $primary-color;
+    color: white;
+  }
+  @include desktop-1440 {
+    font-size: 0.9375rem;
+    padding: 0.6875rem 1.375rem;
+  }
+  @include desktop {
+    font-size: 0.875rem;
+    padding: 0.625rem 1.25rem;
+  }
+  @include tablet {
+    font-size: 0.8125rem;
+    padding: 0.5625rem 1.125rem;
+  }
+  @include mobile {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
   }
 }

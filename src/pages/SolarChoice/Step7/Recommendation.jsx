@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from "react";
 
 // UI Components & Icons
-import { Button, Card, Spin, Radio } from "antd";
+import { Button, Card, Slider, Input, Radio } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -48,7 +48,14 @@ const Recommendation = ({ previousStep, nextStep }) => {
   // Redux Hooks
   const dispatch = useDispatch();
   const solarFormData = useSelector((state) => state.solarForm);
-
+  const batteryChoice = useSelector((state) => state.solarForm.batteryChoice);
+  const batteryData = useSelector(
+    (state) => state.solarForm.batteryChoice.data
+  );
+  const [batteryUsage, setBatteryUsage] = useState({
+    usageValue: batteryChoice.batterySize,
+    costValue: batteryChoice.batteryCost,
+  });
   // Determine the appropriate dataset based on battery choice.
   const dataToUse =
     solarFormData.batteryChoice.wantBattery === "Yes"
@@ -59,7 +66,7 @@ const Recommendation = ({ previousStep, nextStep }) => {
     {
       target: ".battery-choice-section",
       content: "Choose whether you want a battery with your solar system.",
-      placement: "right",
+      placement: "top",
     },
     {
       target: ".filter-section",
@@ -110,9 +117,14 @@ const Recommendation = ({ previousStep, nextStep }) => {
     if (sort) {
       let sortedData = [...filteredData];
       sortedData.sort((a, b) => {
-        const priceA = parseFloat(a.price || a.price_battery);
-        const priceB = parseFloat(b.price || a.price_battery);
+        const priceA = parseFloat(
+          a.price || a.price_battery + batteryUsage.costValue
+        );
+        const priceB = parseFloat(
+          b.price || b.price_battery + batteryUsage.costValue
+        );
 
+        console.log(priceA, priceB);
         return sort === "low" ? priceA - priceB : priceB - priceA;
       });
 
@@ -217,10 +229,19 @@ const Recommendation = ({ previousStep, nextStep }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+  const marks = batteryData.reduce((acc, item) => {
+    acc[parseFloat(item.battery_size)] = item.battery_size;
+    return acc;
+  }, {});
 
   const handleJoyrideCallback = (data) => {
     const { action, index, status, type } = data;
-
+    if (type === EVENTS.STEP_BEFORE) {
+      if (index === 0) {
+        // Adjust according to the desired step's index
+        window.scrollTo(0, 0); // Scrolls to the top of the page
+      }
+    }
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       // Update state to advance the tour
       setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
@@ -231,6 +252,57 @@ const Recommendation = ({ previousStep, nextStep }) => {
       setRun(false);
     }
   };
+  // Find min and max battery size from batteryData
+  const minBatterySize = Math.min(
+    ...batteryData.map((item) => parseFloat(item.battery_size))
+  );
+  const maxBatterySize = Math.max(
+    ...batteryData.map((item) => parseFloat(item.battery_size))
+  );
+
+  const handleUsageChange = (value) => {
+    // Find the corresponding price for the selected battery size
+    const selectedBattery = batteryData.find(
+      (battery) => parseFloat(battery.battery_size) === value
+    );
+
+    if (selectedBattery) {
+      const cost = selectedBattery.price;
+      setBatteryUsage({
+        usageValue: selectedBattery.battery_size,
+        costValue: cost,
+      });
+
+      // Also, update the redux store for battery size and cost
+      dispatch(
+        updateField({
+          section: "batteryChoice",
+          field: "batterySize",
+          value: selectedBattery.battery_size,
+        })
+      );
+      dispatch(
+        updateField({
+          section: "batteryChoice",
+          field: "batteryCost",
+          value: cost,
+        })
+      );
+    }
+  };
+
+  const handleAfterSlide = (value) => {
+    // Find the nearest battery size
+    const nearestBatterySize = batteryData.reduce((prev, curr) => {
+      return Math.abs(curr.battery_size - value) <
+        Math.abs(prev.battery_size - value)
+        ? curr
+        : prev;
+    });
+
+    handleUsageChange(nearestBatterySize.battery_size);
+  };
+
   return (
     <div className="recommendation-container">
       <Joyride
@@ -238,7 +310,7 @@ const Recommendation = ({ previousStep, nextStep }) => {
         run={true}
         stepIndex={stepIndex}
         continuous={true}
-        scrollToFirstStep={true}
+        scrollToFirstStep={true} // Add this line to prevent scrolling to the first step
         showProgress={true}
         showSkipButton={true}
         callback={handleJoyrideCallback}
@@ -252,14 +324,80 @@ const Recommendation = ({ previousStep, nextStep }) => {
               {batteryOpen ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
             </h3>
             {batteryOpen && (
-              <Radio.Group
-                value={solarFormData.batteryChoice.wantBattery}
-                onChange={(e) => handleBatteryChoice(e.target.value)}
-                className="custom-radio-group"
-              >
-                <Radio value="Yes">Yes</Radio>
-                <Radio value="No">No</Radio>
-              </Radio.Group>
+              <div className="battery-choice-container">
+                <Radio.Group
+                  value={solarFormData.batteryChoice.wantBattery}
+                  onChange={(e) => handleBatteryChoice(e.target.value)}
+                  className="custom-radio-group-choice"
+                >
+                  <div
+                    data-testid="No"
+                    className={`radio-container ${
+                      solarFormData.batteryChoice.wantBattery === "No"
+                        ? "selected"
+                        : ""
+                    }`}
+                    onClick={() => handleBatteryChoice("No")}
+                  >
+                    <label>
+                      <Radio value="No">No</Radio>
+                    </label>
+                    <p>$0</p>
+                  </div>
+                  <div
+                    data-testid="Yes"
+                    className={`radio-container ${
+                      solarFormData.batteryChoice.wantBattery === "Yes"
+                        ? "selected"
+                        : ""
+                    }`}
+                    onClick={() => handleBatteryChoice("Yes")}
+                  >
+                    <label>
+                      <Radio value="Yes">Yes, I want Battery</Radio>
+                    </label>
+                    <p>$</p>
+                  </div>
+                </Radio.Group>
+
+                {batteryChoice.wantBattery === "Yes" && (
+                  <div className="usage-slider">
+                    <div className="electricity-usage-size">Battery Size</div>
+                    <div className="range-labels">
+                      <span className="range-labels-low">
+                        {minBatterySize}kWh
+                      </span>
+                      <Slider
+                        min={minBatterySize}
+                        max={maxBatterySize}
+                        step={0.1}
+                        marks={marks}
+                        onChange={handleUsageChange}
+                        onAfterChange={handleAfterSlide}
+                        value={parseFloat(batteryUsage.usageValue)}
+                        className="electricity-usage-slider"
+                      />
+                      <span className="range-labels-high">
+                        {maxBatterySize}kWh
+                      </span>
+                    </div>
+
+                    <div className="electricity-usage-input-container">
+                      <div className="electricity-usage-unit">
+                        Battery Cost:{" "}
+                      </div>
+
+                      <Input
+                        value={String(batteryUsage.costValue)}
+                        onChange={(e) => handleUsageChange(e.target.value)}
+                        className="electricity-usage-input"
+                        data-testid="electricity-usage-input"
+                        prefix="$"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
@@ -359,7 +497,9 @@ const Recommendation = ({ previousStep, nextStep }) => {
                     onChange={(e) => setSort(e ? e.target.value : "")}
                     className="custom-radio-group"
                   >
-                    <Radio value="low">Low to high</Radio>
+                    <div data-testid="low">
+                      <Radio value="low">Low to high</Radio>
+                    </div>
                     <Radio value="high">High to low</Radio>
                     <Radio value="">Clear Selection</Radio> {/* This line */}
                   </Radio.Group>
@@ -378,8 +518,10 @@ const Recommendation = ({ previousStep, nextStep }) => {
       </div>
 
       <div className="main-content">
-        <h1>Discover the Best Installers</h1>
-        <h2>Find the perfect fit tailored to your preferences.</h2>
+        <div className="main-conten-text">
+          <h3>Discover the Best Installers</h3>
+          <h4>Find the perfect fit tailored to your preferences.</h4>
+        </div>
         {loading ? (
           <CustomLoadingSpinner />
         ) : (
@@ -388,13 +530,19 @@ const Recommendation = ({ previousStep, nextStep }) => {
               <h3>{installer.name}</h3>
               <h3>Brand: {installer.brand}</h3>
               <p>System Size: {installer.system_size} kW</p>
-              <p>Price: ${installer.price || installer.price_battery}</p>
+              <p>
+                Price: $
+                {installer.price ||
+                  installer.price_battery + batteryUsage.costValue}
+              </p>
 
               <Button
+                data-testid="compare-button"
                 onClick={() => {
                   addToCompare(
                     installer.system_size + "kw",
-                    installer.price || installer.price_battery
+                    installer.price ||
+                      installer.price_battery + batteryUsage.costValue
                   );
                 }}
               >

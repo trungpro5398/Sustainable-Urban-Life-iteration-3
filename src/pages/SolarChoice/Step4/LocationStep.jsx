@@ -140,7 +140,7 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
   };
   return (
     <div className="location-step">
-      <h1>Location</h1>
+      <h2>Location</h2>
 
       {loading ? (
         <CustomLoadingSpinner />
@@ -156,13 +156,14 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
             stepIndex={0}
             callback={handleJoyrideCallback}
           />
-          <p>Which suburb are you located in?</p>
+          <h3>Which suburb are you located in?</h3>
           <div className="select-location">
             <Select
               showSearch
               placeholder="Select or type a suburb"
               optionFilterProp="children"
               onChange={handleSuburbChange}
+              data-testid="suburb-select"
               value={locationData.suburb}
               filterOption={(input, option) => {
                 const suburbValue = option.value;
@@ -178,7 +179,11 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
               }}
             >
               {uniqueSuburbs.map((suburb) => (
-                <Select.Option key={suburb.key} value={suburb.place_name}>
+                <Select.Option
+                  key={suburb.key}
+                  value={suburb.place_name}
+                  data-testid="suburb-option"
+                >
                   {suburb.postcode} - {suburb.place_name}
                 </Select.Option>
               ))}

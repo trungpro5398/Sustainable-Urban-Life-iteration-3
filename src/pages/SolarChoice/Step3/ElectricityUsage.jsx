@@ -310,18 +310,18 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
           <div className="usage-slider">
             <div className="range-labels">
               <span className="range-labels-low">Low</span>
+              <Slider
+                min={1}
+                max={rangeUsage(10000)}
+                step={0.1}
+                onChange={handleUsageChange}
+                value={electricityUsage.usageValue}
+                className="electricity-usage-slider"
+                handle={CustomHandle}
+                data-testid="electricity-usage-slider"
+              />
               <span className="range-labels-high">High</span>
             </div>
-
-            <Slider
-              min={1}
-              max={rangeUsage(10000)}
-              step={0.1}
-              onChange={handleUsageChange}
-              value={electricityUsage.usageValue}
-              className="electricity-usage-slider"
-              handle={CustomHandle}
-            />
 
             <div className="electricity-usage-size">Electricity usage</div>
 
@@ -330,6 +330,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
                 value={String(electricityUsage.usageValue)}
                 onChange={(e) => handleUsageChange(e.target.value)}
                 className="electricity-usage-input"
+                data-testid="electricity-usage-input"
               />
               <div className="electricity-usage-unit">kWh</div>
             </div>
@@ -351,7 +352,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
                   className="container-icon"
                 />
                 <span className="container-content">
-                  <h3>CO2 Emissions</h3>
+                  <h4>CO2 Emissions</h4>
                   <p>
                     {(electricityUsage.usageDaily * 0.5).toFixed(2)} kg of CO2
                     emissions per day.
@@ -363,11 +364,8 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
               <div className="info-container info-container-2">
                 <FontAwesomeIcon icon={faTree} className="container-icon" />{" "}
                 <span className="container-content">
-                  <h3>Equivalent tree planting</h3>
-                  <p>
-                    {((electricityUsage.usageDaily * 0.5) / 22).toFixed(4)} per
-                    day.
-                  </p>
+                  <h4>Equivalent tree planting</h4>
+                  <p>{((electricityUsage.usageDaily * 0.5) / 22).toFixed(2)}</p>
                 </span>
                 {/* Using a tree icon for this section */}
               </div>
@@ -376,7 +374,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
               <div className="info-container info-container-3">
                 <FontAwesomeIcon icon={faWind} className="container-icon" />{" "}
                 <span className="container-content">
-                  <h3>Air Conditioner Hours</h3>
+                  <h4>Air Conditioner Hours</h4>
                   <p>{(electricityUsage.usageDaily / 2.3).toFixed(2)} hours.</p>
                 </span>
                 {/* Using a wind (or fan) icon for AC context */}

@@ -14,11 +14,9 @@
     width: 100%; // Adjust the size as needed
   }
 
-  p {
-    font-size: $title-font-size;
+  .spin {
     color: $primary-color;
 
-    font-family: $primary-font;
     text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); // Giving it a slight shadow for depth
   }
 }

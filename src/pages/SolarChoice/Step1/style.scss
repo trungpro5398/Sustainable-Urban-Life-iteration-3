@@ -16,60 +16,20 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  filter: drop-shadow($primary-box-shadow);
-  background-color: $light-green;
+
   font-family: $primary-font;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)),
+    url("../../../assets/images/hero-section/background-2.jpeg");
+  background-size: 100% 100%;
+  background-position: center;
 
-  // Animated Text Presentation inside a bordered box
-  .outer-text {
-    padding: 10px;
-    font-size: 24px;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    // border: 5px solid $primary-color;
-    // background-color: #f2f7fa;
-
-    // Word representation with a cartoonish font
-    h1 {
-      margin-right: 15px;
-      margin-top: -15px;
-      color: $primary-color;
-
-      // Animated character representation within words
-      span {
-        display: inline-block;
-        animation: swell 2.5s ease-in-out infinite;
-        -webkit-background-clip: text;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-      }
-    }
-  }
-  @keyframes slide {
-    0%,
-    100% {
-      right: 5px;
-    }
-    50% {
-      right: 17px;
-    }
-  }
-  // Keyframes for the expanding animation
-  @keyframes expand {
-    0% {
-      transform: translateY(-50%) translateX(0) scaleX(1);
-    }
-    100% {
-      transform: translateY(-50%) translateX(50%) scaleX(1.2);
-    }
+  h2 {
+    color: $primary-color;
   }
 
   .start-button {
     margin-top: 5%;
     height: 50px;
-    font-size: 20px;
     font-weight: 500;
     border: $primary-border;
     box-shadow: $solar-hover-box-shadow;
