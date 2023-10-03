@@ -1,8 +1,8 @@
 // External Dependencies
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Row, Col } from "antd";
-import { Carousel as ResponsiveCarousel } from "react-responsive-carousel";
-
+import ReactPlayer from "react-player"; // <-- Import the ReactPlayer
+import introductionVideo from "../../assets/videos/introduction.mp4";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 // Components
 import Navbar from "../Navbar/Navbar";
@@ -10,7 +10,7 @@ import background_1 from "../../assets/images/hero-section/background-1.jpeg";
 import background_2 from "../../assets/images/hero-section/background-2.jpeg";
 // Styles
 import "./HeroSection.scss";
-
+import { FaPlay } from "react-icons/fa";
 /**
  * HeroSection Component
  *
@@ -22,82 +22,59 @@ const HeroSection = () => {
   // Animated text for the hero section
   const text = "Welcome to Sustainable Urban Life";
   const smallText = text.split(" ");
+  // State to manage video play/pause
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Handler for video play button
+  const handlePlayVideo = () => {
+    setIsPlaying(true);
+  };
 
   /**
    * Smoothly scrolls the view to the "sub-options" section of the page.
    */
-  const handleButtonClickToSubOptions = () => {
-    const subOptions = document.getElementById("sub-options");
+  const handleButtonClickToVideoSection = () => {
+    const subOptions = document.getElementById("video-options");
     if (subOptions) {
       subOptions.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const videoSectionRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        videoSectionRef.current &&
+        !videoSectionRef.current.contains(event.target)
+      ) {
+        setIsPlaying(false);
+      }
+    };
 
-  /**
-   * Smoothly scrolls the view to the "info-blocks" section of the page.
-   */
-  const handleButtonClickToInfoBlocks = () => {
-    const infoBlocks = document.getElementById("info-blocks");
-    if (infoBlocks) {
-      infoBlocks.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-  };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <section className="hero">
       <Navbar isHomePage={true} />
 
-      <div className="container">
-        <ResponsiveCarousel
-          showArrows={true}
-          infiniteLoop={true}
-          showThumbs={false}
-          showStatus={false}
-          autoPlay={true}
-          interval={4000}
-        >
-          <div className="carousel-item">
-            <div className="carousel-content">
-              <h1>Sustainable Renewable Solution</h1>
-              <p>
-                Embrace an eco-friendly approach to urban living with
-                innovative, sustainable solutions that not only benefit the
-                environment but also significantly reduce energy costs.
-              </p>
-            </div>
+      {/* <div className="container">
+        <div className="carousel-item">
+          <div className="carousel-content">
+            <h3>Sustainable Renewable Solution</h3>
+            <p>
+              Embrace an eco-friendly approach to urban living with innovative,
+              sustainable solutions that not only benefit the environment but
+              also significantly reduce energy costs.
+            </p>
           </div>
-          <div
-            className="carousel-item"
-            style={{
-              backgroundImage: `linear-gradient(
-              rgba(0, 0, 0, 0.5),
-              rgba(0, 0, 0, 0.1)
-            ),url(${background_2})`,
-            }}
-          >
-            <div className="carousel-content">
-              <h1>Discover and Learn</h1>
-              <p>
-                Explore the transformative power of solar energy. See how
-                government support and initiatives are accelerating the adoption
-                of green technologies in urban settings.
-              </p>
-            </div>
-          </div>
-        </ResponsiveCarousel>
+        </div>
         <div className="hero-overlay">
-          {/* Animated Welcome Text */}
 
           <div className="outer-text">
             {smallText.map((word, wordIndex) => (
-              <h1 key={wordIndex}>
+              <h3 key={wordIndex}>
                 {word.split("").map((char, charIndex) => (
                   <span
                     style={{ animationDelay: `${charIndex * 0.1}s` }}
@@ -106,17 +83,30 @@ const HeroSection = () => {
                     {char}
                   </span>
                 ))}
-              </h1>
+              </h3>
             ))}
           </div>
+          <div className="video-section">
+            <ReactPlayer
+              url={introductionVideo}
+              playing={isPlaying} 
+              width="100%"
+              height="100%"
+              controls
+            />
 
-          {/* Hero Subtitle */}
-          <p>
+            {!isPlaying && (
+              <div className="play-video-button" onClick={handlePlayVideo}>
+                <i className="your-icon-class-here"></i>
+                Introduction
+              </div>
+            )}
+          </div>
+          <h4>
             Bright Futures: The Confluence of Solar Solutions and Government
             Support in Urban Living
-          </p>
+          </h4>
 
-          {/* Call-to-action Buttons */}
           <Row gutter={16}>
             <Col>
               <button
@@ -126,15 +116,30 @@ const HeroSection = () => {
                 Learn More
               </button>
             </Col>
-            {/* <Col>
-              <button
-                className="cta-button"
-                onClick={handleButtonClickToInfoBlocks}
-              >
-                See How It Works
-              </button>
-            </Col> */}
           </Row>
+        </div>
+      </div> */}
+      <div className="container">
+        <div className="video-section" ref={videoSectionRef}>
+          <ReactPlayer
+            url={introductionVideo}
+            playing={isPlaying}
+            width="100%"
+            height="100%"
+            onClick={() => setIsPlaying(false)}
+          />
+
+          {!isPlaying && (
+            <div
+              className="play-video-button"
+              onClick={() => {
+                handlePlayVideo();
+                handleButtonClickToVideoSection();
+              }}
+            >
+              <FaPlay />
+            </div>
+          )}
         </div>
       </div>
     </section>

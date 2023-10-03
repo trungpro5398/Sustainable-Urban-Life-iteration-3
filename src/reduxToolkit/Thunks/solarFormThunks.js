@@ -60,6 +60,16 @@ export const fetchLocationData = createAsyncThunk(
   }
 );
 
+export const fetchBatteryCost = createAsyncThunk(
+  "solarForm/fetchBatteryCost",
+  async () => {
+    const response = await fetch(
+      "https://sustainable-urban-life-backend.onrender.com/api/solar_energy/battery_cost"
+    );
+    return response.json();
+  }
+);
+
 export const updateFieldAsync = createAsyncThunk(
   "solarForm/updateFieldAsync",
   async (payload) => {

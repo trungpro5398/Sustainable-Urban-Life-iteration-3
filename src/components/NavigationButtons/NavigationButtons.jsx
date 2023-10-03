@@ -37,12 +37,14 @@ const NavigationButtons = ({
         icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}
         onClick={() => handleClick(previousStep)}
         shape="circle"
+        data-testid="previous-button"
       />
       <Button
         className="next-button"
         icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
         onClick={() => handleClick(nextStep)}
         shape="circle"
+        data-testid="next-button"
       />
     </div>
   );

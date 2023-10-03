@@ -1,5 +1,5 @@
 @import "../../../assets/scss/variables.scss";
-
+@import "../../../styles/breakpoints";
 .annual-bill-savings {
   min-height: 100vh;
   width: 100vw;
@@ -43,11 +43,9 @@
       font-size: 20px;
     }
   }
-  h1 {
-    font-size: 40px;
+  h2 {
     color: $primary-color;
     text-shadow: $primary-text-shadow;
-    font-weight: bold;
   }
   .annual-bill-savings-container {
     display: flex;
@@ -60,48 +58,73 @@
     padding: 40px;
     border-radius: $primary-border-radius;
     box-shadow: $solar-hover-box-shadow;
-    h2 {
+    h4 {
       font-weight: bold;
     }
-    .compass-wrapper {
-      position: relative;
+    .array-container {
       display: flex;
       flex-direction: column;
-      width: 100%; /* Adjust according to your compass size */
-      align-items: center;
       justify-content: center;
-      height: 100%; /* Adjust according to your compass size */
-      .tooltip {
+      .compass-wrapper {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%; /* Adjust according to your compass size */
+        align-items: center;
+        justify-content: center;
+        height: 100%; /* Adjust according to your compass size */
+        .tooltip {
+          position: relative;
 
-        color: $primary-color;
+          color: $primary-color;
 
-        padding: 5px 10px;
-        border-radius: 5px;
-        white-space: nowrap;
-        font-size: 14px; /* Adjust as needed */
+          padding: 5px 10px;
+          border-radius: 5px;
+          white-space: nowrap;
+          font-size: 14px; /* Adjust as needed */
+        }
+        .compass-container {
+          position: relative;
+          width: 200px;
+          height: 200px;
+          background-color: #f0f0f0; // a light gray background to distinguish the compass
+          border-radius: 50%; // makes it circular
+        }
       }
-      .compass-container {
-        position: relative;
-        width: 200px;
-        height: 200px;
-        background-color: #f0f0f0; // a light gray background to distinguish the compass
-        border-radius: 50%; // makes it circular
+      .remove-array-button {
+        background-color: red;
+        color: white; /* Text color */
+        border: none;
+        padding: 10px 20px; /* Adjust as needed */
+        border-radius: 4px; /* Adjust as needed */
+        cursor: pointer;
+        display: flex;
+        align-items: center; /* Vertically center the text and the icon */
+        transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+        margin-bottom: 10px;
       }
-    }
 
-    .annual-slider .slider-handle {
-      width: 20px;
-      height: 20px;
-      background-color: #4a90e2; /* Color of the handle */
-      border: none; /* Remove any border */
-      border-radius: 50%; /* Make it round */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add some shadow for depth */
-    }
+      .remove-array-button:hover {
+        background-color: darkred; /* Darker shade of red on hover */
+      }
 
-    /* For the hover effect */
-    .annual-slider .slider-handle:hover {
-      background-color: #357abd;
+      .remove-array-button .anticon {
+        margin-right: 8px; /* Spacing between the icon and the text */
+      }
+
+      .annual-slider .slider-handle {
+        width: 20px;
+        height: 20px;
+        background-color: #4a90e2; /* Color of the handle */
+        border: none; /* Remove any border */
+        border-radius: 50%; /* Make it round */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add some shadow for depth */
+      }
+
+      /* For the hover effect */
+      .annual-slider .slider-handle:hover {
+        background-color: #357abd;
+      }
     }
 
     .progress-label {
@@ -159,6 +182,61 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .percentage-display {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .percentage-display-container {
+        display: flex;
+        color: $primary-color;
+        align-items: center;
+        .percentage-display-unit {
+          font-size: 30px;
+          color: $primary-color;
+
+          margin-left: 10px;
+          text-shadow: $primary-text-shadow;
+
+          .instruction-icon {
+            font-size: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            color: $primary-color;
+          }
+        }
+
+        .percentage-display-input {
+          color: $primary-color !important;
+
+          font-style: normal;
+          font-weight: 500;
+          font-size: 1.5rem;
+          line-height: 1.8125rem;
+          letter-spacing: 0.0025em;
+
+          @include desktop-1440 {
+            font-size: 1.375rem;
+            line-height: 1.6875rem;
+          }
+          @include desktop {
+            font-size: 1.25rem;
+            line-height: 1.5625rem;
+          }
+          @include tablet {
+            font-size: 1.125rem;
+            line-height: 1.375rem;
+          }
+          @include mobile {
+            font-size: 1rem;
+            line-height: 1.25rem;
+          }
+          border-radius: $primary-border-radius;
+
+          border: $primary-border;
+          box-shadow: $solar-hover-box-shadow;
+        }
+      }
     }
     .direction-box {
       position: absolute;

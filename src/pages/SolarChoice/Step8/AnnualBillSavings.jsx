@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { InputNumber, Button, Select, Slider, Input } from "antd";
-import { updateField } from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust this path to your project's directory structure
+import { InputNumber, Button, Modal, Slider, message } from "antd";
+import {
+  updateField,
+  addSolarArray,
+  removeSolarArray,
+  updateArrayField,
+} from "../../../reduxToolkit/slices/solarFormSlice"; // Adjust this path to your project's directory structure
 import compass from "../../../assets/images/solar-choice/Step8/compass.png";
 import "./style.scss";
 import { CalculatorOutlined } from "@ant-design/icons";
@@ -12,18 +17,32 @@ import CalculatedLoading from "../../../components/CalculatedLoading/CalculatedL
 import NavigationButtons from "../../../components/NavigationButtons/NavigationButtons";
 import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
+import { CloseCircleOutlined, PlusOutlined } from "@ant-design/icons"; // Import the close (X) icon
 
 const AnnualBillSavings = ({ nextStep, previousStep }) => {
+  const [solarPanelPercentages, setSolarPanelPercentages] = useState([100]);
   const [errors, setErrors] = useState({
     electricityCost: "",
     annualSpend: "",
     supplyCharge: "",
-    directionFacing: "",
-    angle: "",
+    directionFacing: [], // Initialize as an array
+    angle: [], // Initialize as an array
     isCalculated: "",
   });
+
   const [run, setRun] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+  const angle = useSelector((state) => state.solarForm.annualBillSavings.angle);
+  const [numOfArrays, setNumOfArrays] = useState(1); // Initial value
+  const directionFacing = useSelector(
+    (state) => state.solarForm.annualBillSavings.directionFacing
+  );
+
+  useEffect(() => {
+    if (angle && Array.isArray(angle)) {
+      setNumOfArrays(angle.length);
+    }
+  }, [angle]);
 
   const [results, setResults] = useState({
     annualSavings: 0,
@@ -33,14 +52,40 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
     percentAfterSolar: 0,
     percentBeforeSolar: 0,
   });
-  const [directionState, setDirectionState] = useState({
-    active: null,
-    clicked: null,
-    tooltip: "",
-  });
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [inputValue, setInputValue] = useState(null);
+  const [firstPanelDisplay, setFirstPanelDisplay] = useState(
+    solarPanelPercentages[0]
+  );
+  const [directionStates, setDirectionStates] = useState([
+    { active: null, clicked: null, tooltip: "" },
+  ]);
+  useEffect(() => {
+    const updatedDirectionStates = directionFacing.map((dir) => ({
+      direction: dir,
+      active: null,
+      clicked: dir, // set clicked to the current direction
+      tooltip: "",
+    }));
+    setDirectionStates(updatedDirectionStates);
+  }, [directionFacing]);
+
   const resetLoadingAndResults = () => {
     setCalLoading(false);
     setShowResults(false);
+  };
+  message.config({
+    top: "50vh", // 50% of the viewport height, adjust accordingly
+    duration: 5, // 5 seconds
+  });
+  const messageInput = (text) => {
+    message.error({
+      content: text,
+      style: {
+        fontSize: "20px", // Bigger font size
+      },
+    });
   };
   const [steps] = useState([
     {
@@ -79,14 +124,16 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
 
   const update = (payload) => dispatch(updateField(payload));
   const [showResults, setShowResults] = useState(false);
+  const [inputError, setInputError] = useState("");
+
   const validateFields = (isCalculated) => {
     let isValid = true;
     const newErrors = {
       electricityCost: "",
       annualSpend: "",
       supplyCharge: "",
-      directionFacing: "",
-      angle: "",
+      directionFacing: [], // Initialize as an array
+      angle: [], // Initialize as an array
       isCalculated: "",
     };
 
@@ -105,59 +152,94 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
       isValid = false;
     }
 
-    if (!annualBillSavings.directionFacing) {
-      newErrors.directionFacing = "Please select a direction.";
+    // Iterate over each directionFacing and angle of the solar panels
+    directionStates.forEach((directionState, index) => {
+      if (!directionState.clicked) {
+        newErrors.directionFacing[index] = "Please select a direction.";
+        isValid = false;
+      } else {
+        newErrors.directionFacing[index] = ""; // No error
+      }
+
+      if (annualBillSavings.angle <= 0) {
+        newErrors.angle[index] = "Angle must be greater than 0.";
+        isValid = false;
+      } else {
+        newErrors.angle[index] = ""; // No error
+      }
+    });
+
+    if (isValid && !isCalculated) {
+      newErrors.isCalculated = "Please click the calculate button.";
       isValid = false;
     }
 
-    if (annualBillSavings.angle <= 0) {
-      newErrors.angle = "Angle must be greater than 0.";
-      isValid = false;
-    }
-    if (isValid && !isCalculated) {
-      newErrors.isCalculated = "Please click calculate button.";
-      isValid = false;
-    }
     if (isCalculated) {
       setCalculated(true);
     }
+
     setErrors(newErrors);
     return isValid;
   };
-
-  const handleDirection = (direction, clicked = false) => {
+  const handleDirection = (direction, index, clicked = false) => {
     const tooltip = `You've ${
       clicked ? "selected" : "hovering over"
     } the ${direction} direction`;
-    setDirectionState({
-      ...directionState,
+
+    // Update local state
+    const newDirectionStates = [...directionStates];
+    newDirectionStates[index] = {
+      ...newDirectionStates[index],
       active: direction,
       tooltip,
-      clicked: clicked ? direction : directionState.clicked,
-    });
-    if (clicked)
-      update({
-        section: "annualBillSavings",
-        field: "directionFacing",
-        value: direction,
-      });
+      clicked: clicked ? direction : newDirectionStates[index].clicked,
+    };
+    setDirectionStates(newDirectionStates);
+
+    // Update Redux state when clicked
+    if (clicked) {
+      dispatch(
+        updateArrayField({
+          section: "annualBillSavings",
+          field: "directionFacing",
+          value: direction,
+          index,
+        })
+      );
+    }
   };
 
-  const handleMouseOut = () =>
-    handleDirection(annualBillSavings.directionFacing, true);
+  const handleMouseOut = (index) =>
+    handleDirection(directionStates[index].clicked, index, true);
 
   const calcSavings = () => {
     const solarProd = postcodeInfo.data[annualBillSavings.solarPowerSystem];
-    const effect = angle_and_orientation.data.find(
-      (item) =>
-        item.roof_pich === annualBillSavings.angle &&
-        item.roof_oeratation === annualBillSavings.directionFacing
-    ).percentage;
+
+    // Total effect accumulates percentage effects from each solar panel
+    let totalEffect = 0;
+
+    // Loop over each direction state (each solar panel) to accumulate total effect
+    directionStates.forEach((directionState, index) => {
+      const effectFromPanel = angle_and_orientation.data.find(
+        (item) =>
+          item.roof_pich === annualBillSavings.angle[index] &&
+          item.roof_oeratation === directionState.clicked
+      ).percentage;
+
+      // Weight the effect from this panel by its percentage
+      totalEffect += (effectFromPanel * solarPanelPercentages[index]) / 100;
+    });
+
     const annualSavings =
-      solarProd * 365 * annualBillSavings.electricityCost * effect * 0.0001;
+      solarProd *
+      365 *
+      annualBillSavings.electricityCost *
+      totalEffect *
+      0.0001;
     const billBefore =
       annualBillSavings.annualSpend -
       (annualBillSavings.supplyCharge * 365) / 100;
+
     dispatch(
       updateField({
         section: "annualBillSavings",
@@ -165,6 +247,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
         value: true,
       })
     );
+
     setResults({
       annualSavings,
       annualBillWithSolar: billBefore - annualSavings,
@@ -204,6 +287,83 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
       callback && callback();
     }, 4000);
   };
+  const addSolarPanel = () => {
+    // 1. Check for any existing input errors.
+    if (inputValue === null) {
+      messageInput("Please enter a number.");
+      return;
+    } else if (inputValue < 0 || inputValue > 100) {
+      messageInput("Please enter a number between 0 and 100.");
+    } else {
+      setInputError(""); // Clear the error if the input is within the range
+    }
+
+    // 2. Calculate the percentage for the primary panel after adding the new panel.
+    const primaryPanelPercentage = solarPanelPercentages[0] - inputValue;
+
+    // 3. Validate if adding the new panel's percentage doesn't invalidate the primary panel's percentage.
+    if (primaryPanelPercentage < 0) {
+      setInputError(
+        "The added percentage is too high and makes the primary panel's percentage go below 0%."
+      );
+      return;
+    }
+
+    // 4. Update the solar panel percentages.
+    const updatedPercentages = [...solarPanelPercentages];
+    updatedPercentages[0] = primaryPanelPercentage;
+    updatedPercentages.push(inputValue);
+    setSolarPanelPercentages(updatedPercentages);
+
+    // 5. Close the modal and reset the input value.
+    setIsModalVisible(false);
+    setInputValue(null);
+
+    // 6. Create a new direction state for the new solar panel.
+    const newDirectionState = {
+      direction: null,
+      active: null,
+      clicked: null,
+      tooltip: "",
+    };
+    setDirectionStates((prevStates) => [...prevStates, newDirectionState]);
+
+    // 7. Dispatch the addition of a new solar array to the Redux store.
+    // The update is now slightly different, where we pass the whole newDirectionState object instead of individual properties.
+    dispatch(addSolarArray({ directionState: newDirectionState, angle: 0 }));
+
+    // 8. Update the number of solar arrays.
+    setNumOfArrays((prevNum) => prevNum + 1);
+  };
+
+  const removeSolarPanel = () => {
+    if (numOfArrays > 1) {
+      const removedPercentage =
+        solarPanelPercentages[solarPanelPercentages.length - 1];
+
+      const newDirectionStates = directionStates.slice(0, -1);
+      setDirectionStates(newDirectionStates);
+
+      const newSolarPanelPercentages = solarPanelPercentages.slice(0, -1);
+      newSolarPanelPercentages[0] += removedPercentage;
+      setSolarPanelPercentages(newSolarPanelPercentages);
+
+      // Remove last direction and angle from redux
+      dispatch(removeSolarArray({ index: numOfArrays - 1 }));
+
+      setNumOfArrays(numOfArrays - 1);
+    }
+  };
+  const showAddSolarPanelModal = () => {
+    setIsModalVisible(true);
+  };
+  useEffect(() => {
+    const totalOfOtherPanels = solarPanelPercentages.reduce(
+      (acc, currVal, idx) => (idx !== 0 ? acc + currVal : acc),
+      0
+    );
+    setFirstPanelDisplay(100 - totalOfOtherPanels);
+  }, [solarPanelPercentages]);
 
   return (
     <div className="annual-bill-savings">
@@ -217,14 +377,14 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
         showSkipButton={true}
         callback={handleJoyrideCallback}
       />
-      <h1>Annual Bill Savings Calculator</h1>
+      <h2>Annual Bill Savings Calculator</h2>
       {loading ? (
         <CustomLoadingSpinner />
       ) : (
         <div className="annual-bill-savings-container">
           <Row className="solar-input-display" align="middle" gutter={8}>
             <Col>
-              <h2>Your solar power system:</h2>
+              <h4>Your solar power system:</h4>
             </Col>
             <Col>
               <span>{annualBillSavings.solarPowerSystem}</span>
@@ -233,62 +393,179 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
               <span>kWh</span>
             </Col>
           </Row>
+          {Array.from({ length: numOfArrays }).map((_, index) => (
+            <div key={index} className="array-container">
+              <h4 className="percentage-display">
+                Roof's top {index + 1}:{" "}
+                {index === 0 ? (
+                  `${firstPanelDisplay}%`
+                ) : (
+                  <div className="percentage-display-container">
+                    <InputNumber
+                      min={0}
+                      max={100}
+                      value={solarPanelPercentages[index]}
+                      className="percentage-display-input"
+                      onChange={(value) => {
+                        const totalOfOtherPanels = solarPanelPercentages.reduce(
+                          (acc, currVal, idx) =>
+                            idx !== 0 ? acc + currVal : acc,
+                          0
+                        );
+                        if (value === null) {
+                          messageInput("Please enter a number.");
+                          return;
+                        } else if (100 - totalOfOtherPanels - value < 0) {
+                          messageInput("Please enter smaller percentage.");
+                          return;
+                        } else if (value < 0 || value > 100) {
+                          messageInput(
+                            "Please enter a number between 0 and 100."
+                          );
+                        } else {
+                          setInputError(""); // Clear the error if the input is within the range
+                        }
 
-          <div className="compass-wrapper">
-            <div className="tooltip">{directionState.tooltip}</div>
-            <div className="compass-container" onMouseOut={handleMouseOut}>
-              <img
-                src={compass}
-                alt="Compass Needle"
-                className={`compass-needle ${directionState.active}`}
-              />
-              {["NW", "N", "NE", "E", "SE", "S", "SW", "W"].map((direction) => (
+                        const updatedPercentages = [...solarPanelPercentages];
+                        updatedPercentages[index] = value;
+                        // updatedPercentages[0] = 100 - totalOfOtherPanels; // Adjust the first value accordingly
+                        setSolarPanelPercentages(updatedPercentages);
+                      }}
+                    />
+                    <div className="percentage-display-unit">%</div>
+                  </div>
+                )}
+              </h4>
+
+              <div className="compass-wrapper">
+                {directionStates && (
+                  <div className="tooltip">
+                    {directionStates[index].tooltip}
+                  </div>
+                )}
                 <div
-                  key={direction}
-                  className={`direction-box ${direction} ${
-                    direction === directionState.clicked
-                      ? "active"
-                      : direction === directionState.active
-                      ? "hovered"
-                      : ""
-                  }`}
-                  onMouseEnter={() => handleDirection(direction)}
-                  onClick={() => {
-                    resetLoadingAndResults();
-
-                    handleDirection(direction, true);
-                  }}
+                  className="compass-container"
+                  onMouseOut={() => handleMouseOut(index)}
                 >
-                  {direction}
+                  <img
+                    src={compass}
+                    alt="Compass Needle"
+                    className={`compass-needle ${directionStates[index].active}`}
+                  />
+                  {["NW", "N", "NE", "E", "SE", "S", "SW", "W"].map(
+                    (direction) => (
+                      <div
+                        key={direction}
+                        className={`direction-box ${direction} ${
+                          direction === directionStates[index].clicked
+                            ? "active"
+                            : direction === directionStates[index].active
+                            ? "hovered"
+                            : ""
+                        }`}
+                        onMouseEnter={() => handleDirection(direction, index)}
+                        onClick={() => {
+                          resetLoadingAndResults();
+                          handleDirection(direction, index, true);
+                        }}
+                      >
+                        {direction}
+                      </div>
+                    )
+                  )}
                 </div>
-              ))}
+                <div className="error-text">
+                  {errors.directionFacing[index]}
+                </div>
+              </div>
+
+              <div className="angle">
+                <p>
+                  Angle from Horizontal: {annualBillSavings.angle[index] + "°"}
+                </p>
+                <Slider
+                  min={0}
+                  max={90}
+                  value={annualBillSavings.angle[index]}
+                  onChange={(value) => {
+                    resetLoadingAndResults();
+                    // Create a new angles array with the updated value
+                    const updatedAngles = [...annualBillSavings.angle];
+                    updatedAngles[index] = value;
+                    dispatch(
+                      updateField({
+                        section: "annualBillSavings",
+                        field: "angle",
+                        value: updatedAngles, // dispatch the entire updated angles array
+                      })
+                    );
+                  }}
+                  step={5}
+                  className="annual-slider"
+                />
+                <div className="error-text">{errors.angle[index]}</div>
+              </div>
+              {index > 0 && (
+                <button
+                  className="remove-array-button"
+                  onClick={removeSolarPanel}
+                >
+                  <CloseCircleOutlined /> Remove Solar Array
+                </button>
+              )}
             </div>
-            <div className="error-text">{errors.directionFacing}</div>
-          </div>
+          ))}
+          <button onClick={showAddSolarPanelModal}>
+            <PlusOutlined /> Add Another Solar Panel Array
+          </button>
 
-          <div className="angle">
-            <p>Angle from Horizontal: {annualBillSavings.angle + "°"}</p>
-            <Slider
+          <Modal
+            title="Enter Percentage"
+            visible={isModalVisible}
+            onOk={addSolarPanel}
+            onCancel={() => setIsModalVisible(false)}
+          >
+            <p>Please enter the percentage for the new solar panel:</p>
+            <InputNumber
               min={0}
-              max={90}
-              value={annualBillSavings.angle}
+              max={100}
+              value={inputValue}
               onChange={(value) => {
-                resetLoadingAndResults();
-                update({ section: "annualBillSavings", field: "angle", value });
-              }}
-              step={5}
-              className="annual-slider"
-            />
-            <div className="error-text">{errors.angle}</div>
-          </div>
+                const totalOfOtherPanels = solarPanelPercentages.reduce(
+                  (acc, currVal, idx) => (idx !== 0 ? acc + currVal : acc),
+                  0
+                );
 
+                if (value === null) {
+                  messageInput("Please enter a number.");
+                  return;
+                } else if (100 - totalOfOtherPanels - value < 0) {
+                  messageInput("Please enter smaller percentage.");
+                  return;
+                } else if (value < 0 || value > 100) {
+                  messageInput("Please enter a number between 0 and 100.");
+                } else {
+                  setInputError(""); // Clear the error if the input is within the range
+                }
+                setInputValue(value);
+              }}
+            />
+
+            {inputError && (
+              <div style={{ color: "red", marginTop: "10px" }}>
+                {inputError}
+              </div>
+            )}
+          </Modal>
           <div className="cost">
             <div>
-              <h2>Your Electricity Bill</h2>
-              <p>
-                Cost of usage per kWh inc GST: $
-                {annualBillSavings.electricityCost}
-              </p>
+              {/* <h4>Your Electricity Bill</h4> */}
+              <h4>
+                Cost of usage per kWh inc GST:{" "}
+                {annualBillSavings.electricityCost}{" "}
+                {annualBillSavings.electricityCost === 1 ? "cent" : "cents"}
+              </h4>
+
               <Slider
                 min={0}
                 max={90}
@@ -310,9 +587,9 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
             </div>
 
             <div>
-              <h2>
+              <h4>
                 Approximately how much do you spend on electricity in a year
-              </h2>
+              </h4>
               <InputNumber
                 placeholder="0.00"
                 prefix="$"
@@ -331,7 +608,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
             </div>
 
             <div>
-              <h2>Supply charge (cents per day)</h2>
+              <h4>Supply charge (cents per day)</h4>
               <InputNumber
                 placeholder="0.00"
                 suffix="cents"
@@ -349,7 +626,6 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
               <div className="error-text">{errors.supplyCharge}</div>
             </div>
           </div>
-
           <Button
             onClick={() => handleClick(calcSavings)}
             icon={<CalculatorOutlined />}
@@ -359,7 +635,6 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
           <div className="error-text-container">
             <div className="error-text">{errors.isCalculated}</div>
           </div>
-
           {calLoading && <CalculatedLoading />}
           {showResults && (
             <div className="results">

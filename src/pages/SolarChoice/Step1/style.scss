@@ -41,8 +41,6 @@
       // Animated character representation within words
       span {
         display: inline-block;
-        animation: swell 2.5s ease-in-out infinite;
-        -webkit-background-clip: text;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
       }
     }

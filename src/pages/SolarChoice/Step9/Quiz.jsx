@@ -148,7 +148,7 @@ const Quiz = ({ previousStep }) => {
 
   return (
     <div className="quiz-step">
-      <h1>How much subsidy can I get?</h1>
+      <h2>How much subsidy can I get?</h2>
 
       {loading ? (
         <CustomLoadingSpinner />
@@ -217,20 +217,29 @@ const Quiz = ({ previousStep }) => {
               showRebateResults && (
                 <div className="rebate-results">
                   {result === "Eligible for the Victoria solar rebate" && (
-                    <p>Your Victorian rebate is: {victorianRebate}</p>
+                    <p className="rebate-info">
+                      Your Victorian rebate is: <span>{victorianRebate}</span>
+                    </p>
                   )}
-                  <p>
+                  <p className="rebate-info">
                     Your total rebate is:{" "}
-                    {(victorianRebate + federalRebate).toFixed(2)}
+                    <span>{(victorianRebate + federalRebate).toFixed(2)}</span>
                   </p>
-                  <p>Your federal rebate is: {federalRebate.toFixed(2)}</p>
-                  <p>Cost for installation: {price_installation}</p>
-                  <p>
+                  <p className="rebate-info">
+                    Your federal rebate is:{" "}
+                    <span>{federalRebate.toFixed(2)}</span>
+                  </p>
+                  <p className="cost-info">
+                    Cost for installation: <span>{price_installation}</span>
+                  </p>
+                  <p className="final-cost">
                     Cost for installation with rebate:{" "}
-                    {(
-                      price_installation -
-                      (victorianRebate + federalRebate).toFixed(2)
-                    ).toFixed(2)}
+                    <span>
+                      {(
+                        price_installation -
+                        (victorianRebate + federalRebate).toFixed(2)
+                      ).toFixed(2)}
+                    </span>
                   </p>
                 </div>
               )

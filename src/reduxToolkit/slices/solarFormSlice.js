@@ -6,6 +6,7 @@ import {
   fetchZoneRatingData,
   fetchYearlyMarketValuationData,
   fetchLocationData,
+  fetchBatteryCost,
   updateFieldAsync,
 } from "../Thunks/solarFormThunks"; // Assuming they're in the same directory
 
@@ -40,8 +41,10 @@ const initialState = {
     isCompleted: false,
   },
   batteryChoice: {
+    data: null,
     wantBattery: null, // Either "Yes" or "No"
     batterySize: 5, // Defaulted to 5 kW
+    batteryCost: null,
     isCompleted: false,
   },
   pricing: {
@@ -51,8 +54,15 @@ const initialState = {
   },
   annualBillSavings: {
     solarPowerSystem: null,
-    directionFacing: null,
-    angle: 0,
+    directionFacing: [
+      {
+        direction: null,
+        active: null,
+        clicked: null,
+        tooltip: "",
+      },
+    ],
+    angle: [0],
     electricityCost: null,
     annualSpend: null,
     supplyCharge: null,
@@ -94,6 +104,39 @@ const solarFormSlice = createSlice({
     updatePostcodeInfo: (state, action) => {
       state.postcodeInfo.data = action.payload;
     },
+    // Add an entry to directionFacing and angle arrays with real values
+    addSolarArray: (state, action) => {
+      const newAngle = action.payload; // or whatever value you're trying to push
+      state.annualBillSavings.angle = [
+        ...state.annualBillSavings.angle,
+        newAngle,
+      ];
+      state.annualBillSavings.directionFacing = [
+        ...state.annualBillSavings.directionFacing,
+        {
+          direction: null,
+          active: null,
+          clicked: null,
+          tooltip: "",
+        },
+      ];
+    },
+
+    // Remove a specific entry from directionFacing and angle arrays
+    removeSolarArray: (state, action) => {
+      const index = action.payload.index;
+      if (index !== undefined && index >= 0) {
+        state.annualBillSavings.directionFacing.splice(index, 1);
+        state.annualBillSavings.angle.splice(index, 1);
+      }
+    },
+    // Update a specific entry in directionFacing or angle arrays
+    updateArrayField: (state, action) => {
+      const { section, field, value, index } = action.payload;
+      if (state[section][field][index] !== undefined) {
+        state[section][field][index] = value;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -115,6 +158,9 @@ const solarFormSlice = createSlice({
       .addCase(fetchLocationData.fulfilled, (state, action) => {
         state.location.data = action.payload;
       })
+      .addCase(fetchBatteryCost.fulfilled, (state, action) => {
+        state.batteryChoice.data = action.payload;
+      })
       .addCase(updateFieldAsync.fulfilled, (state, action) => {
         const { section, field, value } = action.payload;
         state[section][field] = value;
@@ -122,6 +168,12 @@ const solarFormSlice = createSlice({
   },
 });
 
-export const { updateField, updatePostcodeInfo } = solarFormSlice.actions;
+export const {
+  updateField,
+  updatePostcodeInfo,
+  updateArrayField,
+  removeSolarArray,
+  addSolarArray,
+} = solarFormSlice.actions;
 export const selectSolarForm = (state) => state.solarForm;
 export default solarFormSlice.reducer;

@@ -83,6 +83,10 @@ const SolarChoice = () => {
       stepsToBounce.push(3);
       conditionMet = false;
     }
+    if (targetStep === 5 && !solarForm.location.isCompleted) {
+      stepsToBounce.push(3);
+      conditionMet = false;
+    }
     if (targetStep === 6 && !solarForm.batteryChoice.isCompleted) {
       stepsToBounce.push(5);
       conditionMet = false;
@@ -95,6 +99,7 @@ const SolarChoice = () => {
       stepsToBounce.push(6);
       conditionMet = false;
     }
+    console.log("targetStep", targetStep);
     if (targetStep === 8) {
       if (!solarForm.location.isCompleted) {
         stepsToBounce.push(3);
@@ -175,6 +180,7 @@ const SolarChoice = () => {
               title={isComplete ? "Completed" : "Pending"}
               status={computeStepStatus(isComplete, index)}
               description={stepNames[index]}
+              data-testid={`step-item-${index}`}
               className={`step-item-${index} ${
                 step - 1 === index ? "active-step" : "inactive-step"
               }`}

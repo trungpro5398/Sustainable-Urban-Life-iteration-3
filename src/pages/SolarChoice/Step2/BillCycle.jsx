@@ -80,13 +80,18 @@ const BillCycle = ({ nextStep, previousStep }) => {
       value={cycle.billingCycle?.cycle}
     >
       {["Monthly", "Quarterly", "Yearly"].map((choice) => (
-        <div className={choice + "Cycle"} key={choice}>
+        <div
+          className={choice + "Cycle"}
+          key={choice}
+          data-testid={choice.toLowerCase() + "-cycle-container"}
+        >
           <Radio.Button
             className="bill-cycle-option"
             value={choice.toLowerCase()}
             onClick={() => {
               handleRadioClick(choice.toLowerCase());
             }}
+            data-testid={choice.toLowerCase() + "-cycle-option"}
           >
             <p>{choice}</p>
             <div className="choice-circle">
@@ -104,7 +109,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
    * Error message for when no billing cycle is selected.
    */
   const ErrorMessage = () => (
-    <p className="error-message">
+    <p className="error-message" data-testid="error-message">
       Please select a billing cycle before proceeding.
     </p>
   );

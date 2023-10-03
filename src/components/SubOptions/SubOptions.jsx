@@ -99,9 +99,12 @@ const SubOptions = () => {
         <div className="option-card">
           <div className="option-card-img-1"></div>
 
-          <h3>Solar Energy Benefit</h3>
+          <h3 className="h3-sub">Solar Benefit</h3>
           <p>Discover the advantages of solar energy </p>
-          <button onClick={handleButtonClicktoSolarEnergyBenefit}>
+          <button
+            className="sup-option-button"
+            onClick={handleButtonClicktoSolarEnergyBenefit}
+          >
             Learn More
           </button>
         </div>
@@ -109,25 +112,35 @@ const SubOptions = () => {
         <div className="option-card">
           <div className="option-card-img-2"></div>
 
-          <h3>Solar Choice</h3>
-          <p>Explore the various solar panel choices suitable.</p>
-          <button onClick={handleButtonClick}>Explore</button>
+          <h3 className="h3-sub">Solar Choice</h3>
+          <p>Explore the suitable solar panel choices.</p>
+          <button className="sup-option-button" onClick={handleButtonClick}>
+            Explore
+          </button>
         </div>
 
         <div className="option-card">
           <div className="option-card-img-3"></div>
 
-          <h3>Government Support Program</h3>
+          <h3 className="h3-sub">Government Support</h3>
           <p>Learn about the government incentive.</p>
-          <button onClick={handleButtonClicktoGovernmentSupport}>
+          <button
+            className="sup-option-button"
+            onClick={handleButtonClicktoGovernmentSupport}
+          >
             Get Info
           </button>
         </div>
         <div className="option-card">
           <div className="option-card-img-4"></div>
-          <h3>Calculate roof's solar</h3>
+          <h3 className="h3-sub">Calculate roof's solar</h3>
           <p>Explore the solar potential of your roof</p>
-          <button onClick={handleButtonClickToEstimation}>Explore</button>
+          <button
+            className="sup-option-button"
+            onClick={handleButtonClickToEstimation}
+          >
+            Explore
+          </button>
         </div>
       </Slider>
     </div>

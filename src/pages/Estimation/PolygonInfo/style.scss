@@ -1,0 +1,66 @@
+.polygon-container {
+  transition: all 0.3s ease-in-out;
+
+  .polygon-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    width: 80%;
+
+    .polygon-title,
+    .polygon-details {
+      margin: 0 15px;
+    }
+
+    button {
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 8px 16px;
+      transition: all 0.2s ease-in-out;
+
+      &.delete-btn {
+        background-color: #f54242;
+        color: white;
+        &:hover {
+          background-color: #d13636;
+        }
+      }
+
+      &.view-3d-btn {
+        background-color: #3498db;
+        color: white;
+        &:hover {
+          background-color: #2980b9;
+        }
+      }
+
+      &.close-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+      }
+    }
+  }
+
+  .model-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    border: 2px solid white;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+}

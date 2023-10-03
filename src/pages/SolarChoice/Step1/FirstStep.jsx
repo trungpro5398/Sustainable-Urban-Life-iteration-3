@@ -61,7 +61,7 @@ const FirstStep = ({ nextStep }) => {
   return (
     <div className="first-step-container">
       {/* Animated Text Presentation */}
-      <div className="outer-text">
+      <div className="outer-text" data-testid="animated-text">
         {smallText.map((word, wordIndex) => (
           <h1 key={wordIndex}>
             {word.split("").map((char, charIndex) => (
@@ -81,7 +81,11 @@ const FirstStep = ({ nextStep }) => {
         <CustomLoadingSpinner />
       ) : (
         <>
-          <Button className="start-button" onClick={handleClick}>
+          <Button
+            className="start-button"
+            onClick={handleClick}
+            data-testid="start-button"
+          >
             Make the first step now
             {/* <span className="arrow-icon">
               <ArrowRightOutlined />
@@ -90,6 +94,7 @@ const FirstStep = ({ nextStep }) => {
 
           <Button
             className="next-button"
+            data-testid="next-button"
             icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
             onClick={handleClick}
             shape="circle"

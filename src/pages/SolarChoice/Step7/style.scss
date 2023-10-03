@@ -3,15 +3,14 @@
 
 .recommendation-container {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 220px);
   background-color: $light-green;
   font-family: $primary-font;
   position: relative;
-  font-family: $solar-font;
   filter: drop-shadow($primary-box-shadow);
   color: $primary-color;
   background: $gradient-main;
-  font-family: $primary-font;
+
   // SCSS for react-joyride
   .joyride-overlay {
     position: fixed;
@@ -80,7 +79,7 @@
   }
 
   .sidebar {
-    width: 25%;
+    width: 30%;
     border: $primary-border;
     transition: transform $medium-transition;
     border-left: none;
@@ -88,8 +87,8 @@
     border-top: none;
     border-bottom: none;
     background-color: white;
-    overflow-y: auto;
 
+    overflow-y: auto !important;
     h3 {
       cursor: pointer;
       transition: color $medium-transition;
@@ -111,7 +110,83 @@
       display: block;
       margin-bottom: $spacing-unit;
     }
+    .custom-radio-group-choice {
+      display: flex;
+      align-items: center;
 
+      width: 100%;
+      .radio-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45%;
+        cursor: pointer;
+        box-shadow: $primary-box-shadow;
+        border: $primary-border;
+        box-shadow: $solar-hover-box-shadow;
+        overflow: hidden;
+        transition: transform $medium-transition;
+        color: $primary-color;
+        flex-direction: column;
+        font-weight: 500;
+        &:hover {
+          border: $primary-border;
+
+          background-color: $primary-color;
+          .ant-radio + span {
+            color: white;
+          }
+          p {
+            color: white;
+          }
+        }
+        // Adjust the look of the radio when it's checked
+        &.selected {
+          background-color: $primary-color;
+          color: white;
+          .ant-radio + span {
+            color: white;
+          }
+        }
+      }
+      .radio-container p,
+      .ant-radio + span {
+        margin: 0; // Reset margin
+        padding: 0; // Reset padding
+      }
+      .ant-radio {
+        display: none;
+        margin: 0; // Ensure no margin
+        padding: 0; // Ensure no padding
+      }
+
+      .ant-radio + span {
+        font-size: 16px; // Adjust as per requirement
+
+        margin-left: 10px; // Adjust as per requirement
+      }
+    }
+
+    .battery-choice-container {
+      width: 100%;
+      color: $primary-color !important;
+
+      span {
+        font-size: 20px;
+      }
+      .electricity-usage-size,
+      .electricity-usage-unit {
+        font-weight: 700;
+      }
+
+      .ant-input {
+        color: $primary-color !important;
+
+        ::placeholder {
+          color: $primary-color !important;
+        }
+      }
+    }
     .filter-sort-container {
       .filter-section,
       .sort-section,
@@ -192,20 +267,22 @@
     padding: $desktop-padding;
     overflow-y: auto;
     color: $primary-color;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-    h1,
-    h2 {
-      color: $primary-color;
-
-      text-shadow: $primary-text-shadow;
-      margin-bottom: $spacing-unit;
+    .main-conten-text {
+      width: 100%;
+      h3,
+      h4 {
+        margin-bottom: $spacing-unit;
+      }
     }
-
     .installer-card {
+      width: 48%;
       border-radius: $harry-radius;
       padding: $tablet-padding;
       margin-bottom: $tablet-padding;
-      font-family: $harry-font;
       border: $primary-border;
       box-shadow: $solar-hover-box-shadow;
 
@@ -230,7 +307,6 @@
 
         border-radius: $primary-border-radius;
         border: $primary-border;
-        font-family: $harry-font;
         font-size: $quote-font-size;
 
         height: $button-height-tablet;

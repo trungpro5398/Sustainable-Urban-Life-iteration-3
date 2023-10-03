@@ -7,6 +7,7 @@ import {
   fetchZoneRatingData,
   fetchYearlyMarketValuationData,
   fetchLocationData,
+  fetchBatteryCost,
 } from "../../reduxToolkit/Thunks/solarFormThunks";
 
 /**
@@ -24,6 +25,7 @@ const fetchInitialData = async (dispatch) => {
     dispatch(fetchZoneRatingData()).unwrap(),
     dispatch(fetchYearlyMarketValuationData()).unwrap(),
     dispatch(fetchLocationData()).unwrap(),
+    dispatch(fetchBatteryCost()).unwrap(),
   ];
 
   await Promise.all(promises);

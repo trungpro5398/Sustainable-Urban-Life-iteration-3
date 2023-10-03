@@ -9,7 +9,7 @@ import SubOptions from "../../components/SubOptions/SubOptions";
 
 // Styles
 import "./Home.scss";
-import InfoBlocks from "../../components/InfoBlocks/InfoBlocks";
+import Testimonials from "../../components/Testimonials/Testimonials";
 
 /**
  * Home Component
@@ -54,12 +54,12 @@ const Home = () => {
     <div className="HomePage">
       <HeroSection />
       <SubOptions />
-      <InfoBlocks />
       {isVisible && (
         <div onClick={scrollToTop} className="scroll-to-top">
           <FontAwesomeIcon icon={faChevronUp} className="icon" />
         </div>
       )}
+      <Testimonials />
     </div>
   );
 };
