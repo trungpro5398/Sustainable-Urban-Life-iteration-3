@@ -321,6 +321,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
               value={electricityUsage.usageValue}
               className="electricity-usage-slider"
               handle={CustomHandle}
+              data-testid="electricity-usage-slider"
             />
 
             <div className="electricity-usage-size">Electricity usage</div>
@@ -330,6 +331,7 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
                 value={String(electricityUsage.usageValue)}
                 onChange={(e) => handleUsageChange(e.target.value)}
                 className="electricity-usage-input"
+                data-testid="electricity-usage-input"
               />
               <div className="electricity-usage-unit">kWh</div>
             </div>

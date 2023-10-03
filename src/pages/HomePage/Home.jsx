@@ -10,6 +10,7 @@ import SubOptions from "../../components/SubOptions/SubOptions";
 // Styles
 import "./Home.scss";
 import InfoBlocks from "../../components/InfoBlocks/InfoBlocks";
+import Testimonials from "../../components/Testimonials/Testimonials";
 
 /**
  * Home Component
@@ -60,6 +61,7 @@ const Home = () => {
           <FontAwesomeIcon icon={faChevronUp} className="icon" />
         </div>
       )}
+      <Testimonials />
     </div>
   );
 };

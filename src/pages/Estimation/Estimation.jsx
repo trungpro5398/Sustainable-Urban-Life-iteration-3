@@ -11,6 +11,7 @@ import {
 import "./style.scss";
 import CustomLoadingSpinner from "../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 import Navbar from "../../components/Navbar/Navbar";
+import PolygonInfo from "./PolygonInfo/PolygonInfo";
 const containerStyle = {
   width: "100%",
   height: "500px",
@@ -19,16 +20,18 @@ const containerStyle = {
 const libraries = ["drawing", "places"];
 
 const Estimation = () => {
+  const [polygons, setPolygons] = useState([]); // Use this to store multiple polygons
+  const [areas, setAreas] = useState([]);
   const googleMapsApiKey = "AIzaSyBKa8pMdDd-8T-Ox9feuS2vI5vO9_J41Ls";
   const [selectedAddress, setSelectedAddress] = useState("");
 
-  const [area, setArea] = useState(0); // Store the area of the drawn polygon
+  const [vertices3D, setVertices3D] = useState([]);
+
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [center, setCenter] = useState({
     lat: -3.745,
     lng: -38.523,
   });
-  const [currentPolygon, setCurrentPolygon] = useState(null);
 
   const [runTour, setRunTour] = useState(true);
   const [steps, setSteps] = useState([
@@ -93,7 +96,7 @@ const Estimation = () => {
   const calculateArea = (polygon) => {
     const path = polygon.getPath();
     const area = window.google.maps.geometry.spherical.computeArea(path);
-    setArea(area);
+    return area;
   };
   const [autocomplete, setAutocomplete] = useState(null);
 
@@ -115,17 +118,43 @@ const Estimation = () => {
     }
   };
   const handlePolygonComplete = (polygon) => {
-    if (currentPolygon) {
-      currentPolygon.setMap(null); // Remove the previous polygon from the map
-    }
     calculateArea(polygon);
-    setCurrentPolygon(polygon);
 
-    // Listen for right-clicks on the polygon
+    // Add event listener for right-click to remove last point of current polygon
     polygon.addListener("rightclick", () => {
       undoLastPoint(polygon);
     });
+
+    // Update the polygons array
+    setPolygons((prevPolygons) => [...prevPolygons, polygon]);
+    const newArea = calculateArea(polygon); // Make sure calculateArea returns the area
+    setPolygons([...polygons, polygon]);
+    setAreas([...areas, newArea]);
+    const path = polygon.getPath();
+
+    const new3DVertices = path.getArray().map((latlng) => {
+      return { x: latlng.lng(), y: latlng.lat(), z: 0 }; // z is 0 for simplicity
+    });
+    setVertices3D([...vertices3D, new3DVertices]);
   };
+
+  const deletePolygon = (index) => {
+    polygons[index].setMap(null);
+
+    const newPolygons = [...polygons];
+    const newAreas = [...areas];
+    const newVertices3D = [...vertices3D];
+
+    newPolygons.splice(index, 1);
+    newAreas.splice(index, 1);
+    newVertices3D.splice(index, 1);
+
+    setPolygons(newPolygons);
+    setAreas(newAreas);
+    setVertices3D(newVertices3D);
+  };
+
+  const getTotalArea = () => areas.reduce((total, area) => total + area, 0);
 
   const undoLastPoint = (polygon) => {
     if (!polygon || !polygon.latLngs || !polygon.latLngs.g) return;
@@ -189,7 +218,7 @@ const Estimation = () => {
                       Estimated Roof Area:
                     </span>
                     <span className="estimated-value">
-                      {Math.round(area)} m2
+                      {Math.round(getTotalArea())} m2
                     </span>
                   </div>
                   <div className="estimated-row">
@@ -197,25 +226,14 @@ const Estimation = () => {
                       Estimated System Size:
                     </span>
                     <span className="estimated-value">
-                      {area > 0 ? Math.round(1.4524 * area - 7.5538) : 0} kW
+                      {Math.round(getTotalArea()) > 0
+                        ? Math.round(
+                            1.4524 * Math.round(getTotalArea()) - 7.5538
+                          )
+                        : 0}{" "}
+                      kW
                     </span>
                   </div>
-                  {/* <div className="estimated-row">
-                    <span className="estimated-label">
-                      Average Daily Output:
-                    </span>
-                    <span className="estimated-value">
-                      {Math.round(area * 0.01 * 5)} kWh
-                    </span>
-                  </div> */}
-                  {/* <div className="estimated-row">
-                    <span className="estimated-label">
-                      Estimated Yearly Output:
-                    </span>
-                    <span className="estimated-value">
-                      {Math.round(area * 0.01 * 5 * 365)} kWh
-                    </span>
-                  </div> */}
                 </div>
               </div>
 
@@ -245,6 +263,19 @@ const Estimation = () => {
                     }}
                   />
                 </GoogleMap>
+              </div>
+              {/* Polygon Management Section */}
+              <div className="polygon-management">
+                <h3>Drawn Polygons</h3>
+                {polygons.map((_, index) => (
+                  <PolygonInfo
+                    key={index}
+                    index={index}
+                    onDelete={() => deletePolygon(index)}
+                    area={areas[index]}
+                    vertices2D={vertices3D[index]} // Add this line
+                  />
+                ))}
               </div>
             </div>
           ) : (

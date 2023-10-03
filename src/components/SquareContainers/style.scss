@@ -1,0 +1,52 @@
+.square-container-wrapper {
+  display: flex;
+  justify-content: center !important;
+  margin: 0 auto; // Centering the container
+  position: absolute;
+  top: -15%;
+  transform: translateX(-50%); // Adjust for the centering
+  left: 50%; // Centering it horizontally
+  width: 80%;
+  .square {
+    flex: 1; // Distribute space equally among squares
+    max-width: calc(20% - 1rem); // 25% of parent width minus margin
+    background-color: #f9f9f9;
+    border: 1px solid #e1e1e1; // subtle border
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); // soft shadow for 3D effect
+    transition: transform 0.3s, box-shadow 0.3s; // soft transition for hover effect
+    text-align: center;
+
+    &:hover {
+      transform: translateY(-5px); // subtle lift on hover
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon-wrapper {
+      color: #2e8b57; // greenish color for the icons
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
+      width: 60px;
+      background-color: #e9f7ef; // light green background for contrast
+      border-radius: 50%; // making it circular
+      margin: 0 auto 15px auto; // centering and giving some margin at the bottom
+    }
+
+    h3 {
+      font-weight: 600; // making it slightly bold
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5; // better readability
+    }
+  }
+}

@@ -257,7 +257,9 @@ const Recommendation = ({ previousStep, nextStep }) => {
                 onChange={(e) => handleBatteryChoice(e.target.value)}
                 className="custom-radio-group"
               >
-                <Radio value="Yes">Yes</Radio>
+                <Radio data-testid="Yes" value="Yes">
+                  Yes
+                </Radio>
                 <Radio value="No">No</Radio>
               </Radio.Group>
             )}
@@ -391,6 +393,7 @@ const Recommendation = ({ previousStep, nextStep }) => {
               <p>Price: ${installer.price || installer.price_battery}</p>
 
               <Button
+                data-testid="compare-button"
                 onClick={() => {
                   addToCompare(
                     installer.system_size + "kw",

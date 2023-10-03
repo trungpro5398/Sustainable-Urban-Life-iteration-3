@@ -175,6 +175,7 @@ const SolarChoice = () => {
               title={isComplete ? "Completed" : "Pending"}
               status={computeStepStatus(isComplete, index)}
               description={stepNames[index]}
+              data-testid={`step-item-${index}`}
               className={`step-item-${index} ${
                 step - 1 === index ? "active-step" : "inactive-step"
               }`}

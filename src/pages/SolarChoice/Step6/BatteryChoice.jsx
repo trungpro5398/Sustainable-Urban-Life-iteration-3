@@ -122,19 +122,24 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
             value={batteryChoice?.wantBattery}
           >
             {["No", "Yes"].map((option) => (
-              <Radio.Button
-                className="battery-choice-option"
-                value={option}
+              <div
+                data-testid={option}
                 key={option}
                 onClick={() => handleRadioClick(option)}
               >
-                <p>{option}</p>
-                <div className="choice-circle">
-                  {batteryChoice?.wantBattery === option && (
-                    <div className="choice-tick">✓</div>
-                  )}
-                </div>
-              </Radio.Button>
+                <Radio.Button
+                  className="battery-choice-option"
+                  value={option}
+                  key={option}
+                >
+                  <p>{option}</p>
+                  <div className="choice-circle">
+                    {batteryChoice?.wantBattery === option && (
+                      <div className="choice-tick">✓</div>
+                    )}
+                  </div>
+                </Radio.Button>
+              </div>
             ))}
           </Radio.Group>
           {showError && (

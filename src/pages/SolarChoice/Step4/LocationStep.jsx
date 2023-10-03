@@ -163,6 +163,7 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
               placeholder="Select or type a suburb"
               optionFilterProp="children"
               onChange={handleSuburbChange}
+              data-testid="suburb-select"
               value={locationData.suburb}
               filterOption={(input, option) => {
                 const suburbValue = option.value;
@@ -178,7 +179,11 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
               }}
             >
               {uniqueSuburbs.map((suburb) => (
-                <Select.Option key={suburb.key} value={suburb.place_name}>
+                <Select.Option
+                  key={suburb.key}
+                  value={suburb.place_name}
+                  data-testid="suburb-option"
+                >
                   {suburb.postcode} - {suburb.place_name}
                 </Select.Option>
               ))}
