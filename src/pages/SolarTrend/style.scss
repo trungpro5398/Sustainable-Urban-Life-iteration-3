@@ -1,0 +1,94 @@
+@import "../../assets/scss/variables.scss";
+
+.solar-trend-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  color: #333;
+
+  .solar-trend-page-container {
+    border: $primary-border;
+    padding: 4 * $spacing-unit;
+    border-radius: $primary-border-radius;
+    box-shadow: $solar-hover-box-shadow;
+  }
+  .intro-section {
+    text-align: center;
+    padding-bottom: 30px;
+
+    h3 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: $primary-color;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
+
+  .charts-container {
+    max-width: 1400px;
+    margin: 0 auto;
+
+    .bar-pie-section-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+
+      > div {
+        width: 48%; // Ensuring there's a bit of a gap between them
+
+        h4 {
+          margin-bottom: 10px;
+          color: $primary-color;
+          font-weight: 600;
+        }
+
+        p {
+          margin-bottom: 20px;
+        }
+      }
+      .pie-container,
+      .bar-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    .line-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      h4 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: $primary-color;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .custom-tooltip {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .label {
+      font-weight: bold;
+    }
+
+    .intro {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  }
+}

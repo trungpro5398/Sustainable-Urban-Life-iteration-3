@@ -18,13 +18,11 @@
     h1 {
       font-size: $title-font-size;
       margin-bottom: 25px;
-      color: $primary-color; // Earthy green for a sustainable touch
     }
 
     p {
       font-size: $subtitle-font-size;
       margin-bottom: 10%;
-      color: $earthy-green-border; // Earthy green border color for text
     }
     @include tablet {
       margin-bottom: 20px;
@@ -147,12 +145,10 @@
       h3 {
         font-size: 24px;
         margin: 20px 0;
-        color: $primary-color; // Earthy green color
       }
 
       p {
         font-size: 18px;
-        color: $earthy-green-border;
         margin: 20px 0;
       }
 
@@ -177,8 +173,8 @@
       }
 
       [class^="option-card-img-"] {
-        width: 250px;
-        height: 250px;
+        width: 200px;
+        height: 200px;
         background-position: center;
         background-size: cover;
 
@@ -198,6 +194,9 @@
       }
       .option-card-img-4 {
         background-image: url("../../assets/images/info-blocks/estimation.svg");
+      }
+      .option-card-img-5 {
+        background-image: url("../../assets/images/info-blocks/sup-5.png");
       }
     }
   }

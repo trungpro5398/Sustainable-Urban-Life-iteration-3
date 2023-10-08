@@ -10,6 +10,9 @@ import SubOptions from "../../components/SubOptions/SubOptions";
 // Styles
 import "./Home.scss";
 import Testimonials from "../../components/Testimonials/Testimonials";
+import WhyAussiesChooseUs from "../../components/WhyAussiesChooseUs/WhyAussiesChooseUs";
+import ProjectOverview from "../../components/ProjectOverview/ProjectOverview";
+import Footer from "../../components/Footer/Footer";
 
 /**
  * Home Component
@@ -53,6 +56,9 @@ const Home = () => {
   return (
     <div className="HomePage">
       <HeroSection />
+      <ProjectOverview />
+
+      <WhyAussiesChooseUs />
       <SubOptions />
       {isVisible && (
         <div onClick={scrollToTop} className="scroll-to-top">
@@ -60,6 +66,7 @@ const Home = () => {
         </div>
       )}
       <Testimonials />
+      <Footer />
     </div>
   );
 };

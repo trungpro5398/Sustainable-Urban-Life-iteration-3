@@ -56,7 +56,7 @@
         height: 100%;
         background: linear-gradient(
           -65deg,
-          rgba(0, 0, 0, 0.5) 55%,
+          rgba(0, 0, 0, 0.5) 53%,
           transparent 45%
         );
 
@@ -91,10 +91,9 @@
           margin-right: 5%;
           margin-bottom: 5%;
         }
-        h1 {
-          color: white; // or any desired color
+        .highlighted-text {
+          color: white;
         }
-
         p {
           color: white;
 
@@ -106,22 +105,18 @@
           border-radius: 10px;
           font-size: 25px;
           @include desktop-1440 {
-            width: 70%;
             font-size: 25px;
           }
 
           @include desktop {
-            width: 75%;
             font-size: 20px;
           }
 
           @include tablet {
-            width: 80%;
             font-size: 15px;
           }
 
           @include mobile {
-            width: 90%;
             font-size: 10px;
             margin-right: 5%;
             margin-bottom: 5%;
@@ -174,7 +169,7 @@
           margin-right: 5%;
           margin-bottom: 5%;
         }
-        h1 {
+        h2 {
           color: white;
           margin-right: 10px;
           span {
@@ -218,34 +213,16 @@
       }
 
       .cta-button {
-        padding: 15px 30px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        border-radius: 3px;
-        border: 2px solid #777;
-        font-size: $subtitle-font-size;
-        border: $primary-border;
-        box-shadow: $solar-hover-box-shadow;
-        background: transparent;
-        border-radius: $primary-border-radius;
-        transition: transform $medium-transition;
+        background-color: $primary-color !important;
         color: white;
         border-color: white;
-        @include tablet {
-          padding: 10px 20px;
-          font-size: calc(#{$subtitle-font-size} - 2px); // Adjust accordingly
-        }
 
-        @include mobile {
-          padding: 8px 15px;
-          font-size: calc(#{$subtitle-font-size} - 4px); // Adjust accordingly
-        }
         &:hover {
-          border: $primary-border;
-
           border-radius: $primary-border-radius;
-          background-color: $primary-color;
-          color: white;
+          background-color: darken(
+            $primary-color,
+            10%
+          ) !important; // darken by 10%
         }
       }
       .cta-button-1 {

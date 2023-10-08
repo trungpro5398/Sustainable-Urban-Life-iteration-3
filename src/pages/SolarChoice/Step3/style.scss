@@ -3,17 +3,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"); /* electricity-like font from Google Fonts */
 
 .electricity-usage {
-  min-height: 100vh;
+  filter: drop-shadow($primary-box-shadow);
+
+  height: calc(100vh - 200px);
+  overflow-y: auto !important;
+
   width: 100vw;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: $desktop-padding;
+  box-sizing: border-box;
+  position: relative;
   color: $primary-color;
   background: $gradient-main;
   font-family: $primary-font;
-
   .step-title {
     text-align: center;
     font-size: $title-font-size;
@@ -29,6 +33,7 @@
     border-radius: $primary-border-radius;
     box-shadow: $solar-hover-box-shadow;
     background: white;
+
     .usage-instructions p {
       font-size: $subtitle-font-size;
 
@@ -77,11 +82,7 @@
         border-radius: $primary-border-radius;
         box-shadow: $solar-hover-box-shadow;
         background: white;
-        &:hover {
-          transform: scale(1.05);
-          background: $primary-color;
-          color: white;
-        }
+
         .container-icon {
           font-size: 50px;
 

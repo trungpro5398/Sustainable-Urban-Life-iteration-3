@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -9,47 +9,50 @@ import "slick-carousel/slick/slick-theme.css";
 
 // Redux store
 import { store } from "./store";
+import CustomLoadingSpinner from "./components/CustomLoadingSpinner/CustomLoadingSpinner";
 
-// Pages
-import Home from "./pages/HomePage/Home";
-import AboutUs from "./pages/AboutUsPage/AboutUs";
-import SolarChoice from "./pages/SolarChoice/SolarChoice";
-import GovernmentSupport from "./pages/GovernmentSupport/GovernmentSupport";
-import SolarEnergyBenefit from "./pages/SolarEnergyBenefit/SolarEnergyBenefit";
-import Estimation from "./pages/Estimation/Estimation";
+// Lazy load your components
+const Home = React.lazy(() => import("./pages/HomePage/Home"));
+const AboutUs = React.lazy(() => import("./pages/AboutUsPage/AboutUs"));
+const SolarChoice = React.lazy(() => import("./pages/SolarChoice/SolarChoice"));
+const GovernmentSupport = React.lazy(() =>
+  import("./pages/GovernmentSupport/GovernmentSupport")
+);
+const SolarEnergyBenefit = React.lazy(() =>
+  import("./pages/SolarEnergyBenefit/SolarEnergyBenefit")
+);
+const Estimation = React.lazy(() => import("./pages/Estimation/Estimation"));
+const SolarTrend = React.lazy(() => import("./pages/SolarTrend/SolarTrend"));
+const NotFoundPage = React.lazy(() =>
+  import("./pages/NotFoundPage/NotFoundPage")
+);
 
-/**
- * Main application component.
- *
- * This component sets up the Redux provider and React Router.
- * It defines routes for different pages of the application.
- */
 const App = () => {
   return (
-    // Redux provider to make the Redux store available to all container components.
     <Provider store={store}>
-      {/* Set up the React Router */}
       <Router>
-        {/* Main app container */}
         <div className="App">
-          {/* Content container */}
           <div className="content">
-            {/* Define the routes for the application */}
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/solar-choice" element={<SolarChoice />} />
-              <Route
-                path="/government-support"
-                element={<GovernmentSupport />}
-              />
-              <Route path="/about-us" element={<AboutUs />} />
-              <Route path="/estimation" element={<Estimation />} />
-
-              <Route
-                path="/solar-energy-benefit"
-                element={<SolarEnergyBenefit />}
-              />
-            </Routes>
+            {/* Use Suspense to show a fallback while your components are being lazy-loaded */}
+            <Suspense fallback={<CustomLoadingSpinner isPageLoading={true} />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/solar-choice" element={<SolarChoice />} />
+                <Route
+                  path="/government-support"
+                  element={<GovernmentSupport />}
+                />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/estimation" element={<Estimation />} />
+                <Route path="/solar-trend" element={<SolarTrend />} />
+                <Route
+                  path="/solar-energy-benefit"
+                  element={<SolarEnergyBenefit />}
+                />
+                {/* Add your 404 page at the end as a catch-all route */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
           </div>
         </div>
       </Router>

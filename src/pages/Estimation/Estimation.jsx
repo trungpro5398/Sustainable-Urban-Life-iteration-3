@@ -31,6 +31,7 @@ const Estimation = () => {
   const [inputError, setInputError] = useState(false);
 
   const [vertices3D, setVertices3D] = useState([]);
+  const [zoom, setZoom] = useState(20); // initial zoom level
 
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [center, setCenter] = useState({
@@ -144,26 +145,34 @@ const Estimation = () => {
       console.log("Autocomplete is not loaded yet!");
     }
   };
-
   const handlePolygonComplete = (polygon) => {
-    calculateArea(polygon);
+    console.log("Polygon creation detected!"); // Debugging line
 
-    // Add event listener for right-click to remove last point of current polygon
-    polygon.addListener("rightclick", () => {
-      undoLastPoint(polygon);
+    const newArea = calculateArea(polygon);
+
+    const bounds = new window.google.maps.LatLngBounds();
+    polygon.getPath().forEach((point) => {
+      bounds.extend(point);
     });
+    const center = bounds.getCenter();
 
-    // Update the polygons array
-    setPolygons((prevPolygons) => [...prevPolygons, polygon]);
-    const newArea = calculateArea(polygon); // Make sure calculateArea returns the area
-    setPolygons([...polygons, polygon]);
+    setPolygons((prevPolygons) => {
+      console.log("Previous Polygons:", prevPolygons);
+      return [...prevPolygons, { polygon, center }];
+    });
     setAreas([...areas, newArea]);
-    const path = polygon.getPath();
+  };
 
-    const new3DVertices = path.getArray().map((latlng) => {
-      return { x: latlng.lng(), y: latlng.lat(), z: 0 }; // z is 0 for simplicity
+  const moveToPolygon = (polygonCenter) => {
+    if (!polygonCenter || !polygonCenter.lat || !polygonCenter.lng) {
+      console.error("Invalid polygonCenter:", polygonCenter);
+      return;
+    }
+    setCenter({
+      lat: polygonCenter.lat(),
+      lng: polygonCenter.lng(),
     });
-    setVertices3D([...vertices3D, new3DVertices]);
+    setZoom(100); // Set zoom level to 20, or any desired level
   };
 
   const deletePolygon = (index) => {
@@ -171,35 +180,21 @@ const Estimation = () => {
 
     const newPolygons = [...polygons];
     const newAreas = [...areas];
-    const newVertices3D = [...vertices3D];
 
     newPolygons.splice(index, 1);
     newAreas.splice(index, 1);
-    newVertices3D.splice(index, 1);
 
     setPolygons(newPolygons);
     setAreas(newAreas);
-    setVertices3D(newVertices3D);
   };
 
   const getTotalArea = () => areas.reduce((total, area) => total + area, 0);
-
-  const undoLastPoint = (polygon) => {
-    if (!polygon || !polygon.latLngs || !polygon.latLngs.g) return;
-
-    const path = polygon.latLngs.g[0];
-
-    if (path && path.getLength() > 0) {
-      console.log("Removing last point");
-      path.removeAt(path.getLength() - 1); // Remove the last point
-    }
-  };
 
   return (
     <div className="estimation-container">
       <Navbar isHomePage={false} />
 
-      <h1>Discover the solar potential of your roof</h1>
+      <h2>Discover the solar potential of your roof</h2>
 
       {googleMapsApiKey ? (
         <LoadScript
@@ -260,9 +255,7 @@ const Estimation = () => {
                     </span>
                     <span className="estimated-value">
                       {Math.round(getTotalArea()) > 0
-                        ? Math.round(
-                            1.4524 * Math.round(getTotalArea()) - 7.5538
-                          )
+                        ? Math.round(Math.round(getTotalArea()) / 4)
                         : 0}{" "}
                       kW
                     </span>
@@ -274,9 +267,10 @@ const Estimation = () => {
                 <GoogleMap
                   mapContainerStyle={containerStyle}
                   center={center}
-                  zoom={20}
-                  mapTypeId="satellite" // <-- Add this line
-                  mapTypeControl={true} // <-- Add this line if you want a control to switch between map types
+                  zoom={zoom} // Use zoom state here
+                  mapTypeId="satellite"
+                  mapTypeControl={true}
+                  className="ggMap-container"
                 >
                   {showMarker && <Marker position={center} label={address} />}
                   <DrawingManagerF
@@ -297,20 +291,35 @@ const Estimation = () => {
                     }}
                   />
                 </GoogleMap>
+
+                <div className="polygon-management">
+                  <h4>Drawn Polygons</h4>
+                  {polygons.map(
+                    (_, index) =>
+                      index < polygons.length / 2 && (
+                        <PolygonInfo
+                          key={index}
+                          index={index}
+                          onDelete={() => deletePolygon(index)}
+                          area={areas[index]}
+                          vertices2D={vertices3D[index]}
+                          moveToPolygon={() => {
+                            const polygonCenter =
+                              polygons[index * 2 + 1].center;
+                            if (polygonCenter) {
+                              moveToPolygon(polygonCenter);
+                            } else {
+                              console.error(
+                                `Center for polygon ${index} is not defined`
+                              );
+                            }
+                          }}
+                        />
+                      )
+                  )}
+                </div>
               </div>
               {/* Polygon Management Section */}
-              <div className="polygon-management">
-                <h3>Drawn Polygons</h3>
-                {polygons.map((_, index) => (
-                  <PolygonInfo
-                    key={index}
-                    index={index}
-                    onDelete={() => deletePolygon(index)}
-                    area={areas[index]}
-                    vertices2D={vertices3D[index]} // Add this line
-                  />
-                ))}
-              </div>
             </div>
           ) : (
             <CustomLoadingSpinner />

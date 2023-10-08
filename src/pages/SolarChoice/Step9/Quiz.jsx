@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.scss";
 import CustomLoadingSpinner from "../../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 import { Button, Progress } from "antd";
@@ -36,6 +36,7 @@ const Quiz = ({ previousStep }) => {
   const [victorianRebate, setVictorianRebate] = useState(1400); // default value
   const [federalRebate, setFederalRebate] = useState(null);
   const price_installation = solarFormData.rebate.price_installation; // Replace with actual value
+  const yearlySaving = solarFormData.annualBillSavings.yearlySaving; // Replace with actual value
   const calculateRebate = () => {
     dispatch(
       updateField({
@@ -84,6 +85,24 @@ const Quiz = ({ previousStep }) => {
     }
   };
 
+  useEffect(() => {
+    if (result === "Eligible for the Victoria solar rebate") {
+      setVictorianRebate(1400);
+    } else {
+      setVictorianRebate(0);
+    }
+  }, [result]); // This useEffect will run every time 'result' changes
+  /**
+   * Smoothly scrolls the view to the "results" section of the page.
+   */
+  const handleButtonClickToResult = (id) => {
+    console.log("Trying to scroll to: ", id); // Add this line
+    const resultsMove = document.getElementById(id);
+    if (resultsMove) {
+      resultsMove.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleSubmit = () => {
     // Identifying unanswered questions
     const errorList = answers
@@ -110,6 +129,7 @@ const Quiz = ({ previousStep }) => {
     } else {
       setResult("Not eligible for the Victoria solar rebate");
     }
+    setTimeout(handleButtonClickToResult("installation-year"), 10); // introducing slight delay
   };
 
   /**
@@ -123,8 +143,9 @@ const Quiz = ({ previousStep }) => {
       setLoading(false);
       setIsLoading(false);
       setShowRebateResults(true);
+      setTimeout(handleButtonClickToResult("rebate-results-scroll"), 50); // introducing slight delay
 
-      callback();
+      callback && callback();
     }, 4000); // Simulate loading state with 2 seconds delay
   };
   /**
@@ -195,7 +216,7 @@ const Quiz = ({ previousStep }) => {
               shape="circle"
             />
             {showInstallationForm && (
-              <div className="installation-year">
+              <div className="installation-year" id="installation-year">
                 <label>Year of Installation from 2023:</label>
                 <input
                   type="number"
@@ -215,30 +236,44 @@ const Quiz = ({ previousStep }) => {
               <CalculatedLoading />
             ) : (
               showRebateResults && (
-                <div className="rebate-results">
-                  {result === "Eligible for the Victoria solar rebate" && (
+                <div className="rebate-results" id="rebate-results-scroll">
+                  {victorianRebate > 0 && (
                     <p className="rebate-info">
-                      Your Victorian rebate is: <span>{victorianRebate}</span>
+                      Your Victorian rebate is: <span>${victorianRebate}</span>
                     </p>
                   )}
-                  <p className="rebate-info">
-                    Your total rebate is:{" "}
-                    <span>{(victorianRebate + federalRebate).toFixed(2)}</span>
-                  </p>
+
                   <p className="rebate-info">
                     Your federal rebate is:{" "}
-                    <span>{federalRebate.toFixed(2)}</span>
+                    <span>${federalRebate.toFixed(2)}</span>
                   </p>
+                  <p className="rebate-info">
+                    Your total rebate is:{" "}
+                    <span>${(victorianRebate + federalRebate).toFixed(2)}</span>
+                  </p>
+
                   <p className="cost-info">
-                    Cost for installation: <span>{price_installation}</span>
+                    Cost for installation: <span>${price_installation}</span>
                   </p>
                   <p className="final-cost">
                     Cost for installation with rebate:{" "}
                     <span>
+                      $
                       {(
                         price_installation -
-                        (victorianRebate + federalRebate).toFixed(2)
+                        (victorianRebate + federalRebate)
                       ).toFixed(2)}
+                    </span>
+                  </p>
+                  <p className="payback-period">
+                    Payback period:{" "}
+                    <span>
+                      {Math.round(
+                        (price_installation -
+                          (victorianRebate + federalRebate)) /
+                          yearlySaving
+                      )}{" "}
+                      years
                     </span>
                   </p>
                 </div>

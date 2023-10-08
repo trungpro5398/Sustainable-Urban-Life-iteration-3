@@ -31,7 +31,9 @@
 .postcode-info {
   filter: drop-shadow($primary-box-shadow);
 
-  min-height: 100vh;
+  height: calc(100vh - 200px);
+  overflow-y: auto !important;
+
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -42,6 +44,7 @@
   color: $primary-color;
   background: $gradient-main;
   font-family: $primary-font;
+
   h2 {
     color: $primary-color;
     text-shadow: $primary-text-shadow;
@@ -106,11 +109,6 @@
 
       border-radius: $primary-border-radius;
       transition: transform $medium-transition;
-
-      &:hover {
-        scale: 1.05; /* Slight enlargement on hover */
-        background: rgba(249, 190, 94, 0.9);
-      }
 
       p {
         font-size: $primary-font-size;

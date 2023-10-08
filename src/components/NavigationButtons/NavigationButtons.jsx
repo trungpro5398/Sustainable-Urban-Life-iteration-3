@@ -11,15 +11,17 @@ const NavigationButtons = ({
   setLoading,
   validateFields,
 }) => {
-  const handleClick = (callback) => {
-    // New validation check here
-    if (typeof validateFields === "function" && !validateFields()) {
-      validateFields();
-      return;
-    }
-    if (!condition) {
-      setShowError(true);
-      return;
+  const handleClick = (callback, isNext) => {
+    if (isNext) {
+      // Only check validation for the next button
+      if (typeof validateFields === "function" && !validateFields()) {
+        validateFields();
+        return;
+      }
+      if (!condition) {
+        setShowError(true);
+        return;
+      }
     }
     if (setShowError) setShowError(false);
     setLoading(true);
@@ -35,14 +37,14 @@ const NavigationButtons = ({
       <Button
         className="previous-button"
         icon={<FontAwesomeIcon icon={faArrowLeft} size="xs" />}
-        onClick={() => handleClick(previousStep)}
+        onClick={() => handleClick(previousStep, false)} // Pass false to indicate it's the previous button
         shape="circle"
         data-testid="previous-button"
       />
       <Button
         className="next-button"
         icon={<FontAwesomeIcon icon={faArrowRight} size="xs" />}
-        onClick={() => handleClick(nextStep)}
+        onClick={() => handleClick(nextStep, true)} // Pass true to indicate it's the next button
         shape="circle"
         data-testid="next-button"
       />
