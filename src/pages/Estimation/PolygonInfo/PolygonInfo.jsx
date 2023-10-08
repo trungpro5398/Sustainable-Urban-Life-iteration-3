@@ -3,8 +3,10 @@ import * as THREE from "three";
 import { FaTrashAlt, FaEye } from "react-icons/fa";
 import "./style.scss";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowsAlt } from "@fortawesome/free-solid-svg-icons";
 
-const PolygonInfo = ({ index, onDelete, area, vertices2D }) => {
+const PolygonInfo = ({ index, onDelete, area, vertices2D, moveToPolygon }) => {
   const [show3DModel, setShow3DModel] = useState(false);
   const modelContainerRef = useRef(null);
 
@@ -77,17 +79,11 @@ const PolygonInfo = ({ index, onDelete, area, vertices2D }) => {
         <button className="delete-btn" onClick={onDelete}>
           <FaTrashAlt /> Delete
         </button>
-        {/* <button className="view-3d-btn" onClick={() => setShow3DModel(true)}>
-          <FaEye /> View 3D
-        </button> */}
+
+        <button className="move-btn" onClick={moveToPolygon}>
+          <FontAwesomeIcon icon={faArrowsAlt} /> Move to this location
+        </button>
       </div>
-      {show3DModel && (
-        <div className="model-container" ref={modelContainerRef}>
-          <button className="close-btn" onClick={() => setShow3DModel(false)}>
-            Close
-          </button>
-        </div>
-      )}
     </div>
   );
 };

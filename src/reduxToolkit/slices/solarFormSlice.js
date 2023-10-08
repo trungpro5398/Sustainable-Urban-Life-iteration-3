@@ -8,15 +8,19 @@ import {
   fetchLocationData,
   fetchBatteryCost,
   updateFieldAsync,
+  fetchDewellings,
+  fetchTarffic,
+  fetchTop10,
 } from "../Thunks/solarFormThunks"; // Assuming they're in the same directory
 
 /**
  * Initial state for the solarForm slice.
  */
 const initialState = {
-  personalDetails: {
-    name: "",
-    gender: null,
+  data_trend: {
+    dewellings: null,
+    tarffic: null,
+    top10: null,
   },
   angle_and_orientation: {
     data: null,
@@ -62,6 +66,8 @@ const initialState = {
         tooltip: "",
       },
     ],
+    solarPanelPercentages: [100],
+    yearlySaving: null,
     angle: [0],
     electricityCost: null,
     annualSpend: null,
@@ -104,32 +110,24 @@ const solarFormSlice = createSlice({
     updatePostcodeInfo: (state, action) => {
       state.postcodeInfo.data = action.payload;
     },
-    // Add an entry to directionFacing and angle arrays with real values
     addSolarArray: (state, action) => {
-      const newAngle = action.payload; // or whatever value you're trying to push
-      state.annualBillSavings.angle = [
-        ...state.annualBillSavings.angle,
-        newAngle,
-      ];
-      state.annualBillSavings.directionFacing = [
-        ...state.annualBillSavings.directionFacing,
-        {
-          direction: null,
-          active: null,
-          clicked: null,
-          tooltip: "",
-        },
-      ];
+      const { angle, directionFacing, percentage } = action.payload;
+      // Append new values from the form data to the arrays
+      state.annualBillSavings.angle.push(angle);
+      state.annualBillSavings.directionFacing.push(directionFacing);
+      state.annualBillSavings.solarPanelPercentages.push(percentage);
     },
 
-    // Remove a specific entry from directionFacing and angle arrays
+    // Remove a specific entry from directionFacing, angle arrays, and solarPanelPercentages
     removeSolarArray: (state, action) => {
       const index = action.payload.index;
       if (index !== undefined && index >= 0) {
         state.annualBillSavings.directionFacing.splice(index, 1);
         state.annualBillSavings.angle.splice(index, 1);
+        state.annualBillSavings.solarPanelPercentages.splice(index, 1);
       }
     },
+
     // Update a specific entry in directionFacing or angle arrays
     updateArrayField: (state, action) => {
       const { section, field, value, index } = action.payload;
@@ -160,6 +158,15 @@ const solarFormSlice = createSlice({
       })
       .addCase(fetchBatteryCost.fulfilled, (state, action) => {
         state.batteryChoice.data = action.payload;
+      })
+      .addCase(fetchDewellings.fulfilled, (state, action) => {
+        state.data_trend.dewellings = action.payload;
+      })
+      .addCase(fetchTarffic.fulfilled, (state, action) => {
+        state.data_trend.tarffic = action.payload;
+      })
+      .addCase(fetchTop10.fulfilled, (state, action) => {
+        state.data_trend.top10 = action.payload;
       })
       .addCase(updateFieldAsync.fulfilled, (state, action) => {
         const { section, field, value } = action.payload;

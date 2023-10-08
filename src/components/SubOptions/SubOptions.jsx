@@ -25,6 +25,10 @@ const SubOptions = () => {
   const handleButtonClicktoGovernmentSupport = () => {
     navigate("/government-support");
   };
+  const handleButtonClickToSolarTrend = () => {
+    navigate("/solar-trend");
+  };
+
   function NextArrow(props) {
     const { className, onClick } = props;
     return (
@@ -129,6 +133,18 @@ const SubOptions = () => {
             onClick={handleButtonClicktoGovernmentSupport}
           >
             Get Info
+          </button>
+        </div>
+        <div className="option-card">
+          <div className="option-card-img-5"></div>
+
+          <h3 className="h3-sub">Solar Trend Statistics</h3>
+          <p>Get insights into the latest solar trends.</p>
+          <button
+            className="sup-option-button"
+            onClick={handleButtonClickToSolarTrend}
+          >
+            View Trends
           </button>
         </div>
         <div className="option-card">

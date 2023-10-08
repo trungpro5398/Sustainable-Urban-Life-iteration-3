@@ -70,6 +70,31 @@ export const fetchBatteryCost = createAsyncThunk(
   }
 );
 
+export const fetchDewellings = createAsyncThunk(
+  "solarForm/fetchDewellings",
+  async () => {
+    const response = await fetch(
+      "https://sustainable-urban-life-backend.onrender.com/api/solar_energy/dewellings"
+    );
+    return response.json();
+  }
+);
+export const fetchTarffic = createAsyncThunk(
+  "solarForm/fetchTarffic",
+  async () => {
+    const response = await fetch(
+      "https://sustainable-urban-life-backend.onrender.com/api/solar_energy/Tarffic"
+    );
+    return response.json();
+  }
+);
+export const fetchTop10 = createAsyncThunk("solarForm/fetchTop10", async () => {
+  const response = await fetch(
+    "https://sustainable-urban-life-backend.onrender.com/api/solar_energy/Top_10"
+  );
+  return response.json();
+});
+
 export const updateFieldAsync = createAsyncThunk(
   "solarForm/updateFieldAsync",
   async (payload) => {

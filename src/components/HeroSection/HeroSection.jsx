@@ -2,6 +2,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 import { Carousel as ResponsiveCarousel } from "react-responsive-carousel";
+import { useNavigate } from "react-router-dom";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 // Components
@@ -32,7 +33,14 @@ const HeroSection = () => {
       subOptions.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const navigate = useNavigate();
 
+  const handleButtonClick = () => {
+    navigate("/solar-choice");
+  };
+  const handleButtonClickToEstimation = () => {
+    navigate("/estimation");
+  };
   /**
    * Smoothly scrolls the view to the "info-blocks" section of the page.
    */
@@ -66,12 +74,15 @@ const HeroSection = () => {
         >
           <div className="carousel-item">
             <div className="carousel-content">
-              <h1>Sustainable Renewable Solution</h1>
+              <h2 className="highlighted-text">Solar Choice</h2>{" "}
+              {/* Emphasize this */}
               <p>
-                Embrace an eco-friendly approach to urban living with
-                innovative, sustainable solutions that not only benefit the
-                environment but also significantly reduce energy costs.
+                The ultimate eco-friendly solution for urban living. Discover
+                the power of solar today!
               </p>
+              <button className="cta-button" onClick={handleButtonClick}>
+                Explore Solar Choice
+              </button>
             </div>
           </div>
           <div
@@ -84,12 +95,14 @@ const HeroSection = () => {
             }}
           >
             <div className="carousel-content">
-              <h1>Discover and Learn</h1>
-              <p>
-                Explore the transformative power of solar energy. See how
-                government support and initiatives are accelerating the adoption
-                of green technologies in urban settings.
-              </p>
+              <h2 className="highlighted-text">Calculate roof's solar</h2>{" "}
+              <p>Explore the solar potential of your roof</p>
+              <button
+                className="cta-button"
+                onClick={handleButtonClickToEstimation}
+              >
+                Explore
+              </button>
             </div>
           </div>
         </ResponsiveCarousel>
@@ -98,7 +111,7 @@ const HeroSection = () => {
 
           <div className="outer-text">
             {smallText.map((word, wordIndex) => (
-              <h1 key={wordIndex}>
+              <h2 key={wordIndex}>
                 {word.split("").map((char, charIndex) => (
                   <span
                     style={{ animationDelay: `${charIndex * 0.1}s` }}
@@ -107,15 +120,15 @@ const HeroSection = () => {
                     {char}
                   </span>
                 ))}
-              </h1>
+              </h2>
             ))}
           </div>
 
           {/* Hero Subtitle */}
-          <p>
+          {/* <p>
             Bright Futures: The Confluence of Solar Solutions and Government
             Support in Urban Living
-          </p>
+          </p> */}
 
           {/* Call-to-action Buttons */}
           <Row gutter={16}>

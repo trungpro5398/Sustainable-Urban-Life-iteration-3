@@ -1,16 +1,21 @@
 @import "../../../assets/scss/variables.scss";
 @import "../../../styles/breakpoints";
 .annual-bill-savings {
-  min-height: 100vh;
+  filter: drop-shadow($primary-box-shadow);
+
+  height: calc(100vh - 200px);
+  overflow-y: auto !important;
+
   width: 100vw;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
+  padding: $desktop-padding;
+  box-sizing: border-box;
+  position: relative;
   color: $primary-color;
   background: $gradient-main;
+  font-family: $primary-font;
 
   p {
     font-size: 20px;
@@ -50,7 +55,6 @@
   .annual-bill-savings-container {
     display: flex;
     flex-direction: column;
-
     padding: 40px;
     box-sizing: border-box;
     background: white;

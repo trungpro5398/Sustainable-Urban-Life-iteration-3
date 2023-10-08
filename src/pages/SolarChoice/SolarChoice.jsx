@@ -18,7 +18,7 @@ import CustomLoadingSpinner from "../../components/CustomLoadingSpinner/CustomLo
 import { selectSolarForm } from "../../reduxToolkit/slices/solarFormSlice";
 import AnnualBillSavings from "./Step8/AnnualBillSavings";
 
-import { fetchInitialData } from "./dataFetcher";
+import { fetchInitialData } from "./dataFetcher.js";
 const { Step } = Steps;
 const { confirm } = Modal;
 
@@ -99,7 +99,6 @@ const SolarChoice = () => {
       stepsToBounce.push(6);
       conditionMet = false;
     }
-    console.log("targetStep", targetStep);
     if (targetStep === 8) {
       if (!solarForm.location.isCompleted) {
         stepsToBounce.push(3);

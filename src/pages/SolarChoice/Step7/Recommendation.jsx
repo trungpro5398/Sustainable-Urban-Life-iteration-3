@@ -124,7 +124,6 @@ const Recommendation = ({ previousStep, nextStep }) => {
           b.price || b.price_battery + batteryUsage.costValue
         );
 
-        console.log(priceA, priceB);
         return sort === "low" ? priceA - priceB : priceB - priceA;
       });
 
@@ -384,16 +383,8 @@ const Recommendation = ({ previousStep, nextStep }) => {
 
                     <div className="electricity-usage-input-container">
                       <div className="electricity-usage-unit">
-                        Battery Cost:{" "}
+                        Battery Cost: ${batteryUsage.costValue}
                       </div>
-
-                      <Input
-                        value={String(batteryUsage.costValue)}
-                        onChange={(e) => handleUsageChange(e.target.value)}
-                        className="electricity-usage-input"
-                        data-testid="electricity-usage-input"
-                        prefix="$"
-                      />
                     </div>
                   </div>
                 )}
@@ -525,31 +516,31 @@ const Recommendation = ({ previousStep, nextStep }) => {
         {loading ? (
           <CustomLoadingSpinner />
         ) : (
-          installers.map((installer, index) => (
-            <Card key={index} className="installer-card">
-              <h3>{installer.name}</h3>
-              <h3>Brand: {installer.brand}</h3>
-              <p>System Size: {installer.system_size} kW</p>
-              <p>
-                Price: $
-                {installer.price ||
-                  installer.price_battery + batteryUsage.costValue}
-              </p>
+          installers.map((installer, index) => {
+            // Calculate the price based on whether the battery should be included or not
+            let finalPrice = installer.price || installer.price_battery;
 
-              <Button
-                data-testid="compare-button"
-                onClick={() => {
-                  addToCompare(
-                    installer.system_size + "kw",
-                    installer.price ||
-                      installer.price_battery + batteryUsage.costValue
-                  );
-                }}
-              >
-                Discover cost savings
-              </Button>
-            </Card>
-          ))
+            if (batteryChoice.wantBattery === "Yes") {
+              finalPrice += batteryUsage.costValue - 3000;
+            }
+
+            return (
+              <Card key={index} className="installer-card">
+                <h3>{installer.name}</h3>
+                <h3>Brand: {installer.brand}</h3>
+                <p>System Size: {installer.system_size} kW</p>
+                <p>Price: ${finalPrice.toFixed(2)}</p>
+                <Button
+                  data-testid="compare-button"
+                  onClick={() => {
+                    addToCompare(installer.system_size + "kw", finalPrice);
+                  }}
+                >
+                  Discover cost savings
+                </Button>
+              </Card>
+            );
+          })
         )}
       </div>
     </div>

@@ -10,21 +10,33 @@
   position: relative;
 
   width: 100vw;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 
   font-family: $primary-font;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../../../assets/images/hero-section/background-2.jpeg");
   background-size: 100% 100%;
   background-position: center;
 
+  height: calc(100vh - 200px);
+  overflow-y: auto !important;
+
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $desktop-padding;
+  box-sizing: border-box;
+  position: relative;
+  color: $primary-color;
+  font-family: $primary-font;
   h2 {
-    color: $primary-color;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
   }
 
   .start-button {
@@ -55,19 +67,6 @@
       }
     }
   }
-
-  // // Balloon animation
-  // .sun-animation {
-  //   position: absolute;
-  //   top: 5%;
-  //   left: -5%;
-  //   width: 130px;
-  //   height: 130px;
-  //   background-image: url("../../../assets/images/sun.gif");
-  //   background-size: cover;
-  //   background-position: center;
-  //   animation: moveBalloon 20s linear infinite;
-  // }
 
   .button-common {
     position: absolute;

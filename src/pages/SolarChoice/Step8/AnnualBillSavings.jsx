@@ -20,7 +20,6 @@ import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import { CloseCircleOutlined, PlusOutlined } from "@ant-design/icons"; // Import the close (X) icon
 
 const AnnualBillSavings = ({ nextStep, previousStep }) => {
-  const [solarPanelPercentages, setSolarPanelPercentages] = useState([100]);
   const [errors, setErrors] = useState({
     electricityCost: "",
     annualSpend: "",
@@ -36,6 +35,9 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
   const [numOfArrays, setNumOfArrays] = useState(1); // Initial value
   const directionFacing = useSelector(
     (state) => state.solarForm.annualBillSavings.directionFacing
+  );
+  const solarPanelPercentages = useSelector(
+    (state) => state.solarForm.annualBillSavings.solarPanelPercentages
   );
 
   useEffect(() => {
@@ -58,13 +60,11 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
   const [firstPanelDisplay, setFirstPanelDisplay] = useState(
     solarPanelPercentages[0]
   );
-  const [directionStates, setDirectionStates] = useState([
-    { active: null, clicked: null, tooltip: "" },
-  ]);
+  const [directionStates, setDirectionStates] = useState(directionFacing);
   useEffect(() => {
     const updatedDirectionStates = directionFacing.map((dir) => ({
       direction: dir,
-      active: null,
+      active: dir,
       clicked: dir, // set clicked to the current direction
       tooltip: "",
     }));
@@ -190,6 +190,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
     const newDirectionStates = [...directionStates];
     newDirectionStates[index] = {
       ...newDirectionStates[index],
+      direction,
       active: direction,
       tooltip,
       clicked: clicked ? direction : newDirectionStates[index].clicked,
@@ -208,7 +209,15 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
       );
     }
   };
-
+  /**
+   * Smoothly scrolls the view to the "results" section of the page.
+   */
+  const handleButtonClickToResult = () => {
+    const resultsMove = document.getElementById("results");
+    if (resultsMove) {
+      resultsMove.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const handleMouseOut = (index) =>
     handleDirection(directionStates[index].clicked, index, true);
 
@@ -247,7 +256,13 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
         value: true,
       })
     );
-
+    dispatch(
+      updateField({
+        section: "annualBillSavings",
+        field: "yearlySaving",
+        value: annualSavings,
+      })
+    );
     setResults({
       annualSavings,
       annualBillWithSolar: billBefore - annualSavings,
@@ -284,6 +299,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
     setTimeout(() => {
       setCalLoading(false);
       setShowResults(true);
+      setTimeout(handleButtonClickToResult, 50); // introducing slight delay
       callback && callback();
     }, 4000);
   };
@@ -309,12 +325,6 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
       return;
     }
 
-    // 4. Update the solar panel percentages.
-    const updatedPercentages = [...solarPanelPercentages];
-    updatedPercentages[0] = primaryPanelPercentage;
-    updatedPercentages.push(inputValue);
-    setSolarPanelPercentages(updatedPercentages);
-
     // 5. Close the modal and reset the input value.
     setIsModalVisible(false);
     setInputValue(null);
@@ -330,7 +340,13 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
 
     // 7. Dispatch the addition of a new solar array to the Redux store.
     // The update is now slightly different, where we pass the whole newDirectionState object instead of individual properties.
-    dispatch(addSolarArray({ directionState: newDirectionState, angle: 0 }));
+    dispatch(
+      addSolarArray({
+        directionFacing: newDirectionState,
+        angle: 0,
+        percentage: inputValue,
+      })
+    );
 
     // 8. Update the number of solar arrays.
     setNumOfArrays((prevNum) => prevNum + 1);
@@ -346,7 +362,6 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
 
       const newSolarPanelPercentages = solarPanelPercentages.slice(0, -1);
       newSolarPanelPercentages[0] += removedPercentage;
-      setSolarPanelPercentages(newSolarPanelPercentages);
 
       // Remove last direction and angle from redux
       dispatch(removeSolarArray({ index: numOfArrays - 1 }));
@@ -387,10 +402,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
               <h4>Your solar power system:</h4>
             </Col>
             <Col>
-              <span>{annualBillSavings.solarPowerSystem}</span>
-            </Col>
-            <Col>
-              <span>kWh</span>
+              <span>{annualBillSavings.solarPowerSystem}h</span>
             </Col>
           </Row>
           {Array.from({ length: numOfArrays }).map((_, index) => (
@@ -426,10 +438,15 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
                           setInputError(""); // Clear the error if the input is within the range
                         }
 
-                        const updatedPercentages = [...solarPanelPercentages];
-                        updatedPercentages[index] = value;
-                        // updatedPercentages[0] = 100 - totalOfOtherPanels; // Adjust the first value accordingly
-                        setSolarPanelPercentages(updatedPercentages);
+                        // Dispatch the action to update the Redux store:
+                        dispatch(
+                          updateArrayField({
+                            section: "annualBillSavings",
+                            field: "solarPanelPercentages",
+                            value: value,
+                            index: index,
+                          })
+                        );
                       }}
                     />
                     <div className="percentage-display-unit">%</div>
@@ -637,7 +654,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
           </div>
           {calLoading && <CalculatedLoading />}
           {showResults && (
-            <div className="results">
+            <div className="results" id="results">
               <h1>Results:</h1>
               <Row gutter={16} className="row">
                 <Col span={16}>
