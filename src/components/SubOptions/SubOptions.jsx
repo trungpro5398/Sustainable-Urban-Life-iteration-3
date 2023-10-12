@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Slide } from "react-awesome-reveal"; // Import the animation
 
 // The SubOptions component
 const SubOptions = () => {
@@ -90,76 +91,78 @@ const SubOptions = () => {
 
   // Rendering the SubOptions component
   return (
-    <div className="outer-wrapper-sub-options" id="sub-options">
-      <div className="intro-section">
-        <h1>Unlock the Power of Solar!</h1>
-        <p>
-          From understanding benefits to choosing the right solution, we've got
-          you covered.
-        </p>
+    <Slide direction="left" triggerOnce>
+      <div className="outer-wrapper-sub-options" id="sub-options">
+        <div className="intro-section">
+          <h1>Unlock the Power of Solar!</h1>
+          <p>
+            From understanding benefits to choosing the right solution, we've
+            got you covered.
+          </p>
+        </div>
+
+        <Slider {...settings} className="sub-options-container">
+          <div className="option-card">
+            <div className="option-card-img-1"></div>
+
+            <h3 className="h3-sub">Solar Benefit</h3>
+            <p>Discover the advantages of solar energy </p>
+            <button
+              className="sup-option-button"
+              onClick={handleButtonClicktoSolarEnergyBenefit}
+            >
+              Learn More
+            </button>
+          </div>
+
+          <div className="option-card">
+            <div className="option-card-img-2"></div>
+
+            <h3 className="h3-sub">Solar Choice</h3>
+            <p>Explore the suitable solar panel choices.</p>
+            <button className="sup-option-button" onClick={handleButtonClick}>
+              Explore
+            </button>
+          </div>
+
+          <div className="option-card">
+            <div className="option-card-img-3"></div>
+
+            <h3 className="h3-sub">Government Support</h3>
+            <p>Learn about the government incentive.</p>
+            <button
+              className="sup-option-button"
+              onClick={handleButtonClicktoGovernmentSupport}
+            >
+              Get Info
+            </button>
+          </div>
+          <div className="option-card">
+            <div className="option-card-img-5"></div>
+
+            <h3 className="h3-sub">Solar Trend Statistics</h3>
+            <p>Get insights into the latest solar trends.</p>
+            <button
+              className="sup-option-button"
+              onClick={handleButtonClickToSolarTrend}
+            >
+              View Trends
+            </button>
+          </div>
+          <div className="option-card">
+            <div className="option-card-img-4"></div>
+            <h3 className="h3-sub">Calculate roof's solar</h3>
+            <p>Explore the solar potential of your roof</p>
+            <button
+              className="sup-option-button"
+              onClick={handleButtonClickToEstimation}
+            >
+              Explore
+            </button>
+          </div>
+        </Slider>
       </div>
-
-      <Slider {...settings} className="sub-options-container">
-        <div className="option-card">
-          <div className="option-card-img-1"></div>
-
-          <h3 className="h3-sub">Solar Benefit</h3>
-          <p>Discover the advantages of solar energy </p>
-          <button
-            className="sup-option-button"
-            onClick={handleButtonClicktoSolarEnergyBenefit}
-          >
-            Learn More
-          </button>
-        </div>
-
-        <div className="option-card">
-          <div className="option-card-img-2"></div>
-
-          <h3 className="h3-sub">Solar Choice</h3>
-          <p>Explore the suitable solar panel choices.</p>
-          <button className="sup-option-button" onClick={handleButtonClick}>
-            Explore
-          </button>
-        </div>
-
-        <div className="option-card">
-          <div className="option-card-img-3"></div>
-
-          <h3 className="h3-sub">Government Support</h3>
-          <p>Learn about the government incentive.</p>
-          <button
-            className="sup-option-button"
-            onClick={handleButtonClicktoGovernmentSupport}
-          >
-            Get Info
-          </button>
-        </div>
-        <div className="option-card">
-          <div className="option-card-img-5"></div>
-
-          <h3 className="h3-sub">Solar Trend Statistics</h3>
-          <p>Get insights into the latest solar trends.</p>
-          <button
-            className="sup-option-button"
-            onClick={handleButtonClickToSolarTrend}
-          >
-            View Trends
-          </button>
-        </div>
-        <div className="option-card">
-          <div className="option-card-img-4"></div>
-          <h3 className="h3-sub">Calculate roof's solar</h3>
-          <p>Explore the solar potential of your roof</p>
-          <button
-            className="sup-option-button"
-            onClick={handleButtonClickToEstimation}
-          >
-            Explore
-          </button>
-        </div>
-      </Slider>
-    </div>
+    </Slide>
   );
 };
 

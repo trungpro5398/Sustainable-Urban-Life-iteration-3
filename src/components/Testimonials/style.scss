@@ -35,7 +35,6 @@
         line-height: 1.5;
         margin-bottom: 1.5rem;
         font-style: italic;
-        color: $primary-color;
 
         position: relative;
 
@@ -43,7 +42,6 @@
         &::after {
           content: '"';
           font-size: 2rem;
-          color: $primary-color;
 
           position: absolute;
         }
@@ -62,7 +60,6 @@
       span {
         display: block;
         text-align: right;
-        color: $primary-color;
 
         font-weight: 600;
       }

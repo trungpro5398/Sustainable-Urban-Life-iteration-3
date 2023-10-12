@@ -5,6 +5,8 @@ import {
   faCity,
   faSolarPanel,
 } from "@fortawesome/free-solid-svg-icons";
+import { Slide } from "react-awesome-reveal";
+
 import "./style.scss";
 
 const features = [
@@ -28,18 +30,20 @@ const features = [
 
 const WhyAussiesChooseUs = () => {
   return (
-    <div className="why-aussies">
-      <h3>Why Aussies Choose Us</h3>
-      <div className="features-list">
-        {features.map((feature, index) => (
-          <div key={index} className="feature-item">
-            <FontAwesomeIcon icon={feature.icon} className="feature-icon" />
-            <h3 className="feature-title">{feature.title}</h3>
-            <p className="feature-description">{feature.description}</p>
-          </div>
-        ))}
+    <Slide direction="right" triggerOnce>
+      <div className="why-aussies">
+        <h3>Why Aussies Choose Us</h3>
+        <div className="features-list">
+          {features.map((feature, index) => (
+            <div key={index} className="feature-item">
+              <FontAwesomeIcon icon={feature.icon} className="feature-icon" />
+              <h3 className="feature-title">{feature.title}</h3>
+              <p className="feature-description">{feature.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </Slide>
   );
 };
 

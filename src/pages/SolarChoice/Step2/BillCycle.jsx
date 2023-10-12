@@ -134,20 +134,6 @@ const BillCycle = ({ nextStep, previousStep }) => {
       setRunTour(true);
       localStorage.setItem("firstTime", "false");
     }
-    const handleKeyPress = (event) => {
-      // Checking for the arrow left key
-      if (event.keyCode === 37) {
-        handleClick(previousStep); // go to the previous step
-      }
-    };
-
-    // Adding the event listener
-    window.addEventListener("keydown", handleKeyPress);
-
-    // Cleanup: remove the event listener when component unmounts
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
   }, []);
   const handleJoyrideCallback = (data) => {
     const { status } = data;
@@ -158,7 +144,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
   };
   return (
     <div className="bill-step">
-      <h1>Electricity Usage</h1>
+      <h2>Electricity Usage</h2>
 
       {loading ? (
         <CustomLoadingSpinner />
@@ -174,7 +160,7 @@ const BillCycle = ({ nextStep, previousStep }) => {
             callback={handleJoyrideCallback}
             stepIndex={0}
           /> */}
-          <h2>Which is your billing cycle?</h2>
+          <h3>Which is your billing cycle?</h3>
 
           <BillingCycleOptions cycle={cycle} dispatch={dispatch} />
           {showError && <ErrorMessage />}

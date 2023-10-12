@@ -109,27 +109,6 @@ const LocationStep = ({ data, nextStep, previousStep }) => {
       setRunTour(true);
       localStorage.setItem("firstTime", "false");
     }
-
-    const handleKeyPress = (event) => {
-      // Checking for the arrow right key
-
-      if (event.keyCode === 39) {
-        handleClick(nextStep); // go to the next step
-      }
-
-      // Checking for the arrow left key
-      if (event.keyCode === 37) {
-        handleClick(previousStep); // go to the previous step
-      }
-    };
-
-    // Adding the event listener
-    window.addEventListener("keydown", handleKeyPress);
-
-    // Cleanup: remove the event listener when component unmounts
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
   }, []);
   const handleJoyrideCallback = (data) => {
     const { status } = data;

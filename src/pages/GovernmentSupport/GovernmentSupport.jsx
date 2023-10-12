@@ -6,6 +6,7 @@ import sup2 from "../../assets/images/gov-sup/sup-2.png";
 import sup3 from "../../assets/images/gov-sup/sup-3.png";
 import sup4 from "../../assets/images/gov-sup/sup-4.png";
 import Navbar from "../../components/Navbar/Navbar";
+import { Slide } from "react-awesome-reveal"; // Import the animation
 
 const { Panel } = Collapse;
 
@@ -31,8 +32,12 @@ const HoverableLink = ({ url, children }) => {
  */
 const CustomPanel = ({ image, title, children }) => (
   <div className="custom-panel">
-    {image && <Image src={image} />}
-    <div className="content">{children}</div>
+    <Slide direction="left" triggerOnce>
+      {image && <Image src={image} />}
+    </Slide>
+    <Slide direction="right" triggerOnce>
+      <div className="content">{children}</div>
+    </Slide>
   </div>
 );
 
@@ -46,7 +51,7 @@ const GovernmentSupport = () => {
   return (
     <div className="government-support">
       <Navbar isHomePage={false} />
-      <h1>Government Support</h1>
+      <h2>Government Support</h2>
 
       <Collapse
         accordion={false}
@@ -57,7 +62,9 @@ const GovernmentSupport = () => {
         expandIconPosition="right"
       >
         <div className="sub-img">
-          <Image src={sup1} />
+          <Slide direction="up" triggerOnce>
+            <Image src={sup1} />
+          </Slide>
         </div>
         <h2 className="sub-title">VICTORIA’S SOLAR REBATE</h2>
         <p className="sub-description">

@@ -13,7 +13,6 @@ import CustomLoadingSpinner from "./components/CustomLoadingSpinner/CustomLoadin
 
 // Lazy load your components
 const Home = React.lazy(() => import("./pages/HomePage/Home"));
-const AboutUs = React.lazy(() => import("./pages/AboutUsPage/AboutUs"));
 const SolarChoice = React.lazy(() => import("./pages/SolarChoice/SolarChoice"));
 const GovernmentSupport = React.lazy(() =>
   import("./pages/GovernmentSupport/GovernmentSupport")
@@ -42,7 +41,6 @@ const App = () => {
                   path="/government-support"
                   element={<GovernmentSupport />}
                 />
-                <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/estimation" element={<Estimation />} />
                 <Route path="/solar-trend" element={<SolarTrend />} />
                 <Route

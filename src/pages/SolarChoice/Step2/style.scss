@@ -19,8 +19,7 @@
   font-family: $primary-font;
   overflow-y: auto !important;
 
-  h1 {
-    text-shadow: $primary-text-shadow;
+  h2 {
     margin-bottom: 5 * $spacing-unit;
     margin-bottom: 20px;
   }
@@ -42,18 +41,6 @@
     p {
       font-weight: 600;
       margin-bottom: $spacing-unit;
-    }
-
-    h2 {
-      position: relative;
-      display: flex;
-      align-items: center;
-
-      .info-icon {
-        margin-left: $spacing-unit;
-        cursor: pointer;
-        color: $primary-color;
-      }
     }
 
     .error-message {

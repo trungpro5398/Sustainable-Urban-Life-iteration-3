@@ -13,6 +13,7 @@ import s9 from "../../assets/images/solar-energy-benefit/s9.webp";
 import s10 from "../../assets/images/solar-energy-benefit/s10.jpg";
 
 import Navbar from "../../components/Navbar/Navbar";
+import { Slide } from "react-awesome-reveal"; // Import the animation
 
 const { Panel } = Collapse;
 
@@ -38,11 +39,15 @@ const HoverableLink = ({ url, children }) => (
  */
 const CustomPanel = ({ image, title, children, link }) => (
   <div className="custom-panel">
-    {image && <Image src={image} />}
-    <div className="content">
-      {children}
-      {link && <HoverableLink url={link}>Read more</HoverableLink>}
-    </div>
+    <Slide direction="left" triggerOnce>
+      {image && <Image src={image} />}
+    </Slide>
+    <Slide direction="right" triggerOnce>
+      <div className="content">
+        {children}
+        {link && <HoverableLink url={link}>Read more</HoverableLink>}
+      </div>
+    </Slide>
   </div>
 );
 

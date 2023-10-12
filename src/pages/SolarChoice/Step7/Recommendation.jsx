@@ -208,20 +208,6 @@ const Recommendation = ({ previousStep, nextStep }) => {
       setRun(true);
       localStorage.setItem("firstTime", "false");
     }
-    const handleKeyPress = (event) => {
-      // Checking for the arrow left key
-      if (event.keyCode === 37) {
-        handleClick(previousStep); // go to the previous step
-      }
-    };
-
-    // Adding the event listener
-    window.addEventListener("keydown", handleKeyPress);
-
-    // Cleanup: remove the event listener when component unmounts
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
   }, []);
   const marks = batteryData.reduce((acc, item) => {
     acc[parseFloat(item.battery_size)] = item.battery_size;
@@ -524,7 +510,7 @@ const Recommendation = ({ previousStep, nextStep }) => {
                 <h3>{installer.name}</h3>
                 <h3>Brand: {installer.brand}</h3>
                 <p>System Size: {installer.system_size} kW</p>
-                <p>Price: ${finalPrice.toFixed(2)}</p>
+                <p>Price: ${finalPrice.toFixed(0)}</p>
                 <Button
                   data-testid="compare-button"
                   onClick={() => {

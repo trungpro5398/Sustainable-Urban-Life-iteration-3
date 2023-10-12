@@ -11,6 +11,7 @@ import {
 } from "@react-google-maps/api";
 
 import "./style.scss";
+import { Slide, Fade } from "react-awesome-reveal";
 import CustomLoadingSpinner from "../../components/CustomLoadingSpinner/CustomLoadingSpinner";
 import Navbar from "../../components/Navbar/Navbar";
 import PolygonInfo from "./PolygonInfo/PolygonInfo";
@@ -38,13 +39,14 @@ const Estimation = () => {
     lat: -3.745,
     lng: -38.523,
   });
+  const [activePolygonIndex, setActivePolygonIndex] = useState(null);
 
   const [runTour, setRunTour] = useState(true);
   const [steps, setSteps] = useState([
     {
       target: "label",
       content: "Start by entering your address in this field.",
-      placement: "top-start",
+      placement: "bottom-end",
     },
 
     {
@@ -146,8 +148,6 @@ const Estimation = () => {
     }
   };
   const handlePolygonComplete = (polygon) => {
-    console.log("Polygon creation detected!"); // Debugging line
-
     const newArea = calculateArea(polygon);
 
     const bounds = new window.google.maps.LatLngBounds();
@@ -156,8 +156,14 @@ const Estimation = () => {
     });
     const center = bounds.getCenter();
 
+    // Add click event listener to polygon
+    polygon.addListener("click", () => {
+      setActivePolygonIndex((prevIndex) =>
+        prevIndex !== polygons.length ? polygons.length : null
+      );
+    });
+
     setPolygons((prevPolygons) => {
-      console.log("Previous Polygons:", prevPolygons);
       return [...prevPolygons, { polygon, center }];
     });
     setAreas([...areas, newArea]);
@@ -168,20 +174,19 @@ const Estimation = () => {
       console.error("Invalid polygonCenter:", polygonCenter);
       return;
     }
+
     setCenter({
       lat: polygonCenter.lat(),
       lng: polygonCenter.lng(),
     });
-    setZoom(100); // Set zoom level to 20, or any desired level
+    setZoom(200); // Set zoom level to 20, or any desired level
   };
   const deletePolygon = (index) => {
     polygons[index].polygon.setMap(null);
-    polygons[index * 2 + 1].polygon.setMap(null);
 
     const newPolygons = [...polygons];
     const newAreas = [...areas];
 
-    newPolygons.splice(index * 2 + 1, 1);
     newPolygons.splice(index, 1);
     newAreas.splice(index, 1);
 
@@ -216,50 +221,56 @@ const Estimation = () => {
               />
               <div className="container-1">
                 <div className="address-input">
-                  <label>
-                    <p>Step 1. Enter your address:</p>
-                    <Autocomplete
-                      onLoad={onLoad}
-                      onPlaceChanged={onPlaceChanged}
-                    >
-                      <Input
-                        value={selectedAddress}
-                        onChange={(e) => setSelectedAddress(e.target.value)}
-                        placeholder="Enter your address here"
-                      />
-                    </Autocomplete>
-                  </label>
-                  {inputError && (
-                    <p style={{ color: "red" }}>
-                      Please enter a valid address.
+                  <Slide direction="left" triggerOnce>
+                    <label>
+                      <p>Step 1. Enter your address:</p>
+                      <Autocomplete
+                        onLoad={onLoad}
+                        onPlaceChanged={onPlaceChanged}
+                      >
+                        <Input
+                          value={selectedAddress}
+                          onChange={(e) => setSelectedAddress(e.target.value)}
+                          placeholder="Enter your address here"
+                        />
+                      </Autocomplete>
+                    </label>
+                    {inputError && (
+                      <p style={{ color: "red" }}>
+                        Please enter a valid address.
+                      </p>
+                    )}
+                    <p>
+                      Step 2. Click and join dots to form a shape on your roof
+                      (click rather than drag), and your preferred solar panel
+                      area will be shaded.
                     </p>
-                  )}
-                  <p>
-                    Step 2. Click and join dots to form a shape on your roof
-                    (click rather than drag), and your preferred solar panel
-                    area will be shaded.
-                  </p>
+                  </Slide>
                 </div>
 
                 <div className="estimated-values">
                   <div className="estimated-row">
-                    <span className="estimated-label">
-                      Estimated Roof Area:
-                    </span>
-                    <span className="estimated-value">
-                      {Math.round(getTotalArea())} m2
-                    </span>
+                    <Slide direction="right" triggerOnce>
+                      <span className="estimated-label">
+                        Estimated Roof Area:
+                      </span>
+                      <span className="estimated-value">
+                        {Math.round(getTotalArea())} m2
+                      </span>
+                    </Slide>
                   </div>
                   <div className="estimated-row">
-                    <span className="estimated-label">
-                      Estimated System Size:
-                    </span>
-                    <span className="estimated-value">
-                      {Math.round(getTotalArea()) > 0
-                        ? Math.round(Math.round(getTotalArea()) / 4)
-                        : 0}{" "}
-                      kW
-                    </span>
+                    <Slide direction="right" triggerOnce>
+                      <span className="estimated-label">
+                        Estimated System Size:
+                      </span>
+                      <span className="estimated-value">
+                        {Math.round(getTotalArea()) > 0
+                          ? Math.round(Math.round(getTotalArea()) / 4)
+                          : 0}{" "}
+                        kW
+                      </span>
+                    </Slide>
                   </div>
                 </div>
               </div>
@@ -273,7 +284,9 @@ const Estimation = () => {
                   mapTypeControl={true}
                   className="ggMap-container"
                 >
-                  {showMarker && <Marker position={center} label={address} />}
+                  {showMarker && polygons.length > 0 && (
+                    <Marker position={center} label={address} />
+                  )}
                   <DrawingManagerF
                     onPolygonComplete={handlePolygonComplete}
                     options={{
@@ -294,30 +307,40 @@ const Estimation = () => {
                 </GoogleMap>
 
                 <div className="polygon-management">
-                  <h4>Drawn Polygons</h4>
-                  {polygons.map(
-                    (_, index) =>
-                      index < polygons.length / 2 && (
-                        <PolygonInfo
-                          key={index}
-                          index={index}
-                          onDelete={() => deletePolygon(index)}
-                          area={areas[index]}
-                          vertices2D={vertices3D[index]}
-                          moveToPolygon={() => {
-                            const polygonCenter =
-                              polygons[index * 2 + 1].center;
-                            if (polygonCenter) {
-                              moveToPolygon(polygonCenter);
-                            } else {
-                              console.error(
-                                `Center for polygon ${index} is not defined`
-                              );
-                            }
-                          }}
-                        />
-                      )
-                  )}
+                  <h4>Roof areas</h4>
+                  {polygons.map((_, index) => (
+                    <PolygonInfo
+                      key={index}
+                      index={index}
+                      onDelete={() => deletePolygon(index)}
+                      area={areas[index]}
+                      vertices2D={vertices3D[index]}
+                      moveToPolygon={() => {
+                        const polygonCenter = polygons[index].center;
+                        polygons.forEach((p) => {
+                          p.polygon.setOptions({
+                            fillColor: "blue",
+                            strokeColor: "blue",
+                          });
+                          p.color = "blue";
+                        });
+                        // Set selected polygon to red
+                        polygons[index].polygon.setOptions({
+                          fillColor: "red",
+                          strokeColor: "red",
+                        });
+                        polygons[index].color = "red";
+
+                        if (polygonCenter) {
+                          moveToPolygon(polygonCenter);
+                        } else {
+                          console.error(
+                            `Center for polygon ${index} is not defined`
+                          );
+                        }
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
               {/* Polygon Management Section */}

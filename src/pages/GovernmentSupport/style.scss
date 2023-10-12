@@ -13,16 +13,9 @@
   color: $primary-color;
   font-family: $primary-font;
 
-  h1 {
-    font-size: $title-font-size;
+  h2 {
     color: #2b8a3e; // Darker green for contrast
-    font-weight: 900;
     text-align: center;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); // Giving it a slight shadow for depth
-
-    font-family: $primary-font;
   }
 
   .question-collapse {

@@ -207,7 +207,6 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
       );
     }
   };
-
   /**
    * Smoothly scrolls the view to the "results" section of the page.
    */
@@ -401,7 +400,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
               <h4>Your solar power system:</h4>
             </Col>
             <Col>
-              <span>{annualBillSavings.solarPowerSystem}h</span>
+              <h4>{annualBillSavings.solarPowerSystem}h</h4>
             </Col>
           </Row>
           {Array.from({ length: numOfArrays }).map((_, index) => (
@@ -650,7 +649,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
           {calLoading && <CalculatedLoading />}
           {showResults && (
             <div className="results" id="results">
-              <h1>Results:</h1>
+              <h3>Results:</h3>
               <Row gutter={16} className="row">
                 <Col span={16}>
                   <p>

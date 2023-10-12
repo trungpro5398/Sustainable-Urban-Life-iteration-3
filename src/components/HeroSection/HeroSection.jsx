@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 // Components
 import Navbar from "../Navbar/Navbar";
-import background_1 from "../../assets/images/hero-section/background-1.jpeg";
 import background_2 from "../../assets/images/hero-section/background-2.jpeg";
+import { Slide } from "react-awesome-reveal"; // Import the animation
+
 // Styles
 import "./HeroSection.scss";
 
@@ -21,7 +22,7 @@ import "./HeroSection.scss";
  */
 const HeroSection = () => {
   // Animated text for the hero section
-  const text = "Welcome to Sustainable Urban Life";
+  const text = "Sustainable Urban Life";
   const smallText = text.split(" ");
 
   /**
@@ -41,23 +42,7 @@ const HeroSection = () => {
   const handleButtonClickToEstimation = () => {
     navigate("/estimation");
   };
-  /**
-   * Smoothly scrolls the view to the "info-blocks" section of the page.
-   */
-  const handleButtonClickToInfoBlocks = () => {
-    const infoBlocks = document.getElementById("info-blocks");
-    if (infoBlocks) {
-      infoBlocks.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-  };
+
   return (
     <section className="hero">
       <Navbar isHomePage={true} />
@@ -74,15 +59,18 @@ const HeroSection = () => {
         >
           <div className="carousel-item">
             <div className="carousel-content">
-              <h2 className="highlighted-text">Solar Choice</h2>{" "}
-              {/* Emphasize this */}
-              <p>
-                The ultimate eco-friendly solution for urban living. Discover
-                the power of solar today!
-              </p>
-              <button className="cta-button" onClick={handleButtonClick}>
-                Explore Solar Choice
-              </button>
+              <Slide direction="right" triggerOnce>
+                {" "}
+                <h2 className="highlighted-text">Solar Choice</h2>{" "}
+                {/* Emphasize this */}
+                <p>
+                  The ultimate eco-friendly solution for urban living. Discover
+                  the power of solar today!
+                </p>
+                <button className="cta-button" onClick={handleButtonClick}>
+                  Explore Solar Choice
+                </button>
+              </Slide>
             </div>
           </div>
           <div
@@ -95,60 +83,44 @@ const HeroSection = () => {
             }}
           >
             <div className="carousel-content">
-              <h2 className="highlighted-text">Calculate roof's solar</h2>{" "}
-              <p>Explore the solar potential of your roof</p>
-              <button
-                className="cta-button"
-                onClick={handleButtonClickToEstimation}
-              >
-                Explore
-              </button>
+              <Slide direction="right" triggerOnce>
+                <h2 className="highlighted-text">Calculate roof's solar</h2>{" "}
+                <p>Explore the solar potential of your roof</p>
+                <button
+                  className="cta-button"
+                  onClick={handleButtonClickToEstimation}
+                >
+                  Explore
+                </button>
+              </Slide>
             </div>
           </div>
         </ResponsiveCarousel>
         <div className="hero-overlay">
           {/* Animated Welcome Text */}
 
-          <div className="outer-text">
-            {smallText.map((word, wordIndex) => (
-              <h2 key={wordIndex}>
-                {word.split("").map((char, charIndex) => (
-                  <span
-                    style={{ animationDelay: `${charIndex * 0.1}s` }}
-                    key={charIndex}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </h2>
-            ))}
-          </div>
+          <h2>
+            <Slide direction="left" triggerOnce>
+              Sustainable urban life
+            </Slide>
+          </h2>
 
           {/* Hero Subtitle */}
-          {/* <p>
-            Bright Futures: The Confluence of Solar Solutions and Government
-            Support in Urban Living
-          </p> */}
+          <h4>
+            <Slide direction="left" triggerOnce>
+              Bright Futures: The Confluence of Solar Solutions and Government
+              Support in Urban Living
+            </Slide>
+          </h4>
 
-          {/* Call-to-action Buttons */}
-          <Row gutter={16}>
-            <Col>
-              <button
-                className="cta-button "
-                onClick={handleButtonClickToSubOptions}
-              >
-                Learn More
-              </button>
-            </Col>
-            {/* <Col>
-              <button
-                className="cta-button"
-                onClick={handleButtonClickToInfoBlocks}
-              >
-                See How It Works
-              </button>
-            </Col> */}
-          </Row>
+          <Slide direction="left" triggerOnce>
+            <button
+              className="cta-button "
+              onClick={handleButtonClickToSubOptions}
+            >
+              Learn More
+            </button>
+          </Slide>
         </div>
       </div>
     </section>

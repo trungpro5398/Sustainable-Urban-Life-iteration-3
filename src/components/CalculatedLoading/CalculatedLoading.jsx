@@ -5,7 +5,7 @@ const CalculatedLoading = () => {
   return (
     <div className="calculated-loading-container">
       <img src={calSpin} alt="Loading..." />
-      <p>Calculating...</p>
+      <h4>Calculating...</h4>
     </div>
   );
 };

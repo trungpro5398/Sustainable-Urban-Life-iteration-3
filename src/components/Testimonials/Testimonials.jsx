@@ -1,4 +1,6 @@
 import React from "react";
+import { Slide } from "react-awesome-reveal"; // Import the animation
+
 import "./style.scss";
 
 const Testimonials = () => {
@@ -18,17 +20,19 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="container-testimonials">
-      <h2>What the Pioneers Say</h2>
-      <div className="testimonials">
-        {quotes.map((quote, index) => (
-          <div className="testimonial" key={index}>
-            <p>{quote.text}</p>
-            <span>- {quote.author}</span>
-          </div>
-        ))}
+    <Slide direction="right" triggerOnce>
+      <div className="container-testimonials">
+        <h2>What the Pioneers Say</h2>
+        <div className="testimonials">
+          {quotes.map((quote, index) => (
+            <div className="testimonial" key={index}>
+              <p>{quote.text}</p>
+              <span>- {quote.author}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </Slide>
   );
 };
 

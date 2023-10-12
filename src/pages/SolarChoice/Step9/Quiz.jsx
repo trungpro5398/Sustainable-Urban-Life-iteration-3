@@ -240,25 +240,27 @@ const Quiz = ({ previousStep }) => {
             ) : (
               showRebateResults && (
                 <div className="rebate-results" id="rebate-results-scroll">
+                  <h3>Results:</h3>
+
                   {victorianRebate > 0 && (
-                    <p className="rebate-info">
+                    <h4 className="rebate-info">
                       Your Victorian rebate is: <span>${victorianRebate}</span>
-                    </p>
+                    </h4>
                   )}
 
-                  <p className="rebate-info">
+                  <h4 className="rebate-info">
                     Your federal rebate is:{" "}
                     <span>${federalRebate.toFixed(2)}</span>
-                  </p>
-                  <p className="rebate-info">
+                  </h4>
+                  <h4 className="rebate-info">
                     Your total rebate is:{" "}
                     <span>${(victorianRebate + federalRebate).toFixed(2)}</span>
-                  </p>
+                  </h4>
 
-                  <p className="cost-info">
+                  <h4 className="cost-info">
                     Cost for installation: <span>${price_installation}</span>
-                  </p>
-                  <p className="final-cost">
+                  </h4>
+                  <h4 className="final-cost">
                     Cost for installation with rebate:{" "}
                     <span>
                       $
@@ -267,8 +269,8 @@ const Quiz = ({ previousStep }) => {
                         (victorianRebate + federalRebate)
                       ).toFixed(2)}
                     </span>
-                  </p>
-                  <p className="payback-period">
+                  </h4>
+                  <h4 className="payback-period">
                     Payback period:{" "}
                     <span>
                       {Math.round(
@@ -278,7 +280,7 @@ const Quiz = ({ previousStep }) => {
                       )}{" "}
                       years
                     </span>
-                  </p>
+                  </h4>
                 </div>
               )
             )}
