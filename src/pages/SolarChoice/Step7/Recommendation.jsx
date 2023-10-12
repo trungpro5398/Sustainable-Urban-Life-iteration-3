@@ -64,11 +64,6 @@ const Recommendation = ({ previousStep, nextStep }) => {
   // Joyride steps
   const [steps] = useState([
     {
-      target: ".battery-choice-section",
-      content: "Choose whether you want a battery with your solar system.",
-      placement: "top",
-    },
-    {
       target: ".filter-section",
       content: "This section allows you to filter the installers.",
       placement: "right",
@@ -235,12 +230,12 @@ const Recommendation = ({ previousStep, nextStep }) => {
 
   const handleJoyrideCallback = (data) => {
     const { action, index, status, type } = data;
-    if (type === EVENTS.STEP_BEFORE) {
-      if (index === 0) {
-        // Adjust according to the desired step's index
-        window.scrollTo(0, 0); // Scrolls to the top of the page
-      }
-    }
+    // if (type === EVENTS.STEP_BEFORE) {
+    //   if (index === 0) {
+    //     // Adjust according to the desired step's index
+    //     window.scrollTo(0, 0); // Scrolls to the top of the page
+    //   }
+    // }
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       // Update state to advance the tour
       setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));

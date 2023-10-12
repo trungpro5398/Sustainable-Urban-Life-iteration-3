@@ -178,7 +178,10 @@ const Quiz = ({ previousStep }) => {
           <div className="quiz-container">
             {questions.map((question, index) => (
               <div className="question" key={index}>
-                <p>{question}</p>
+                <p>
+                  {question}
+                  {<span style={{ color: "red", marginLeft: "5px" }}>*</span>}
+                </p>
                 <div className="button-group">
                   <button
                     onClick={() => {

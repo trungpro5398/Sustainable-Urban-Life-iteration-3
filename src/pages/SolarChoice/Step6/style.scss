@@ -52,6 +52,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    height: 80%;
     .battery-choice-tabs {
       width: 50%;
       background: white;
@@ -64,6 +65,8 @@
       border-radius: $primary-border-radius;
       box-shadow: $solar-hover-box-shadow;
       color: $primary-color;
+      overflow-y: auto;
+
       button {
         border: $primary-border;
         box-shadow: $solar-hover-box-shadow;
@@ -273,8 +276,6 @@
         p {
           z-index: 1;
           color: $harry-shadow;
-
-          font-size: $quote-font-size;
         }
 
         /* Choice Circle */
@@ -319,46 +320,6 @@
         margin-top: 10px;
         text-shadow: 3px 3px 0px #ffdd77; /* Cartoonish yellow shadow */
       }
-    }
-
-    .button-common {
-      position: absolute;
-      width: 70px;
-      height: 70px;
-      top: 50%;
-      background: linear-gradient(to bottom, $soft-yellow, $light-green);
-      border: $primary-border;
-      color: $primary-color;
-      padding: 10px 20px;
-      border-radius: 35px;
-      box-shadow: $solar-hover-box-shadow;
-      transition: all 0.3s ease-out;
-      opacity: 0.8;
-      font-size: 30px;
-
-      &:hover {
-        background: linear-gradient(to bottom, $light-green, $soft-yellow);
-        box-shadow: $solar-hover-box-shadow;
-        transform: translateX(-50%) translateY(-50%) scale(1.05);
-
-        .anticon {
-          transform: scale(1.2);
-        }
-      }
-    }
-
-    /* Next Button */
-    .next-button {
-      @extend .button-common;
-      right: 0px;
-      transform: translateX(-50%) translateY(-50%);
-    }
-
-    /* Previous Button */
-    .previous-button {
-      @extend .button-common;
-      left: 70px;
-      transform: translateX(-50%) translateY(-50%);
     }
   }
 }

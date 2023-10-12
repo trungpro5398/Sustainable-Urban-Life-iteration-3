@@ -144,6 +144,25 @@ const SolarTrend = () => {
     }
     return acc;
   }, []);
+  const threshold = 3; // Percentage threshold below which data points are combined into "Other"
+
+  // Filter out data points with a percentage less than 3%
+  const filteredBarData = pieChartData.filter(
+    (item) => item.value >= threshold
+  );
+
+  // Calculate the sum of percentages for data points below the threshold
+  const otherPercentage =
+    100 - filteredBarData.reduce((sum, item) => sum + item.value, 0);
+
+  // Create a "Other" data point if there are data points below the threshold
+  if (otherPercentage > 0) {
+    filteredBarData.push({
+      name: "Other",
+      value: otherPercentage,
+    });
+  }
+
   return (
     <div className="solar-trend-page">
       <Navbar isHomePage={false} />
@@ -177,14 +196,14 @@ const SolarTrend = () => {
 
                 <PieChart width={710} height={600}>
                   <Pie
-                    data={pieChartData}
+                    data={filteredBarData}
                     dataKey="value"
                     nameKey="name"
                     outerRadius={180}
                     labelLine={false}
                     label={renderCustomLabel}
                   >
-                    {pieChartData.map((entry, index) => (
+                    {filteredBarData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}

@@ -54,15 +54,8 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
   const [runTour, setRunTour] = useState(true);
   const [steps, setSteps] = useState([
     {
-      target: ".electricity-usage-slider",
-      content:
-        "You can also use the slider to indicate your electricity consumption.",
-      placement: "top-start",
-    },
-    {
       target: ".electricity-usage-input-container",
-      content:
-        "You can also type in your electricity consumption in this field.",
+      content: "You can  type in your electricity consumption in this field.",
       placement: "top",
     },
     {
@@ -211,17 +204,6 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
       return;
     }
 
-    // Check length last
-    if (String(value).length > maxLength) {
-      message.error({
-        content: "Input exceeds character limit.",
-        style: {
-          fontSize: "20px", // Bigger font size
-        },
-      });
-      return;
-    }
-
     const dailyUsage = computeDailyUsage(value);
     dispatch(
       updateField({ section: "electricityUsage", field: "usageValue", value })
@@ -300,29 +282,8 @@ const ElectricityUsage = ({ nextStep, previousStep }) => {
             showSkipButton={true}
             callback={handleJoyrideCallback}
           />
-          <div className="usage-instructions">
-            <p>
-              Please slide to indicate your {billingCycle.cycle} electricity
-              consumption
-            </p>
-          </div>
 
           <div className="usage-slider">
-            <div className="range-labels">
-              <span className="range-labels-low">Low</span>
-              <Slider
-                min={1}
-                max={rangeUsage(10000)}
-                step={0.1}
-                onChange={handleUsageChange}
-                value={electricityUsage.usageValue}
-                className="electricity-usage-slider"
-                handle={CustomHandle}
-                data-testid="electricity-usage-slider"
-              />
-              <span className="range-labels-high">High</span>
-            </div>
-
             <div className="electricity-usage-size">Electricity usage</div>
 
             <div className="electricity-usage-input-container">

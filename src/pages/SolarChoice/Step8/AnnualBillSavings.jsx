@@ -66,7 +66,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
       direction: dir,
       active: dir,
       clicked: dir, // set clicked to the current direction
-      tooltip: "",
+      tooltip: "Please select the direction",
     }));
     setDirectionStates(updatedDirectionStates);
   }, [directionFacing]);
@@ -88,30 +88,27 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
     });
   };
   const [steps] = useState([
-    {
-      target: ".solar-input-display",
-      content: "This displays your solar power system.",
-    },
-    {
-      target: ".compass-container",
-      content:
-        "The direction that your roof faces will have an impact on the potential performance of your solar power panels. A north-facing roof is ideal in Australia, but many systems will perform well on east, west or even south facing roofs.",
-    },
-    {
-      target: ".angle",
-      content:
-        "Most Australian roofs are at either 25º or 15º from horizontal. If you are unsure, just leave it at 20º and you'll get good enough result from the solar calculator. Please note that if the installation angle of your solar panels is between 0º to 10º, there will be an additional cleaning cost applied every year.",
-    },
-    {
-      target: ".cost",
-      content:
-        "Tell us if you supply cost/usage cost base on your bill. You can typically find this information in the Statement section of your electricity bill.",
-    },
-    {
-      target: ".cost",
-      content:
-        "Tell us if you supply cost/usage cost base on your bill. You can typically find this information in the Statement section of your electricity bill.",
-    },
+    // {
+    //   target: ".compass-container",
+    //   content:
+    //     "The direction that your roof faces will have an impact on the potential performance of your solar power panels. A north-facing roof is ideal in Australia, but many systems will perform well on east, west or even south facing roofs.",
+    //   placement: "top-start",
+    // },
+    // {
+    //   target: ".angle",
+    //   content:
+    //     "Most Australian roofs are at either 25º or 15º from horizontal. If you are unsure, just leave it at 20º and you'll get good enough result from the solar calculator. Please note that if the installation angle of your solar panels is between 0º to 10º, there will be an additional cleaning cost applied every year.",
+    // },
+    // {
+    //   target: ".cost",
+    //   content:
+    //     "Tell us if you supply cost/usage cost base on your bill. You can typically find this information in the Statement section of your electricity bill.",
+    // },
+    // {
+    //   target: ".cost",
+    //   content:
+    //     "Tell us if you supply cost/usage cost base on your bill. You can typically find this information in the Statement section of your electricity bill.",
+    // },
     //... you can add more steps as needed
   ]);
 
@@ -182,11 +179,13 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
     return isValid;
   };
   const handleDirection = (direction, index, clicked = false) => {
-    const tooltip = `You've ${
-      clicked ? "selected" : "hovering over"
-    } the ${direction} direction`;
+    const tooltip =
+      typeof direction === "string"
+        ? `You've ${
+            clicked ? "selected" : "hovering over"
+          } the ${direction} direction`
+        : "Please select the direction";
 
-    // Update local state
     const newDirectionStates = [...directionStates];
     newDirectionStates[index] = {
       ...newDirectionStates[index],
@@ -197,7 +196,6 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
     };
     setDirectionStates(newDirectionStates);
 
-    // Update Redux state when clicked
     if (clicked) {
       dispatch(
         updateArrayField({
@@ -209,6 +207,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
       );
     }
   };
+
   /**
    * Smoothly scrolls the view to the "results" section of the page.
    */
@@ -455,11 +454,7 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
               </h4>
 
               <div className="compass-wrapper">
-                {directionStates && (
-                  <div className="tooltip">
-                    {directionStates[index].tooltip}
-                  </div>
-                )}
+                <h4 className="tooltip">{directionStates[index].tooltip}</h4>
                 <div
                   className="compass-container"
                   onMouseOut={() => handleMouseOut(index)}
@@ -497,9 +492,9 @@ const AnnualBillSavings = ({ nextStep, previousStep }) => {
               </div>
 
               <div className="angle">
-                <p>
+                <h4>
                   Angle from Horizontal: {annualBillSavings.angle[index] + "°"}
-                </p>
+                </h4>
                 <Slider
                   min={0}
                   max={40}

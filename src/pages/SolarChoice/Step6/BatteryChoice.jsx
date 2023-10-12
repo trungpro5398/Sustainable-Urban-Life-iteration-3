@@ -16,26 +16,31 @@ const AGLEligibilityQuestions = [
     question:
       "Do you have a reliable and ongoing internet connection via ethernet or Wi-Fi?",
     key: "internetConnection",
+    isMandatory: true,
   },
   {
     question:
       "Do you have an operating solar system or are you in the process of buying one as part of a solar battery bundle?",
     key: "solarSystem",
+    isMandatory: true,
   },
   {
     question:
       "Do you have or are you in the process of buying a compatible Tesla Powerwall, SolarEdge Energy Bank, or LG Home Battery with a compatible SolarEdge inverter?",
     key: "compatibleBattery",
+    isMandatory: true,
   },
   {
     question:
       "Are you currently a part of another Virtual Power Plant, or are you able to change if you are?",
     key: "vppParticipation",
+    isMandatory: true,
   },
   {
     question:
       "Do you have a smart meter installed at your premise or agree to have one installed?",
     key: "smartMeter",
+    isMandatory: true,
   },
 ];
 
@@ -44,25 +49,30 @@ const TeslaEligibilityQuestions = [
     question:
       "Do you have an existing Tesla Powerwall (excluding Powerwall 1) or are you planning to purchase one?",
     key: "powerwallOwnershipTes",
+    isMandatory: true,
   },
   {
     question:
       "Are you a residential customer residing in an eligible Tesla Energy Plan region?",
     key: "residencyTes",
+    isMandatory: true,
   },
   {
     question: "Do you have a reliable internet connection (Wi-Fi or Ethernet)?",
     key: "internetConnectionTes",
+    isMandatory: true,
   },
   {
     question:
       "Do you have a smart meter installed at your home or agree to have one installed at no cost?",
     key: "smartMeterTes",
+    isMandatory: true,
   },
   {
     question:
       "Do you have an operating solar system under 15 kW per Powerwall, with no zero export restrictions in place?",
     key: "solarSystemTes",
+    isMandatory: true,
   },
 ];
 
@@ -298,7 +308,14 @@ const BatteryChoice = ({ nextStep, previousStep }) => {
 
                     {AGLEligibilityQuestions.map((q, index) => (
                       <div className="question" key={index}>
-                        <p>{q.question}</p>
+                        <p>
+                          {q.question}
+                          {q.isMandatory && (
+                            <span style={{ color: "red", marginLeft: "5px" }}>
+                              *
+                            </span>
+                          )}
+                        </p>
                         <div className="button-group">
                           <button
                             onClick={() => {
